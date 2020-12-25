@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import './adminPage.css';
+import './userPage.css';
 import { Layout, Menu, Carousel } from 'antd';
 import {
   MenuUnfoldOutlined,
@@ -16,9 +16,7 @@ import {
   TeamOutlined,
  
 } from '@ant-design/icons';
-import { contentStyle } from './AdminPageCSS'
-
-
+import TableContent from './TableContent'
 
 
 const { Header, Sider, Content } = Layout;
@@ -26,8 +24,19 @@ const { SubMenu } = Menu;
 
 
 
-class AdminPage extends React.Component {
+class TableContent2 extends React.Component {
 
+   //点击按钮进行页面跳转
+   buttonClick = (e) => {
+    console.log('暗流点击了')
+    console.log(e)
+    if (e.key === '3') {
+      this.props.history.push('/content1')
+    } else if (e.key === '4') {
+      this.props.history.push('/content2')
+    }
+
+  }
 
   state = {
     collapsed: false,
@@ -89,8 +98,8 @@ class AdminPage extends React.Component {
                 Option 2
             </Menu.Item>
               <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-                <Menu.Item key="3">Tom</Menu.Item>
-                <Menu.Item key="4">Bill</Menu.Item>
+                <Menu.Item key="3" onClick={this.buttonClick}>Tom</Menu.Item>
+                <Menu.Item key="4" onClick={this.buttonClick}>Bill</Menu.Item>
                 <Menu.Item key="5">Alex</Menu.Item>
               </SubMenu>
               <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
@@ -132,7 +141,14 @@ class AdminPage extends React.Component {
                 minHeight: 1080,
               }}
             >
-              Content
+             
+             
+
+              <TableContent></TableContent>
+
+
+
+
           </Content>
           </Layout>
         </Layout>
@@ -148,4 +164,4 @@ class AdminPage extends React.Component {
   }
 }
 
-export default AdminPage
+export default TableContent2

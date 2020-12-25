@@ -1,9 +1,13 @@
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React,{Fragment} from 'react';
+// import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import './adminPage.css';
-import { Layout, Menu, Carousel } from 'antd';
+import './userPage.css';
+import { connect } from 'dva';
+import { Layout, Menu, Carousel } from 'antd'; 
+//import { Router,Route, Switch, Link, withRouter } from 'dva/router'; //天坑，局部路由跳转不能用dva的
+import {BrowserRouter as Router,Link,Route} from 'react-router-dom'      //局部路由跳转能用这个
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -14,20 +18,45 @@ import {
   PieChartOutlined,
   FileOutlined,
   TeamOutlined,
- 
+
 } from '@ant-design/icons';
-import { contentStyle } from './AdminPageCSS'
-
-
+import Table1 from './table/Table1'
+import Table2 from './table/Table2'
 
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
+let MyComponent = Table2
 
 
-class AdminPage extends React.Component {
 
+
+@connect(({ loginNamespace }) => ({
+  loginNamespace,
+}))
+
+
+class UserPage extends React.Component {
+
+
+
+
+  //点击按钮进行页面跳转
+  buttonClick = (e) => {
+
+    console.log(e)
+    if (e.key === '1.1') {
+      console.log("1.1执行")
+      //this.props.history.push('/content1')
+      MyComponent = Table1
+    } else if (e.key === '1.2') {
+      console.log("1.2执行")
+      //this.props.history.push('/content2')
+      MyComponent = Table2
+    }
+
+  }
 
   state = {
     collapsed: false,
@@ -48,24 +77,7 @@ class AdminPage extends React.Component {
     return (
 
 
-      <div>
-
-
-        {/* <Carousel afterChange={onChange}>
-          <div>
-            <h3 style={contentStyle}>1</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>2</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>3</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>4</h3>
-          </div>
-        </Carousel> */}
-
+      <Router>
 
 
 
@@ -82,20 +94,26 @@ class AdminPage extends React.Component {
 
             />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1" icon={<PieChartOutlined />}>
-                Option 1
-            </Menu.Item>
+
+              <SubMenu key="1" icon={<PieChartOutlined />} title="数据上报">
+                <Menu.Item key="1.1" onClick={this.buttonClick}>专业代理、经纪用表</Menu.Item>
+                <Menu.Item key="1.2" onClick={this.buttonClick}>公估机构用表</Menu.Item>
+                <Menu.Item key="1.3" onClick={this.buttonClick}>合作销售寿险公司产品统计表</Menu.Item>
+                <Menu.Item key="1.4" onClick={this.buttonClick}>银邮代理机构用表</Menu.Item>
+              </SubMenu>
+
+
               <Menu.Item key="2" icon={<DesktopOutlined />}>
                 Option 2
-            </Menu.Item>
-              <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-                <Menu.Item key="3">Tom</Menu.Item>
+              </Menu.Item>
+              <SubMenu key="3" icon={<UserOutlined />} title="User">
+                <Menu.Item key="3" >Tom</Menu.Item>
                 <Menu.Item key="4">Bill</Menu.Item>
                 <Menu.Item key="5">Alex</Menu.Item>
               </SubMenu>
-              <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-                <Menu.Item key="6">Team 1</Menu.Item>
-                <Menu.Item key="8">Team 2</Menu.Item>
+              <SubMenu key="4" icon={<TeamOutlined />} title="Team">
+                <Menu.Item key="6"><Link to="/table1">用户信息1</Link></Menu.Item>
+                <Menu.Item key="8"><Link to="/table2">用户信息2</Link></Menu.Item>
               </SubMenu>
               <Menu.Item key="9" icon={<FileOutlined />}>
                 Files
@@ -132,13 +150,23 @@ class AdminPage extends React.Component {
                 minHeight: 1080,
               }}
             >
-              Content
-          </Content>
+
+              
+                <Route path="/table1" component={Table1} />
+                <Route path="/table2" component={Table2} />
+          
+
+            </Content>
           </Layout>
         </Layout>
 
 
-      </div>
+
+
+     
+
+
+      </Router>
 
 
     );
@@ -148,4 +176,4 @@ class AdminPage extends React.Component {
   }
 }
 
-export default AdminPage
+export default UserPage
