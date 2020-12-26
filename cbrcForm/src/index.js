@@ -3,8 +3,6 @@ import './index.css';
 
 
 // 1. Initialize
-
-
 const app = dva();
 
 

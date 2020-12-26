@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import { loginRequest,uploadRequest } from '../services/loginService'
+import { loginRequest } from '../services/loginService'
 import Axios from 'axios';
 
 
