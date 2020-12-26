@@ -60,26 +60,6 @@ export default {
 
     },
 
-    *upload({ uploadInfo }, { call, put }) {
-
-      console.log("*upload开始执行")
-      console.log(uploadInfo)
-
-      const response = yield call(uploadRequest, uploadInfo);
-
-      console.log("*upload返回为：")
-      console.log(response)
-
-      if (response.data.F) {
-        notification.error({ message: response.data.F })
-        return false;
-      } else {
-        notification.success({ message: '数据上传成功' })
-        yield put({ type: 'uploadReduce', payload: { ...response } });
-        return true;
-      }
-
-    },
 
 
   },
@@ -95,14 +75,7 @@ export default {
       return { ...state, ...action.data };
     },
 
-    uploadReduce(state, action) {
-
-      console.log("uploadReduce开始执行")
-      console.log(action.payload.data)
-
-      return { ...state, ...action.data };
-    },
-
+   
 
 
 

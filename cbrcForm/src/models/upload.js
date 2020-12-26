@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import { loginRequest } from '../services/loginService'
+import { uploadRequest } from '../services/uploadService'
 import Axios from 'axios';
 
 
@@ -34,28 +34,27 @@ export default {
 
   effects: {
 
-    *upload({ loginInfo }, { call, put }) {  
+    *upload({ uploadInfo }, { call, put }) {
 
       console.log("*upload开始执行")
-      console.log(loginInfo)
+      console.log(uploadInfo)
 
-      const response = yield call(loginRequest, loginInfo); 
-      
-      console.log("*login返回为：")
+      const response = yield call(uploadRequest, uploadInfo);
+
+      console.log("*upload返回为：")
       console.log(response)
 
       if (response.data.F) {
         notification.error({ message: response.data.F })
         return false;
       } else {
-        notification.success({ message: '登陆成功页面跳转中.....' })
+        notification.success({ message: '数据上传成功' })
         yield put({ type: 'uploadReduce', payload: { ...response } });
         return true;
       }
 
-
-
     },
+
 
 
   },
@@ -70,6 +69,7 @@ export default {
 
       return { ...state, ...action.data };
     },
+
 
 
   },

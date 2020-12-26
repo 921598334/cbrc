@@ -22,6 +22,8 @@ import {
 } from '@ant-design/icons';
 import Table1 from './table/Table1'
 import Table2 from './table/Table2'
+import Table3 from './table/Table3'
+import Table4 from './table/Table4'
 
 
 const { Header, Sider, Content } = Layout;
@@ -96,10 +98,10 @@ class UserPage extends React.Component {
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
 
               <SubMenu key="1" icon={<PieChartOutlined />} title="数据上报">
-                <Menu.Item key="1.1" onClick={this.buttonClick}>专业代理、经纪用表</Menu.Item>
-                <Menu.Item key="1.2" onClick={this.buttonClick}>公估机构用表</Menu.Item>
-                <Menu.Item key="1.3" onClick={this.buttonClick}>合作销售寿险公司产品统计表</Menu.Item>
-                <Menu.Item key="1.4" onClick={this.buttonClick}>银邮代理机构用表</Menu.Item>
+                <Menu.Item key="1.1" ><Link to="/table1">专业代理、经纪用表</Link></Menu.Item>
+                <Menu.Item key="1.2" ><Link to="/table2">公估机构用表</Link></Menu.Item>
+                <Menu.Item key="1.3" ><Link to="/table3">合作销售寿险公司产品统计表</Link></Menu.Item>
+                <Menu.Item key="1.4" ><Link to="/table4">银邮代理机构用表</Link></Menu.Item>
               </SubMenu>
 
 
@@ -154,6 +156,8 @@ class UserPage extends React.Component {
               
                 <Route path="/table1" component={Table1} />
                 <Route path="/table2" component={Table2} />
+                <Route path="/table3" component={Table3} />
+                <Route path="/table4" component={Table4} />
           
 
             </Content>
