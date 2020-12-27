@@ -50,7 +50,7 @@ export default {
         notification.error({ message: response.data.F })
         return false;
       } else {
-        
+
         yield put({ type: 'getCellReduce', payload: { ...response } });
         notification.success({ message: '初始化成功' })
         return true;
@@ -73,7 +73,7 @@ export default {
 
         //去除前后空格
         //const amount = uploadInfo.dataSource[index]['amount'].replace(/\s*/g, '')
-         
+
 
         // if(amount==='请输入'){
         //   notification.error({message:'请输入 '+uploadInfo[index]['cellname']+' 的金额'})
@@ -97,7 +97,7 @@ export default {
 
       }
 
-     
+
 
       const response = yield call(uploadRequest, uploadInfo);
 
@@ -141,22 +141,59 @@ export default {
       const table3Struct = []
       const table4Struct = []
 
-      action.payload.data.map((key) =>{
+
+     
+      for (let index in action.payload.data) {
+
+        let key = action.payload.data[index]
         
-        if(key['repid']==1){
+
+        //对数据进行筛选，没有'（'的需要滤除，
+        if (key['cellname'].indexOf('（')==-1) {
+          console.log('过滤'+key['cellname'])
+          continue
+        }
+        //有'备注'的需要滤除
+        if (key['cellname'].indexOf('备注')!=-1) {
+          console.log('过滤'+key['cellname'])
+          continue
+        }
+
+
+        if (key['repid'] == 1) {
           table1Struct.push(key)
-        }else if(key['repid']==2){
+        } else if (key['repid'] == 2) {
           table2Struct.push(key)
-        }else if(key['repid']==3){
+        } else if (key['repid'] == 3) {
           table3Struct.push(key)
-        }else if(key['repid']==4){
+        } else if (key['repid'] == 4) {
           table4Struct.push(key)
-        }else{
+        } else {
           console.log('没有找到repid')
           console.log(key)
         }
-      })
+      }
+
     
+
+      // action.payload.data.map((key) => {
+
+
+
+      //   if (key['repid'] == 1) {
+      //     table1Struct.push(key)
+      //   } else if (key['repid'] == 2) {
+      //     table2Struct.push(key)
+      //   } else if (key['repid'] == 3) {
+      //     table3Struct.push(key)
+      //   } else if (key['repid'] == 4) {
+      //     table4Struct.push(key)
+      //   } else {
+      //     console.log('没有找到repid')
+      //     console.log(key)
+      //   }
+      // })
+
       //console.log(table1Struct)
 
       //console.log(action.payload.data)
