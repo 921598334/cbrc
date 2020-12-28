@@ -6,12 +6,12 @@ import zhCN from 'antd/es/locale/zh_CN';
 import { Collapse } from 'antd';
 import { connect } from 'dva';
 import { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button, Popconfirm, Form, Row, Col, DatePicker, ConfigProvider } from 'antd';
-import { UserOutlined, SketchOutlined, CloudUploadOutlined, SmileOutlined, PhoneOutlined, FileSearchOutlined } from '@ant-design/icons';
+import { Table, Input, Button, Popconfirm, Form, Row, Col, DatePicker, Select } from 'antd';
+import { UserOutlined, SketchOutlined, CloudUploadOutlined, SmileOutlined, PhoneOutlined, FileSearchOutlined, ZoomInOutlined } from '@ant-design/icons';
 
 
 
-
+const { Option } = Select;
 const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
 
@@ -139,7 +139,7 @@ class BasicTable extends React.Component {
       ],
 
       orgName: '',
-      tableName: '',
+      tableName: '1',
       fromDate: '',
       endDate: ''
 
@@ -162,10 +162,13 @@ class BasicTable extends React.Component {
     })
   }
   tableNameChange = (e) => {
+    console.log('表发生了变化')
+    console.log(e)
     this.setState({
-      tableName: e.target.value,
+      tableName: e,
     })
   }
+
   dateChange = (e) => {
 
     if (e != null || e != undefined) {
@@ -233,12 +236,31 @@ class BasicTable extends React.Component {
     })
       .then(result => {
         if (result) {
-          
+
           window.open('http://' + this.props.queryNamespace.downloadLink)
         }
       })
-
   }
+
+  collectDownload = (id) => {
+
+    this.props.dispatch({
+      type: "queryNamespace/collectDownload",
+      queryInfo: {
+        ...this.state
+      }
+    })
+      .then(result => {
+        if (result) {
+
+          window.open('http://' + this.props.queryNamespace.downloadLink)
+        }
+      })
+  }
+
+
+  
+
 
   render() {
 
@@ -314,7 +336,7 @@ class BasicTable extends React.Component {
 
     return (
 
-      <ConfigProvider locale={zhCN}>
+      <div>
 
         <Row gutter={[16, 24]}>
           <Col >
@@ -322,48 +344,57 @@ class BasicTable extends React.Component {
           </Col >
         </Row>
 
-        <Row gutter={[16, 24]} align="middle">
-          <Col className="gutter-row" span={4}>
-            <Input size="large" placeholder="机构列表" prefix={<SketchOutlined />} onChange={this.orgNameChange} />
+        <Row gutter={[16, 24]}  justify="space-between">
+          <Col span={4}>
+            <Input placeholder="机构列表" prefix={<SketchOutlined />} onChange={this.orgNameChange} />
           </Col>
 
-          <Col className="gutter-row" span={4}>
-            <Input size="large" placeholder="表名" prefix={<SketchOutlined />} onChange={this.tableNameChange} />
+
+          <Col span={6}  >
+            <Select defaultValue="重庆保险中介机构季度数据表-专业代理、经纪机构用表" onChange={this.tableNameChange} style={{width:'300px'}}>
+              <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
+              <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
+              <Option value="3">重庆保险中介机构季度数据表-专业中介机构销售寿险公司长期保险产品统计表</Option>
+              <Option value="4">重庆保险中介机构季度数据表-银邮代理机构用表</Option>
+            </Select>
           </Col>
 
-          <Col className="gutter-row" span={4}>
+
+          <Col span={6}  >
             <RangePicker onChange={this.dateChange} format={dateFormat} />
           </Col>
 
 
-          <Col className="gutter-row" span={8}>
+          <Col span={4}  >
             <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
               查询
             </Button>
           </Col>
+
+        </Row>
+
+        <Row gutter={[16, 24]}  >
+
         </Row>
 
 
+
+
+
         <div>
-          {queryData ? (
-
-            <div>
-              <div style={{ marginBottom: 16 }}>
-                <Button type="primary" onClick={this.start} loading={false}>
-                  全部下载
+          <div style={{ marginBottom: 16 }}>
+            <Button type="primary" onClick={this.collectDownload} loading={false}>
+              全部下载
               </Button>
-                <span style={{ marginLeft: 8 }}>
-                  {/* {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''} */}
-                </span>
-              </div>
-              <Table rowSelection={rowSelection} columns={columns} dataSource={queryData} pagination={false} />
-            </div>
-
-
-          ) : null}
-
+            <Button type="primary" onClick={this.collectDownload} loading={false} style={{ marginLeft: 8 }}>
+              汇总下载
+              </Button>
+            <span style={{ marginLeft: 8 }}>
+              {/* {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''} */}
+            </span>
+          </div>
+          <Table rowSelection={rowSelection} columns={columns} dataSource={queryData} pagination={false} />
         </div>
-
 
 
         {/* 
@@ -604,7 +635,7 @@ class BasicTable extends React.Component {
         </Collapse>
  */}
 
-      </ConfigProvider >
+      </div >
 
 
     );

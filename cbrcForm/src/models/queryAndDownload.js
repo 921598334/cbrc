@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import { queryRequest,downloadRequest } from '../services/queryServiceAndDownload'
+import { queryRequest,downloadRequest,collectDownloadRequest } from '../services/queryServiceAndDownload'
 import Axios from 'axios';
 
 
@@ -9,7 +9,6 @@ export default {
 
   state: {
     downloadLink: 'null',
-   
 
   },
 
@@ -21,6 +20,34 @@ export default {
 
  
 
+    //汇总下载
+    *collectDownload({ queryInfo }, { call, put }) {
+
+      console.log("*collectDownload开始执行")
+      console.log(queryInfo)
+
+
+      //检查输入是否合法
+      
+
+      const response = yield call(collectDownloadRequest, queryInfo);
+
+      console.log("*query返回为：")
+      console.log(response)
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '数据查询成功' })
+        yield put({ type: 'downloadReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
+
 
     *query({ queryInfo }, { call, put }) {
 
@@ -29,7 +56,7 @@ export default {
 
 
       //检查输入是否合法
-    
+      
      
 
       const response = yield call(queryRequest, queryInfo);
@@ -48,7 +75,7 @@ export default {
 
     },
 
-
+    //下载单个文件
     *download({ downloadInfo }, { call, put }) {
 
       console.log("*download开始执行")
@@ -81,6 +108,16 @@ export default {
   },
 
   reducers: {
+
+
+    
+    // collectDownloadReduce(state, action) {
+
+    //   console.log("collectDownloadReduce开始执行")
+    //   console.log(action.payload.data)
+
+    //   return { ...state, queryData:action.payload.data };
+    // },
 
 
     queryReduce(state, action) {

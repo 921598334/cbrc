@@ -2,6 +2,38 @@ import request from '../utils/request';
 import Axios from 'axios';
 
 
+
+
+
+
+
+export async function collectDownloadRequest(queryInfo) {
+
+  console.log("collectDownloadRequest开始执行")
+  console.log(queryInfo)
+
+  
+ 
+  return await Axios({
+    method: 'post',
+    url: 'http://localhost:8080/collectDownload',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+      ...queryInfo,
+    }
+  }).then(function (response) {
+
+    return response
+
+  });
+}
+
+
+
+
+
 export async function queryRequest(queryInfo) {
 
   console.log("queryRequest开始执行")

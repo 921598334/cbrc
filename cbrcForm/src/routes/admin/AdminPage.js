@@ -3,7 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './adminPage.css';
-import { Layout, Menu, Carousel, Spin } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
+import { Layout, Menu, Carousel, Spin,ConfigProvider } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -58,7 +59,7 @@ class AdminPage extends React.Component {
 
 
 
-      <div>
+      <ConfigProvider  locale={zhCN}>
 
 
         {/* <Carousel afterChange={onChange}>
@@ -103,17 +104,17 @@ class AdminPage extends React.Component {
 
                  
 
-                  <Menu.Item key="2" icon={<DesktopOutlined />}>
-                    <Link to='/table2'>数据查询与下载2</Link>
-                  </Menu.Item>
+                
 
-                  <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-                    <Menu.Item key="6">Team 1</Menu.Item>
-                    <Menu.Item key="8">Team 2</Menu.Item>
+                  <SubMenu key="sub2" icon={<DesktopOutlined />}title="任务发布">
+                    <Menu.Item key="6">任务 1</Menu.Item>
+                    <Menu.Item key="8">任务 2</Menu.Item>
                   </SubMenu>
+
                   <Menu.Item key="9" icon={<FileOutlined />}>
                     Files
-            </Menu.Item>
+                </Menu.Item>
+
                 </Menu>
               </Sider>
               <Layout className="site-layout">
@@ -162,7 +163,7 @@ class AdminPage extends React.Component {
 
 
 
-      </div>
+      </ConfigProvider>
 
 
     );
