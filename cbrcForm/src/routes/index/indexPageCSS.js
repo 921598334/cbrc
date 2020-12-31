@@ -1,3 +1,5 @@
+
+
 export const styleTopSpan = {
   marginTop: '50px'
 }
@@ -19,4 +21,7 @@ export const contentStyle = {
   lineHeight: '160px',
   textAlign: 'center',
   background: '#364d79',
+  //background: 'url(../assets/yay.jpg)',
+  //backgroundSize: '388px 328px',
+  //backgroundImage: "url(" + require("../bg1.png") + ")"
 };

@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router'
-import { Form, Input, Button, Checkbox, Carousel, Row, Col } from 'antd';
+import { Form, Input, Button, Checkbox, Carousel, Row, Col, ConfigProvider } from 'antd';
 import 'antd/dist/antd.css';
-import {styleTopSpan,layout,tailLayout,contentStyle} from './indexPageCSS'
+import { styleTopSpan, layout, tailLayout, contentStyle } from './indexPageCSS'
+import zhCN from 'antd/es/locale/zh_CN';
 
-
+import stylestest from './test.css';
 
 @connect(({ loginNamespace }) => ({
   loginNamespace,
@@ -14,23 +15,52 @@ import {styleTopSpan,layout,tailLayout,contentStyle} from './indexPageCSS'
 class IndexPage extends React.Component {
 
 
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      islogin: false,
+    }
+  }
+
+
   render() {
 
 
     const onFinish = values => {
       console.log('点击了登陆');
+
+      this.setState({
+        islogin:true,
+      })
+
       this.props.dispatch({
         type: "loginNamespace/login",
         loginInfo: {
           ...values,
         }
       }).then(result => {
-        if(result){
-          //登陆成功后跳转到管理员页面
-          this.props.history.push('/admin')
+
+        this.setState({
+          islogin:false,
+        })
+
+        if (result) {
+
+          console.log("根据用户的类型进行登陆判断")
+          console.log(this.props.loginNamespace)
+
+          //如果用户类型不是10-这个类型，表明是非管理员，此时进入用户页面
+          if (this.props.loginNamespace['orgid'].indexOf("10-") == -1) {
+            //登陆成功后跳转到管理员页面
+            this.props.history.push('/user')
+          } else {
+            //登陆成功后跳转到管理员页面
+            this.props.history.push('/admin')
+          }
         }
-        
-        
+
       })
     };
 
@@ -39,31 +69,24 @@ class IndexPage extends React.Component {
     };
 
 
-    function onChange(a, b, c) {
-      console.log(a, b, c);
-    }
+
 
     console.log("IndexPage开始渲染")
     console.log(this.props)
 
     return (
 
-      <div>
+      <ConfigProvider locale={zhCN}>
 
 
-        <Carousel afterChange={onChange}>
-          <div>
-            <h3 style={contentStyle}>1</h3>
+        <Carousel >
+          <div >
+            <h3 className={stylestest.background1}>1</h3>
           </div>
-          <div>
-            <h3 style={contentStyle}>2</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>3</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>4</h3>
-          </div>
+          {/* <div>
+            <h3 className={stylestest.background2}>2</h3>
+          </div> */}
+
         </Carousel>,
 
 
@@ -82,24 +105,24 @@ class IndexPage extends React.Component {
               <Col span={4} >
 
                 <Form.Item
-                  label="Username"
+                  label="用户名"
                   name="username"
-                  rules={[{ required: true, message: 'Please input your username!' }]}
+                  rules={[{ required: true, message: '请输入用户名！' }]}
                 >
                   <Input />
                 </Form.Item>
 
                 <Form.Item
-                  label="Password"
+                  label="密  码"
                   name="password"
-                  rules={[{ required: true, message: 'Please input your password!' }]}
+                  rules={[{ required: true, message: '请输入密码！' }]}
                 >
                   <Input.Password />
                 </Form.Item>
 
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+                {/* <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+                  <Checkbox>记住我</Checkbox>
+                </Form.Item> */}
 
               </Col>
 
@@ -108,8 +131,8 @@ class IndexPage extends React.Component {
             <Row justify="center">
               <Col span={4}>
                 <Form.Item {...tailLayout}>
-                  <Button type="primary" htmlType="submit">
-                    Submit
+                  <Button type="primary" htmlType="submit" loading={this.state.islogin}>
+                    登陆
                 </Button>
                 </Form.Item>
               </Col>
@@ -124,7 +147,7 @@ class IndexPage extends React.Component {
 
 
 
-      </div>
+      </ConfigProvider>
 
 
 

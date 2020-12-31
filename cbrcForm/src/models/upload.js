@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import { uploadRequest, getCellRequest } from '../services/uploadService'
 import Axios from 'axios';
-
+import Cookies from 'js-cookie'
 
 export default {
 
@@ -12,6 +12,8 @@ export default {
     table2Struct: 'null',
     table3Struct: 'null',
     table4Struct: 'null',
+    username: '',
+    token: '',
   },
 
   subscriptions: {
@@ -36,6 +38,15 @@ export default {
   },
 
   effects: {
+
+
+
+    *exit({ payload }, { call, put }) {
+      yield put({ type: 'exitReduce' });
+
+      return true;
+    },
+
 
     *getCell({ payload }, { call, put }) {
 
@@ -98,11 +109,45 @@ export default {
       }
 
 
+      if (uploadInfo.creator == null || uploadInfo.creator == undefined || uploadInfo.creator.replace(/\s*/g,"")==='') {
+        notification.error({ message: '创建人不能为空' })
+        return false
+      }
+
+      if (uploadInfo.managerName == null || uploadInfo.managerName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
+        notification.error({ message: '管理员不能为空' })
+        return false
+      }
+
+      if (uploadInfo.orgName == null || uploadInfo.orgName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
+        notification.error({ message: '机构名不能为空' })
+        return false
+      }
+
+      if (uploadInfo.tel == null || uploadInfo.tel == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
+        notification.error({ message: '电话不能为空' })
+        return false
+      }
+
+
+
+
+      uploadInfo.userid = Cookies.get('userid')
+     
+
 
       const response = yield call(uploadRequest, uploadInfo);
 
       console.log("*upload返回为：")
       console.log(response)
+
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
 
       if (response.data.F) {
         notification.error({ message: response.data.F })
@@ -120,6 +165,40 @@ export default {
   },
 
   reducers: {
+
+
+    //退出登陆
+    exitReduce(state, action) {
+
+      console.log("exitReduce开始执行")
+
+      Cookies.remove('username');
+      Cookies.remove('token');
+
+      return { ...state };
+    },
+
+
+
+
+    //得到cookie中的信息
+    getCookieReduce(state, action) {
+
+      console.log("getCookie开始执行")
+
+      state.username = Cookies.get('username');
+      state.token = Cookies.get('token');
+
+
+      return { ...state };
+    },
+
+
+
+
+
+
+
 
 
     uploadReduce(state, action) {
@@ -142,20 +221,20 @@ export default {
       const table4Struct = []
 
 
-     
+
       for (let index in action.payload.data) {
 
         let key = action.payload.data[index]
-        
+
 
         //对数据进行筛选，没有'（'的需要滤除，
-        if (key['cellname'].indexOf('（')==-1) {
-          console.log('过滤'+key['cellname'])
+        if (key['cellname'].indexOf('（') == -1) {
+          console.log('过滤' + key['cellname'])
           continue
         }
         //有'备注'的需要滤除
-        if (key['cellname'].indexOf('备注')!=-1) {
-          console.log('过滤'+key['cellname'])
+        if (key['cellname'].indexOf('备注') != -1) {
+          console.log('过滤' + key['cellname'])
           continue
         }
 
@@ -174,7 +253,7 @@ export default {
         }
       }
 
-    
+
 
       // action.payload.data.map((key) => {
 

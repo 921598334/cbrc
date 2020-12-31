@@ -13,7 +13,7 @@ export async function uploadRequest(uploadInfo) {
     dataSourceTmp[key] = item
   })
 
-  console.log(dataSourceTmp)
+  
 
 
   return await Axios({
@@ -29,11 +29,18 @@ export async function uploadRequest(uploadInfo) {
       managerName: uploadInfo.managerName,
       creator: uploadInfo.creator,
       tel: uploadInfo.tel,
+      period: uploadInfo.period,
+      fileType:uploadInfo.fileType,
+      userid:uploadInfo.userid,
     }
   }).then(function (response) {
 
     return response
 
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
   });
 }
 

@@ -17,7 +17,12 @@ export async function loginRequest(loginInfo) {
 
     return response
 
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
   });
+
 }
 
 

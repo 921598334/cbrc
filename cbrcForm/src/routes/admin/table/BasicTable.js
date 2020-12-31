@@ -10,7 +10,6 @@ import { Table, Input, Button, Popconfirm, Form, Row, Col, DatePicker, Select } 
 import { UserOutlined, SketchOutlined, CloudUploadOutlined, SmileOutlined, PhoneOutlined, FileSearchOutlined, ZoomInOutlined } from '@ant-design/icons';
 
 
-
 const { Option } = Select;
 const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
@@ -19,7 +18,6 @@ const { RangePicker } = DatePicker;
 function callback(key) {
   console.log(key);
 }
-
 
 
 const dateFormat = 'YYYY/MM/DD';
@@ -139,9 +137,9 @@ class BasicTable extends React.Component {
       ],
 
       orgName: '',
-      tableName: '1',
       fromDate: '',
-      endDate: ''
+      endDate: '',
+      fileType:'1',
 
     };
   }
@@ -153,6 +151,8 @@ class BasicTable extends React.Component {
 
     // //不知道为什么，只有这样才能成功赋值
     // this.state.dataSource = table1Struct
+
+
   }
 
 
@@ -165,7 +165,7 @@ class BasicTable extends React.Component {
     console.log('表发生了变化')
     console.log(e)
     this.setState({
-      tableName: e,
+      fileType: e,
     })
   }
 
@@ -231,7 +231,8 @@ class BasicTable extends React.Component {
     this.props.dispatch({
       type: "queryNamespace/download",
       downloadInfo: {
-        id: id
+        id: id,
+        ...this.state
       }
     })
       .then(result => {
@@ -322,9 +323,6 @@ class BasicTable extends React.Component {
           }
         })
     };
-
-
-
 
 
     const { loading, selectedRowKeys } = this.state;

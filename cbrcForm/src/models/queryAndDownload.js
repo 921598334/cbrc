@@ -1,6 +1,7 @@
 import { notification } from "antd";
-import { queryRequest,downloadRequest,collectDownloadRequest } from '../services/queryServiceAndDownload'
+import { queryRequest, downloadRequest, collectDownloadRequest } from '../services/queryServiceAndDownload'
 import Axios from 'axios';
+import Cookies from 'js-cookie'
 
 
 export default {
@@ -9,16 +10,20 @@ export default {
 
   state: {
     downloadLink: 'null',
-
+   
   },
 
   subscriptions: {
-   
+
   },
 
   effects: {
 
- 
+
+
+   
+
+
 
     //汇总下载
     *collectDownload({ queryInfo }, { call, put }) {
@@ -28,7 +33,7 @@ export default {
 
 
       //检查输入是否合法
-      
+
 
       const response = yield call(collectDownloadRequest, queryInfo);
 
@@ -56,8 +61,8 @@ export default {
 
 
       //检查输入是否合法
-      
-     
+
+
 
       const response = yield call(queryRequest, queryInfo);
 
@@ -83,8 +88,8 @@ export default {
 
 
       //检查输入是否合法
-    
-      const response = yield call(downloadRequest, downloadInfo.id);
+
+      const response = yield call(downloadRequest, downloadInfo);
 
       console.log("*download返回为：")
       console.log(response)
@@ -101,7 +106,7 @@ export default {
     },
 
 
-    
+
 
 
 
@@ -110,7 +115,9 @@ export default {
   reducers: {
 
 
-    
+   
+
+
     // collectDownloadReduce(state, action) {
 
     //   console.log("collectDownloadReduce开始执行")
@@ -125,7 +132,7 @@ export default {
       console.log("queryReduce开始执行")
       console.log(action.payload.data)
 
-      return { ...state, queryData:action.payload.data };
+      return { ...state, queryData: action.payload.data };
     },
 
 
@@ -138,8 +145,8 @@ export default {
       return { ...state };
     },
 
-   
-    
+
+
 
   },
 

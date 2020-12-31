@@ -1,0 +1,19 @@
+.background1 {
+  height: 160px;
+  color: #fff;
+  lineHeight: 160px;
+  textAlign: center;
+  background: url(../../assets/b1.png) no-repeat center 0;
+
+}
+
+
+
+.background2 {
+  height: 160px;
+  color: #fff;
+  lineHeight: 160px;
+  textAlign: center;
+  background: url(../../assets/b2.png) no-repeat center 0;
+
+}

@@ -71,10 +71,10 @@ export async function queryRequest(queryInfo) {
 
 
 
-export async function downloadRequest(id) {
+export async function downloadRequest(downloadInfo) {
 
   console.log("downloadRequest开始执行")
-  console.log(id)
+  console.log(downloadInfo)
 
   var dataSourceTmp = {}
   //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
@@ -91,7 +91,7 @@ export async function downloadRequest(id) {
     },
     params: {
 
-      id:id,
+      ...downloadInfo,
     
     }
   }).then(function (response) {

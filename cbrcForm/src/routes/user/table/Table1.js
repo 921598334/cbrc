@@ -7,10 +7,11 @@ import './tableCSS.css';
 import { Collapse } from 'antd';
 import { connect } from 'dva';
 import { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button, Popconfirm, Form, Row, Col } from 'antd';
+import { Table, Input, Button, Popconfirm, Form, Row, Col, Select, Result,BackTop } from 'antd';
 import { UserOutlined, SketchOutlined, CloudUploadOutlined, SmileOutlined, PhoneOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
+const { Option } = Select;
 
 //如果在类外定义变量或者熟悉，可以直接访问，如果在类内定义需要用this
 function callback(key) {
@@ -80,7 +81,7 @@ const EditableCell = ({
         rules={[
           {
             required: true,
-            message: `${title} is required.`,
+            message: `${title} 是必输项`,
           },
         ]}
       >
@@ -336,6 +337,9 @@ class Table1 extends React.Component {
       managerName: '',
       creator: '',
       tel: '',
+      isUplaod: false,
+      isComplete: false,
+      fileType:1,
     };
   }
 
@@ -377,6 +381,12 @@ class Table1 extends React.Component {
 
   }
 
+  periodChage = (e) => {
+    console.log(e)
+    this.setState({
+      period: e,
+    })
+  }
 
 
   handleSave = (row) => {
@@ -420,10 +430,10 @@ class Table1 extends React.Component {
   render() {
 
 
-
-
     console.log("Table1的render开始执行")
     const dataSource = this.state.dataSource
+
+
 
 
 
@@ -454,31 +464,43 @@ class Table1 extends React.Component {
     //点击保存数据上传
     const dataUpload = values => {
       console.log('dataUpload开始执行');
+
+      this.setState({
+        isUplaod: true,
+      })
+
       console.log(this.state)
       this.props.dispatch({
         type: "uploadNamespace/upload",
         uploadInfo: {
-           ...this.state
-          // dataSource: this.state.dataSource,
-          // orgName: this.state.orgName,
-          // managerName: this.state.managerName,
-          // creator: this.state.creator,
-          // tel: this.state.tel,
+          ...this.state,
+         
+          dataSource: this.state.dataSource,
+          orgName: this.state.orgName,
+          managerName: this.state.managerName,
+          creator: this.state.creator,
+          tel: this.state.tel,
         }
       })
         .then(result => {
+
+          this.setState({
+            isUplaod: false,
+          })
+
           if (result) {
-            //登陆成功后跳转到管理员页面
-            //this.props.history.push('/admin')
+            //数据上传成功后
+            this.setState({
+              isComplete: true
+            })
           }
         })
     };
 
 
-    if (dataSource) {
+    if (!this.state.isComplete) {
 
       return (
-
 
         <div>
 
@@ -490,19 +512,29 @@ class Table1 extends React.Component {
 
           <Row gutter={[16, 24]} align="middle">
             <Col className="gutter-row" span={4}>
-              <Input size="large" placeholder="机构全称" prefix={<SketchOutlined />} onChange={this.orgNameChange} />
+              <Input placeholder="机构全称" prefix={<SketchOutlined />} onChange={this.orgNameChange} />
             </Col>
             <Col className="gutter-row" span={4}>
-              <Input size="large" placeholder="负责人" prefix={<UserOutlined />} onChange={this.managerNameChange} />
+              <Input placeholder="负责人" prefix={<UserOutlined />} onChange={this.managerNameChange} />
             </Col>
             <Col className="gutter-row" span={4}>
-              <Input size="large" placeholder="填表人" prefix={<SmileOutlined />} onChange={this.creatorChange} />
+              <Input placeholder="填表人" prefix={<SmileOutlined />} onChange={this.creatorChange} />
             </Col>
             <Col className="gutter-row" span={4}>
-              <Input size="large" placeholder="填表人联系方式" prefix={<PhoneOutlined />} onChange={this.telChange} />
+              <Input placeholder="填表人联系方式" prefix={<PhoneOutlined />} onChange={this.telChange} />
             </Col>
+
             <Col className="gutter-row" span={4}>
-              <Button type="primary" icon={<CloudUploadOutlined />} onClick={dataUpload}>
+              <Select defaultValue="1" onChange={this.periodChage}>
+                <Option value="1">第1季度(1~3月)</Option>
+                <Option value="2">第2季度(4~6月)</Option>
+                <Option value="3">第3季度(7~9月)</Option>
+                <Option value="4">第4季度(10~12月)</Option>
+              </Select>
+            </Col>
+
+            <Col className="gutter-row" span={4}>
+              <Button type="primary" icon={<CloudUploadOutlined />} onClick={dataUpload} loading={this.state.isUplaod}>
                 上传
             </Button>
             </Col>
@@ -747,12 +779,30 @@ class Table1 extends React.Component {
           </Collapse>
 
 
+          <BackTop>
+            <div style={{
+              height: 40,
+              width: 40,
+              lineHeight: '40px',
+              borderRadius: 4,
+              backgroundColor: '#1088e9',
+              color: '#fff',
+              textAlign: 'center',
+              fontSize: 14,
+            }}>UP</div>
+          </BackTop>
+
         </div >
 
 
       );
     } else {
-      return (<div></div>)
+      return (
+        <Result
+          icon={<SmileOutlined />}
+          title="您已经完成了当前的所有操作!"
+        // extra={<Button type="primary">Next</Button>}
+        />)
     }
 
 
