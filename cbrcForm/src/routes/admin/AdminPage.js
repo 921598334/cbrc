@@ -23,9 +23,9 @@ import { contentStyle } from './AdminPageCSS'
 import Cookies from 'js-cookie'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import BasicTable from './table/BasicTable'
-import Table2 from './table/Table2'
-import Table3 from './table/Table3'
-import Table4 from './table/Table4'
+import HistoryTask from './task/HistoryTask'
+import PublishTask from './task/PublishTask'
+
 
 
 
@@ -125,21 +125,7 @@ class AdminPage extends React.Component {
       <ConfigProvider locale={zhCN}>
 
 
-        {/* <Carousel afterChange={onChange}>
-          <div>
-            <h3 style={contentStyle}>1</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>2</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>3</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>4</h3>
-          </div>
-        </Carousel> */}
-
+    
 
         <Spin spinning={false} tip="数据加载中...">
 
@@ -167,9 +153,9 @@ class AdminPage extends React.Component {
                   </SubMenu>
 
 
-                  <SubMenu key="sub2" icon={<DesktopOutlined />} title="任务发布">
-                    <Menu.Item key="6">任务 1</Menu.Item>
-                    <Menu.Item key="8">任务 2</Menu.Item>
+                  <SubMenu key="sub2" icon={<DesktopOutlined />} title="任务模块">
+                    <Menu.Item key="6"><Link to='/admin/publishTask'>发布任务</Link></Menu.Item>
+                    <Menu.Item key="8"><Link to='/admin/historyTask'>历史任务</Link></Menu.Item>
                   </SubMenu>
 
                   <Menu.Item key="9" icon={<FileOutlined />}>
@@ -231,6 +217,12 @@ class AdminPage extends React.Component {
                   }}
                 >
                   <Route exact path="/admin/basicTable" component={BasicTable} />
+
+                  <Route exact path="/admin/publishTask" component={PublishTask} />
+                  <Route exact path="/admin/historyTask" component={HistoryTask} />
+
+
+                  
 
                 </Content>
               </Layout>

@@ -118,15 +118,6 @@ export default {
    
 
 
-    // collectDownloadReduce(state, action) {
-
-    //   console.log("collectDownloadReduce开始执行")
-    //   console.log(action.payload.data)
-
-    //   return { ...state, queryData:action.payload.data };
-    // },
-
-
     queryReduce(state, action) {
 
       console.log("queryReduce开始执行")
@@ -144,8 +135,6 @@ export default {
 
       return { ...state };
     },
-
-
 
 
   },

@@ -6,6 +6,8 @@ import './index.css';
 const app = dva();
 
 
+
+
 // 2. Plugins
 // app.use({});
 
@@ -14,6 +16,7 @@ app.model(require('./models/login').default);
 app.model(require('./models/upload').default);
 app.model(require('./models/queryAndDownload').default);
 app.model(require('./models/admin').default);
+app.model(require('./models/task').default);
 
 // 4. Router
 app.router(require('./router').default);
