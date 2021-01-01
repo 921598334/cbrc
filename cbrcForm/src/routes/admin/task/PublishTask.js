@@ -35,7 +35,7 @@ class PublishTask extends React.Component {
       userid: Cookies.get('userid'),
       fileType: '1',
       isComplete: false,
-      selectedValue:['331-0','331-1','331-2'],
+      selectedValue:[],
     };
   }
 

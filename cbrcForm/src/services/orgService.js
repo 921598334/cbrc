@@ -29,12 +29,13 @@ export async function publishRequest(publishInfo) {
   console.log("publishRequest开始执行")
 
   var orgTypesTmp = {}
+
    //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
-   publishInfo.orgTypes.map((item, key) => {
+   publishInfo.selectedValue.map((item, key) => {
     orgTypesTmp[key] = item
   })
 
-  publishInfo.orgTypes = orgTypesTmp
+  publishInfo.selectedValue = orgTypesTmp
 
   console.log(publishInfo)
 
