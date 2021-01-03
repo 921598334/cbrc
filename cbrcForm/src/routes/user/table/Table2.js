@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import 'antd/dist/antd.css';
 import './tableCSS';
 import './tableCSS.css';
-
+import Cookies from 'js-cookie'
 import { Collapse } from 'antd';
 import { connect } from 'dva';
 import { useContext, useState, useEffect, useRef } from 'react';
@@ -156,10 +156,12 @@ class Table2 extends React.Component {
 
       ],
 
-      orgName: '',
-      managerName: '',
-      creator: '',
-      tel: '',
+
+      orgid: Cookies.get('orgid'),
+      token: Cookies.get('token'),
+      userid: Cookies.get('userid'),
+
+    
       isUplaod: false,
       isComplete: false,
       fileType:2,
@@ -175,35 +177,7 @@ class Table2 extends React.Component {
   }
 
 
-  orgNameChange = e => {
-    this.setState({
-      orgName: e.target.value,
-    })
-  }
-  managerNameChange = (e) => {
-    this.setState({
-      managerName: e.target.value,
-    })
-  }
-  creatorChange = (e) => {
-    this.setState({
-      creator: e.target.value,
-    })
-  }
-  telChange = (e) => {
-
-    this.setState({
-      tel: e.target.value,
-    })
-
-  }
-
-  periodChage = (e) => {
-    console.log(e)
-    this.setState({
-      period: e,
-    })
-  }
+  
 
 
   handleSave = (row) => {
@@ -271,6 +245,10 @@ class Table2 extends React.Component {
     const dataUpload = values => {
       console.log('dataUpload开始执行');
 
+
+      const taskCompleteId = this.props.location.state.taskComplete['id']
+      const taskId = this.props.location.state.taskComplete['taskid']
+
       this.setState({
         isUplaod: true,
       })
@@ -280,7 +258,8 @@ class Table2 extends React.Component {
         type: "uploadNamespace/upload",
         uploadInfo: {
           ...this.state,
-        
+          taskCompleteId: taskCompleteId,
+          taskId: taskId,
         }
       })
         .then(result => {
@@ -312,27 +291,7 @@ class Table2 extends React.Component {
           </Row>
 
           <Row gutter={[16, 24]} align="middle">
-            <Col className="gutter-row" span={4}>
-              <Input placeholder="机构全称" prefix={<SketchOutlined />} onChange={this.orgNameChange} />
-            </Col>
-            <Col className="gutter-row" span={4}>
-              <Input placeholder="负责人" prefix={<UserOutlined />} onChange={this.managerNameChange} />
-            </Col>
-            <Col className="gutter-row" span={4}>
-              <Input placeholder="填表人" prefix={<SmileOutlined />} onChange={this.creatorChange} />
-            </Col>
-            <Col className="gutter-row" span={4}>
-              <Input placeholder="填表人联系方式" prefix={<PhoneOutlined />} onChange={this.telChange} />
-            </Col>
-
-            <Col className="gutter-row" span={4}>
-              <Select defaultValue="1" onChange={this.periodChage}>
-                <Option value="1">第1季度(1~3月)</Option>
-                <Option value="2">第2季度(4~6月)</Option>
-                <Option value="3">第3季度(7~9月)</Option>
-                <Option value="4">第4季度(10~12月)</Option>
-              </Select>
-            </Col>
+            
 
             <Col className="gutter-row" span={4}>
               <Button type="primary" icon={<CloudUploadOutlined />} onClick={dataUpload} loading={this.state.isUplaod}>

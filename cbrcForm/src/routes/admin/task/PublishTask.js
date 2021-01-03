@@ -36,6 +36,7 @@ class PublishTask extends React.Component {
       fileType: '1',
       isComplete: false,
       selectedValue:[],
+      period:'1',
     };
   }
 
@@ -96,13 +97,18 @@ class PublishTask extends React.Component {
   orgTypeChange = value => {
     console.log('onChange ', value);
 
-    //判断该value对应的树下是否有子树
-
     this.setState({
       selectedValue: value
     });
   };
 
+
+  periodChage= value => {
+    console.log('periodChage ', value);
+    this.setState({
+      period: value
+    });
+  };
 
 
 

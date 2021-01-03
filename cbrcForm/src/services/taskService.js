@@ -3,47 +3,29 @@ import Axios from 'axios';
 
 
 
+//管理员查询用户
+export async function queryTaskCompleteRequest(queryInfo) {
 
-export async function getOrgTypeRequest() {
-
-  console.log("getOrgTypeRequest 开始执行")
-  
- 
-  return await Axios({
-    method: 'post',
-    url: 'http://localhost:8080/getOrgType',
-    headers: {
-      'Accept': 'application/json,text/plain,*/*'
-    },
-    
-  }).then(function (response) {
-
-    return response
-
-  }).catch(function (error) {
-    console.log('出现了错误，错误信息为：');
-    console.log(error);
-    return error
-  });
-}
-
-
-
-export async function collectDownloadRequest(queryInfo) {
-
-  console.log("collectDownloadRequest开始执行")
+  console.log("queryTaskCompleteRequest 开始执行")
   console.log(queryInfo)
 
-  
+  var dataSourceTmp = {}
+  //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
+  // uploadInfo.dataSource.map((item, key) => {
+  //   dataSourceTmp[key] = item
+  // })
+
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/collectDownload',
+    url: 'http://localhost:8080/queryTaskComplete',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
     params: {
+
       ...queryInfo,
+    
     }
   }).then(function (response) {
 
@@ -55,6 +37,10 @@ export async function collectDownloadRequest(queryInfo) {
     return error
   });
 }
+
+
+
+
 
 
 
@@ -74,7 +60,7 @@ export async function queryRequest(queryInfo) {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/query',
+    url: 'http://localhost:8080/queryTask',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -99,31 +85,29 @@ export async function queryRequest(queryInfo) {
 
 
 
+export async function publishRequest(publishInfo) {
+
+  console.log("publishRequest开始执行")
+
+  var orgTypesTmp = {}
+
+   //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
+   publishInfo.selectedValue.map((item, key) => {
+    orgTypesTmp[key] = item
+  })
+
+  publishInfo.selectedValue = orgTypesTmp
+
+  console.log(publishInfo)
 
 
-export async function downloadRequest(downloadInfo) {
-
-  console.log("downloadRequest开始执行")
-  console.log(downloadInfo)
-
-  var dataSourceTmp = {}
-  //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
-  // uploadInfo.dataSource.map((item, key) => {
-  //   dataSourceTmp[key] = item
-  // })
-
- 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/download',
-    headers: {
-      'Accept': 'application/json,text/plain,*/*'
-    },
+    url: 'http://localhost:8080/publish',
     params: {
-
-      ...downloadInfo,
-    
+      ...publishInfo
     }
+
   }).then(function (response) {
 
     return response

@@ -17,24 +17,7 @@ export default {
   },
 
   subscriptions: {
-    //检查是否用户登陆的是主页，如果不是主页需要判断当前用户的cookie是否存在用户信息
-    // check({ dispatch, history }) { 
-    //   console.info("subscriptions开始执行")
-    //   history.listen(({pathname})=>{
-    //     if(pathname!='/'){
-    //       console.info("用户进入的不是主页,而是:"+pathname)
-
-    //       //检查cookie是否存在，存在就设置用户信息，并且允许用户访问
-
-    //       //如果不存在，就重定向到登陆页面
-
-    //     }else{
-    //       console.info("用户进入主页:"+pathname)
-
-    //     }
-
-    //   })
-    // },
+   
   },
 
   effects: {
@@ -56,6 +39,14 @@ export default {
 
       console.log("*getCell返回为：")
       console.log(response)
+
+
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
 
       if (response.data.F) {
         notification.error({ message: response.data.F })
@@ -109,25 +100,25 @@ export default {
       }
 
 
-      if (uploadInfo.creator == null || uploadInfo.creator == undefined || uploadInfo.creator.replace(/\s*/g,"")==='') {
-        notification.error({ message: '创建人不能为空' })
-        return false
-      }
+      // if (uploadInfo.creator == null || uploadInfo.creator == undefined || uploadInfo.creator.replace(/\s*/g,"")==='') {
+      //   notification.error({ message: '创建人不能为空' })
+      //   return false
+      // }
 
-      if (uploadInfo.managerName == null || uploadInfo.managerName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
-        notification.error({ message: '管理员不能为空' })
-        return false
-      }
+      // if (uploadInfo.managerName == null || uploadInfo.managerName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
+      //   notification.error({ message: '管理员不能为空' })
+      //   return false
+      // }
 
-      if (uploadInfo.orgName == null || uploadInfo.orgName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
-        notification.error({ message: '机构名不能为空' })
-        return false
-      }
+      // if (uploadInfo.orgName == null || uploadInfo.orgName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
+      //   notification.error({ message: '机构名不能为空' })
+      //   return false
+      // }
 
-      if (uploadInfo.tel == null || uploadInfo.tel == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
-        notification.error({ message: '电话不能为空' })
-        return false
-      }
+      // if (uploadInfo.tel == null || uploadInfo.tel == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
+      //   notification.error({ message: '电话不能为空' })
+      //   return false
+      // }
 
 
 
@@ -165,6 +156,7 @@ export default {
   },
 
   reducers: {
+
 
 
     //退出登陆

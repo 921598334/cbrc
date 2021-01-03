@@ -1,4 +1,4 @@
-import request from '../utils/request';
+
 import Axios from 'axios';
 
 
@@ -32,6 +32,9 @@ export async function uploadRequest(uploadInfo) {
       period: uploadInfo.period,
       fileType:uploadInfo.fileType,
       userid:uploadInfo.userid,
+      taskCompleteId:uploadInfo.taskCompleteId,
+      taskId:uploadInfo.taskId,
+      orgid:uploadInfo.orgid,
     }
   }).then(function (response) {
 

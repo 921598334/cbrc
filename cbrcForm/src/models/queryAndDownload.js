@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import { queryRequest, downloadRequest, collectDownloadRequest } from '../services/queryServiceAndDownload'
+import { queryRequest, downloadRequest, collectDownloadRequest,getOrgTypeRequest } from '../services/queryServiceAndDownload'
 import Axios from 'axios';
 import Cookies from 'js-cookie'
 
@@ -10,7 +10,7 @@ export default {
 
   state: {
     downloadLink: 'null',
-   
+
   },
 
   subscriptions: {
@@ -19,9 +19,34 @@ export default {
 
   effects: {
 
+    *getOrgType({ queryInfo }, { call, put }) {
+
+      console.log("*getOrgType 开始执行")
+      
+
+      const response = yield call(getOrgTypeRequest);
+
+      console.log("*getOrgType 返回为：")
+      console.log(response)
 
 
-   
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '数据查询成功' })
+        yield put({ type: 'getOrgTypeReduce', payload: { ...response } });
+        return true;
+      }
+    },
+
+
 
 
 
@@ -39,6 +64,13 @@ export default {
 
       console.log("*query返回为：")
       console.log(response)
+
+
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
 
       if (response.data.F) {
         notification.error({ message: response.data.F })
@@ -69,6 +101,14 @@ export default {
       console.log("*query返回为：")
       console.log(response)
 
+       //如果出现异常
+       if(response.data == undefined){
+      
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
       if (response.data.F) {
         notification.error({ message: response.data.F })
         return false;
@@ -94,6 +134,14 @@ export default {
       console.log("*download返回为：")
       console.log(response)
 
+
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
       if (response.data.F) {
         notification.error({ message: response.data.F })
         return false;
@@ -115,7 +163,16 @@ export default {
   reducers: {
 
 
-   
+
+    getOrgTypeReduce(state, action) {
+      console.log("getOrgTypeReduce 开始执行")
+      console.log(action.payload.data)
+
+      return { ...state, orgList: action.payload.data };
+    },
+
+
+
 
 
     queryReduce(state, action) {

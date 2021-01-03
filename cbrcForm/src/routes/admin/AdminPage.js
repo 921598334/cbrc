@@ -1,21 +1,18 @@
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './adminPage.css';
 import zhCN from 'antd/es/locale/zh_CN';
-import { Layout, Menu, Carousel, Spin, ConfigProvider, Dropdown, Row, Col } from 'antd';
+import { Layout, Menu, Spin, ConfigProvider, Dropdown, Row, Col } from 'antd';
 import { connect } from 'dva';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
+
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
-  TeamOutlined,
+  
   DownOutlined,
 
 } from '@ant-design/icons';

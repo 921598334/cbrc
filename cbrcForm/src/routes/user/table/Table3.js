@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import 'antd/dist/antd.css';
 import './tableCSS';
 import './tableCSS.css';
-
+import Cookies from 'js-cookie'
 import { Collapse } from 'antd';
 import { connect } from 'dva';
 import { useContext, useState, useEffect, useRef } from 'react';
@@ -202,25 +202,13 @@ class Table3 extends React.Component {
 
     this.state = {
       dataSource: [
-        // {
-        //   key: '0',
-        //   name: 'Edward King 0',
-        //   age: '32',
-        //   address: 'London, Park Lane no. 0',
-        // },
-        // {
-        //   key: '1',
-        //   name: 'Edward King 1',
-        //   age: '32',
-        //   address: 'London, Park Lane no. 1',
-        // },
+     
       ],
       
-      count: 0,
-      orgName: '',
-      managerName: '',
-      creator: '',
-      tel: '',
+      orgid: Cookies.get('orgid'),
+      token: Cookies.get('token'),
+      userid: Cookies.get('userid'),
+
       isUplaod: false,
       isComplete: false,
       fileType: 3,
@@ -230,45 +218,10 @@ class Table3 extends React.Component {
   componentWillMount() {
     console.log("Table1的componentWillmount开始执行")
     //const { table1Struct } = this.props.uploadNamespace
-
-
-
-    //不知道为什么，只有这样才能成功赋值
-    //this.state.dataSource = table1Struct
   }
 
 
-  orgNameChange = e => {
-    this.setState({
-      orgName: e.target.value,
-    })
-  }
-  managerNameChange = (e) => {
-    this.setState({
-      managerName: e.target.value,
-    })
-  }
-  creatorChange = (e) => {
-    this.setState({
-      creator: e.target.value,
-    })
-  }
-  telChange = (e) => {
-
-    this.setState({
-      tel: e.target.value,
-    })
-
-  }
-
-  periodChage = (e) => {
-    console.log(e)
-    this.setState({
-      period: e,
-    })
-  }
-
-
+ 
 
   handleDelete = (key) => {
     const dataSource = [...this.state.dataSource];
@@ -356,6 +309,13 @@ class Table3 extends React.Component {
     const dataUpload = values => {
       console.log('dataUpload开始执行');
 
+
+      const taskCompleteId = this.props.location.state.taskComplete['id']
+      const taskId = this.props.location.state.taskComplete['taskid']
+
+
+
+
       this.setState({
         isUplaod: true,
       })
@@ -367,10 +327,9 @@ class Table3 extends React.Component {
           ...this.state,
 
           dataSource: this.state.dataSource,
-          orgName: this.state.orgName,
-          managerName: this.state.managerName,
-          creator: this.state.creator,
-          tel: this.state.tel,
+         
+          taskCompleteId: taskCompleteId,
+          taskId: taskId,
         }
       })
         .then(result => {
@@ -402,7 +361,7 @@ class Table3 extends React.Component {
           </Row>
 
           <Row gutter={[16, 24]} align="middle">
-            <Col className="gutter-row" span={4}>
+            {/* <Col className="gutter-row" span={4}>
               <Input placeholder="机构全称" prefix={<SketchOutlined />} onChange={this.orgNameChange} />
             </Col>
             <Col className="gutter-row" span={4}>
@@ -422,7 +381,7 @@ class Table3 extends React.Component {
                 <Option value="3">第3季度(7~9月)</Option>
                 <Option value="4">第4季度(10~12月)</Option>
               </Select>
-            </Col>
+            </Col> */}
 
             <Col className="gutter-row" span={4}>
               <Button type="primary" icon={<CloudUploadOutlined />} onClick={dataUpload} loading={this.state.isUplaod}>

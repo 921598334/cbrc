@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import 'antd/dist/antd.css';
 import './tableCSS';
 import './tableCSS.css';
-
+import Cookies from 'js-cookie'
 import { Collapse } from 'antd';
 import { connect } from 'dva';
 import { useContext, useState, useEffect, useRef } from 'react';
@@ -152,14 +152,13 @@ class Table4 extends React.Component {
 
     this.state = {
       dataSource: [
-
-
       ],
 
-      orgName: '',
-      managerName: '',
-      creator: '',
-      tel: '',
+      orgid: Cookies.get('orgid'),
+      token: Cookies.get('token'),
+      userid: Cookies.get('userid'),
+
+
       isUplaod: false,
       isComplete: false,
       fileType: 4,
@@ -175,35 +174,35 @@ class Table4 extends React.Component {
   }
 
 
-  orgNameChange = e => {
-    this.setState({
-      orgName: e.target.value,
-    })
-  }
-  managerNameChange = (e) => {
-    this.setState({
-      managerName: e.target.value,
-    })
-  }
-  creatorChange = (e) => {
-    this.setState({
-      creator: e.target.value,
-    })
-  }
-  telChange = (e) => {
+  // orgNameChange = e => {
+  //   this.setState({
+  //     orgName: e.target.value,
+  //   })
+  // }
+  // managerNameChange = (e) => {
+  //   this.setState({
+  //     managerName: e.target.value,
+  //   })
+  // }
+  // creatorChange = (e) => {
+  //   this.setState({
+  //     creator: e.target.value,
+  //   })
+  // }
+  // telChange = (e) => {
 
-    this.setState({
-      tel: e.target.value,
-    })
+  //   this.setState({
+  //     tel: e.target.value,
+  //   })
 
-  }
+  // }
 
-  periodChage = (e) => {
-    console.log(e)
-    this.setState({
-      period: e,
-    })
-  }
+  // periodChage = (e) => {
+  //   console.log(e)
+  //   this.setState({
+  //     period: e,
+  //   })
+  // }
 
 
   handleSave = (row) => {
@@ -244,6 +243,10 @@ class Table4 extends React.Component {
     const dataSource = this.state.dataSource
 
 
+    const taskCompleteId = this.props.location.state.taskComplete['id']
+    const taskId = this.props.location.state.taskComplete['taskid']
+
+
     const components = {
       body: {
         row: EditableRow,
@@ -280,7 +283,8 @@ class Table4 extends React.Component {
         type: "uploadNamespace/upload",
         uploadInfo: {
           ...this.state,
-
+          taskCompleteId: taskCompleteId,
+          taskId: taskId,
         }
       })
         .then(result => {
@@ -312,7 +316,7 @@ class Table4 extends React.Component {
           </Row>
 
           <Row gutter={[16, 24]} align="middle">
-            <Col className="gutter-row" span={4}>
+            {/* <Col className="gutter-row" span={4}>
               <Input placeholder="机构全称" prefix={<SketchOutlined />} onChange={this.orgNameChange} />
             </Col>
             <Col className="gutter-row" span={4}>
@@ -332,7 +336,7 @@ class Table4 extends React.Component {
                 <Option value="3">第3季度(7~9月)</Option>
                 <Option value="4">第4季度(10~12月)</Option>
               </Select>
-            </Col>
+            </Col> */}
 
             <Col className="gutter-row" span={4}>
               <Button type="primary" icon={<CloudUploadOutlined />} onClick={dataUpload} loading={this.state.isUplaod}>
@@ -519,7 +523,7 @@ class Table4 extends React.Component {
 
                 </Panel>
               </Collapse>
-           
+
             </Panel>
 
           </Collapse>
