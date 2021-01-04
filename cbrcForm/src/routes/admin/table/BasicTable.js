@@ -128,7 +128,10 @@ class BasicTable extends React.Component {
     })
       .then(result => {
         if (result) {
-
+          
+          console.log('下载连接：')
+          console.log(this.props.queryNamespace.downloadLink)
+          
           window.open('http://' + this.props.queryNamespace.downloadLink)
         }
       })
