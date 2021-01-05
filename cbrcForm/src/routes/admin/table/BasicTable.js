@@ -408,7 +408,7 @@ class BasicTable extends React.Component {
 
             <Col span={4}>
               <h1>任务状态：</h1>
-              <Select defaultValue="待完成" onChange={this.taskStatusChange} >
+              <Select defaultValue="待审核" onChange={this.taskStatusChange} >
                 {/* <Option value="0">待完成</Option> */}
                 <Option value="1">待审核</Option>
                 <Option value="2">已完成</Option>
@@ -466,7 +466,7 @@ class BasicTable extends React.Component {
                 {/* {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''} */}
               </span>
             </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={queryData} pagination={false} />
+            <Table rowSelection={rowSelection} columns={columns} dataSource={queryData}   />
           </div>
 
 

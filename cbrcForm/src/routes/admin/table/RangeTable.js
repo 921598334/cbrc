@@ -301,7 +301,7 @@ class RangeTable extends React.Component {
                 {/* {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''} */}
               </span>
             </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={collectqQuery} pagination={false} />
+            <Table rowSelection={rowSelection} columns={columns} dataSource={collectqQuery}   />
           </div>
         </div >
       </Spin>

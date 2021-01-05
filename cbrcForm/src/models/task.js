@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { getOrgRequest } from '../services/orgService'
-import { publishRequest, queryRequest, queryTaskCompleteRequest } from '../services/taskService'
+import { publishRequest, queryRequest, queryTaskCompleteRequest,deleteTaskRequest,queryTaskDetailRequest,updateRequest } from '../services/taskService'
 import Axios from 'axios';
 import Cookies from 'js-cookie'
 
@@ -19,6 +19,115 @@ export default {
   },
 
   effects: {
+
+
+    //任务更新
+    *update({ publishInfo }, { call, put }) {
+
+      console.log("*update 开始执行")
+
+      console.log(publishInfo)
+
+      const response = yield call(updateRequest, publishInfo);
+
+      console.log("*publish返回为：")
+      console.log(response)
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+
+        yield put({ type: 'updateReduce', payload: { ...response } });
+        notification.success({ message: '初始化成功' })
+        return true;
+      }
+
+    },
+
+
+
+    //删除任务
+    *deleteTask({ deleteInfo }, { call, put }) {
+
+      console.log("*deleteTask 开始执行")
+      console.log(deleteInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(deleteTaskRequest, deleteInfo);
+
+      console.log("*deleteTask 返回为：")
+      console.log(response)
+
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '数据查询成功' })
+        yield put({ type: 'deleteTaskReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
+
+
+
+
+
+    //查询任务
+    *queryTaskDetail({ queryDetailInfo }, { call, put }) {
+
+      console.log("*queryTaskDetail 开始执行")
+      console.log(queryDetailInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(queryTaskDetailRequest, queryDetailInfo);
+
+      console.log("*queryTask 返回为：")
+      console.log(response)
+
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '数据查询成功' })
+        yield put({ type: 'queryTaskDetailReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
 
 
 
@@ -61,7 +170,7 @@ export default {
 
 
 
-    //管理元查询任务
+    //管理元查询任务列表
     *queryTask({ queryInfo }, { call, put }) {
 
       console.log("*queryTask 开始执行")
@@ -161,6 +270,42 @@ export default {
   },
 
   reducers: {
+
+
+    updateReduce(state, action) {
+
+      console.log("deleteTaskReduce")
+      console.log(action.payload.data)
+
+      return { ...state };
+    },
+
+
+    deleteTaskReduce(state, action) {
+
+      console.log("deleteTaskReduce")
+      console.log(action.payload.data)
+
+      return { ...state };
+    },
+
+
+    queryTaskDetailReduce(state, action) {
+
+      console.log("queryTaskDetailReduce")
+      console.log(action.payload.data)
+
+      const orgtypeTmp = JSON.parse(action.payload.data.orgtype)
+
+      action.payload.data.orgtype = orgtypeTmp
+
+    
+
+      return { ...state, taskDetail: action.payload.data };
+    },
+
+
+
 
 
 

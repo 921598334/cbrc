@@ -8,11 +8,9 @@ import { connect } from 'dva';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-
   DesktopOutlined,
   PieChartOutlined,
   ClusterOutlined,
-  
   DownOutlined,
 
 } from '@ant-design/icons';
@@ -23,6 +21,7 @@ import BasicTable from './table/BasicTable'
 import RangeTable from './table/RangeTable'
 import HistoryTask from './task/HistoryTask'
 import PublishTask from './task/PublishTask'
+import HistoryTaskDetail from './task/HistoryTaskDetail'
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -222,7 +221,9 @@ class AdminPage extends React.Component {
                   <Route exact path="/admin/basicTable" component={BasicTable} />
                   <Route exact path="/admin/rangeTable" component={RangeTable} />
                   <Route exact path="/admin/publishTask" component={PublishTask} />
+
                   <Route exact path="/admin/historyTask" component={HistoryTask} />
+                  <Route exact path="/admin/historyTaskDetail" component={HistoryTaskDetail} />
 
                   <Route exact path="/admin/userManager" component={HistoryTask} />
                   <Route exact path="/admin/orgManager" component={HistoryTask} />

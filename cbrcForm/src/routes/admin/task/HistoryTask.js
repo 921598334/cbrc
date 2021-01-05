@@ -96,6 +96,39 @@ class HistoryTask extends React.Component {
 
   }
 
+  deleteTask = (id) => {
+
+    console.log(id)
+
+    this.props.dispatch({
+      type: "taskNamespace/deleteTask",
+      deleteInfo: {
+        id: id,
+        ...this.state
+      }
+    })
+      .then(result => {
+        if (result) {
+
+        
+        }
+      })
+  }
+
+  queryTaskDetail = (id) => {
+
+    console.log(id)
+
+
+    //跳转到任务细节
+    
+    this.props.history.push({ pathname:'/admin/historyTaskDetail',state:{id : id } })
+
+
+
+  
+  }
+
 
 
   render() {
@@ -113,7 +146,12 @@ class HistoryTask extends React.Component {
         title: '标题',
         dataIndex: 'tasktitle',
         key: 'tasktitle',
-        render: text => <a>{text}</a>,
+        render: (text, record) => (
+          <Space size="middle">
+
+            <a onClick={() => this.queryTaskDetail(record.id)}>{text}</a>
+          </Space>
+        ),
       },
       // {
       //   title: '描述',
@@ -137,7 +175,7 @@ class HistoryTask extends React.Component {
         render: (text, record) => (
           <Space size="middle">
 
-            <a>删除</a>
+            <a onClick={() => this.deleteTask(record.id)}>删除</a>
           </Space>
         ),
       },
@@ -150,7 +188,7 @@ class HistoryTask extends React.Component {
 
 
 
-    //点击查询
+    //点击查询任务列表
     const query = values => {
       console.log('query开始执行');
 
@@ -180,28 +218,23 @@ class HistoryTask extends React.Component {
 
         <Row gutter={[16, 24]}>
           <Col >
-            <h1>任务列表</h1>
+            <h1>历史任务列表</h1>
           </Col >
         </Row>
 
         <Row gutter={[16, 24]} justify="space-between">
-          <Col span={4}>
-            <Select defaultValue="待完成" onChange={this.taskStatusChange} >
-              <Option value="1">待完成</Option>
-              <Option value="2">已完成</Option>
-              <Option value="3">被驳回</Option>
-
-            </Select>
-          </Col>
+         
 
 
 
           <Col span={6}  >
+            <h1>任务创建时间：</h1>
             <RangePicker onChange={this.dateChange} format={dateFormat} />
           </Col>
 
 
           <Col span={4}  >
+            <h1>操作：</h1>
             <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
               查询
             </Button>
