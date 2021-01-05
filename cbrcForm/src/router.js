@@ -6,10 +6,6 @@ import UserPage from './routes/user/UserPage';
 
 
 
-import Table1 from './routes/user/table/Table1';
-import Table2 from './routes/user/table/Table2';
-
-
 function RouterConfig({ history }) {
   return (
     <Router history={history}>

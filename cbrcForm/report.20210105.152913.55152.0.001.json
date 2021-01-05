@@ -499,7 +499,7 @@
     "npm_config_format_package_lock": "true",
     "npm_package_devDependencies_eslint_plugin_react": "^7.1.0",
     "COLORTERM": "truecolor",
-    "NODE_ENV": "development",
+    "NODE_ENV": "production",
     "BABEL_DISABLE_CACHE": "1"
   },
   "userLimits": {

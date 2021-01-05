@@ -1,7 +1,6 @@
 import { notification } from "antd";
 import { queryRequest, downloadRequest, collectDownloadRequest,getOrgTypeRequest,collectqQueryRequest,handlePassRequest,handleRefuseRequest } from '../services/queryServiceAndDownload'
-import Axios from 'axios';
-import Cookies from 'js-cookie'
+
 
 
 export default {

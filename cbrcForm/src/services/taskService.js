@@ -54,7 +54,7 @@ export async function queryTaskDetailRequest(queryDetailInfo) {
   console.log("queryTaskDetailRequest 开始执行")
   console.log(queryDetailInfo)
 
-  var dataSourceTmp = {}
+  
   //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
   // uploadInfo.dataSource.map((item, key) => {
   //   dataSourceTmp[key] = item
@@ -94,7 +94,7 @@ export async function deleteTaskRequest(deleteInfo) {
   console.log("deleteTaskRequest 开始执行")
   console.log(deleteInfo)
 
-  var dataSourceTmp = {}
+  
   //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
   // uploadInfo.dataSource.map((item, key) => {
   //   dataSourceTmp[key] = item
@@ -141,7 +141,7 @@ export async function queryTaskCompleteRequest(queryInfo) {
   console.log("queryTaskCompleteRequest 开始执行")
   console.log(queryInfo)
 
-  var dataSourceTmp = {}
+  
   //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
   // uploadInfo.dataSource.map((item, key) => {
   //   dataSourceTmp[key] = item
@@ -183,7 +183,7 @@ export async function queryRequest(queryInfo) {
   console.log("queryRequest开始执行")
   console.log(queryInfo)
 
-  var dataSourceTmp = {}
+  
   //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
   // uploadInfo.dataSource.map((item, key) => {
   //   dataSourceTmp[key] = item

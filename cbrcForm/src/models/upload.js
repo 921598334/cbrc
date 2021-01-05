@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { uploadRequest, getCellRequest } from '../services/uploadService'
-import Axios from 'axios';
+
 import Cookies from 'js-cookie'
 
 export default {
@@ -100,25 +100,7 @@ export default {
       }
 
 
-      // if (uploadInfo.creator == null || uploadInfo.creator == undefined || uploadInfo.creator.replace(/\s*/g,"")==='') {
-      //   notification.error({ message: '创建人不能为空' })
-      //   return false
-      // }
-
-      // if (uploadInfo.managerName == null || uploadInfo.managerName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
-      //   notification.error({ message: '管理员不能为空' })
-      //   return false
-      // }
-
-      // if (uploadInfo.orgName == null || uploadInfo.orgName == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
-      //   notification.error({ message: '机构名不能为空' })
-      //   return false
-      // }
-
-      // if (uploadInfo.tel == null || uploadInfo.tel == undefined || uploadInfo.managerName.replace(/\s*/g,"")==='') {
-      //   notification.error({ message: '电话不能为空' })
-      //   return false
-      // }
+     
 
 
 

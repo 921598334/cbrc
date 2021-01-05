@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { loginRequest } from '../services/loginService'
-import Axios from 'axios';
+
 import Cookies from 'js-cookie'
 
 export default {

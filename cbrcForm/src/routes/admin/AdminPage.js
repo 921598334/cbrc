@@ -3,7 +3,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import './adminPage.css';
 import zhCN from 'antd/es/locale/zh_CN';
-import { Layout, Menu, Spin, ConfigProvider, Dropdown, Row, Col } from 'antd';
+import { Layout, Menu, Spin, ConfigProvider, Dropdown, Row } from 'antd';
 import { connect } from 'dva';
 import {
   MenuUnfoldOutlined,
@@ -14,7 +14,7 @@ import {
   DownOutlined,
 
 } from '@ant-design/icons';
-import { contentStyle } from './AdminPageCSS'
+
 import Cookies from 'js-cookie'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import BasicTable from './table/BasicTable'
@@ -110,9 +110,6 @@ class AdminPage extends React.Component {
 
 
 
-    function onChange(a, b, c) {
-      console.log(a, b, c);
-    }
 
     return (
 

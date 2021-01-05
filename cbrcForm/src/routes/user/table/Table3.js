@@ -1,17 +1,17 @@
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import './tableCSS';
 import './tableCSS.css';
 import Cookies from 'js-cookie'
-import { Collapse } from 'antd';
+
 import { connect } from 'dva';
 import { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button, Popconfirm, Form, Row, Col, Select, Result, BackTop } from 'antd';
-import { UserOutlined, SketchOutlined, CloudUploadOutlined, SmileOutlined, PhoneOutlined } from '@ant-design/icons';
+import { Table, Input, Button, Popconfirm, Form, Row, Col, Result, BackTop } from 'antd';
+import {   CloudUploadOutlined, SmileOutlined } from '@ant-design/icons';
 
 const EditableContext = React.createContext();
-const { Option } = Select;
+
 
 
 

@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Link } from 'dva/router'
-import { Form, Input, Button, Checkbox, Carousel, Row, Col, ConfigProvider } from 'antd';
+
+import { Form, Input, Button, Carousel, Row, Col, ConfigProvider } from 'antd';
 import 'antd/dist/antd.css';
-import { styleTopSpan, layout, tailLayout, contentStyle } from './indexPageCSS'
+import { styleTopSpan, layout, tailLayout } from './indexPageCSS'
 import zhCN from 'antd/es/locale/zh_CN';
 
 import stylestest from './test.css';

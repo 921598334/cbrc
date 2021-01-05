@@ -1,20 +1,20 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
-import zhCN from 'antd/es/locale/zh_CN';
+
 import Cookies from 'js-cookie'
-import { Collapse } from 'antd';
+
 import { connect } from 'dva';
-import { useContext, useEffect, useRef } from 'react';
-import { Spin, Input, Button, Popconfirm, Form, Row, Col, DatePicker, Select, TreeSelect, Divider, Result } from 'antd';
-import { UserOutlined, SketchOutlined, CloudUploadOutlined, SmileOutlined, PhoneOutlined, FileSearchOutlined, ZoomInOutlined } from '@ant-design/icons';
+
+import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result } from 'antd';
+import {  SketchOutlined, FileSearchOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 const { TextArea } = Input;
 
-const { SHOW_PARENT } = TreeSelect;
+
 const { Option } = Select;
-const { Panel } = Collapse;
+
 const { RangePicker } = DatePicker;
 
 const dateFormat = 'YYYY/MM/DD';
@@ -238,7 +238,7 @@ class HistoryTaskDetail extends React.Component {
           <Row gutter={[10, 24]} justify="space-between">
 
             <Col span={16}>
-              <Select value={"2"} onChange={this.tableNameChange} >
+              <Select defaultValue={"3"} onChange={this.tableNameChange} >
                 <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
                 <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
                 <Option value="3">重庆保险中介机构季度数据表-专业中介机构销售寿险公司长期保险产品统计表</Option>

@@ -1,23 +1,19 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-import zhCN from 'antd/es/locale/zh_CN';
 
-import { Collapse } from 'antd';
 import { connect } from 'dva';
 
-import { Table, Button, Spin, Row, Col, DatePicker, Select, Space, Popconfirm } from 'antd';
-import { FileSearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Table, Button, Spin, Row, Col, DatePicker, Select, Space } from 'antd';
+import { FileSearchOutlined } from '@ant-design/icons';
 
 
 const { Option } = Select;
-const { Panel } = Collapse;
+
 const { RangePicker } = DatePicker;
 
 //如果在类外定义变量或者熟悉，可以直接访问，如果在类内定义需要用this
-function callback(key) {
-  console.log(key);
-}
+
 
 
 const dateFormat = 'YYYY/MM/DD';

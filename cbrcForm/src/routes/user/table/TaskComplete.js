@@ -1,14 +1,14 @@
 
-import React, { Fragment } from 'react';
+import React  from 'react';
 import 'antd/dist/antd.css';
-import zhCN from 'antd/es/locale/zh_CN';
+
 import Cookies from 'js-cookie'
 
-import { Collapse } from 'antd';
+
 import { connect } from 'dva';
-import { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button, Popconfirm, Form, Row, Col, DatePicker, Select, Tag, Space } from 'antd';
-import { UserOutlined, SketchOutlined, CloudUploadOutlined, SmileOutlined, PhoneOutlined, FileSearchOutlined, ZoomInOutlined } from '@ant-design/icons';
+
+import { Table,  Button,   Row, Col, DatePicker, Select,   Space } from 'antd';
+import {   FileSearchOutlined } from '@ant-design/icons';
 
 
 const { Option } = Select;

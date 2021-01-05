@@ -1,8 +1,7 @@
 import { notification } from "antd";
 import { getOrgRequest } from '../services/orgService'
 import { publishRequest, queryRequest, queryTaskCompleteRequest,deleteTaskRequest,queryTaskDetailRequest,updateRequest } from '../services/taskService'
-import Axios from 'axios';
-import Cookies from 'js-cookie'
+
 
 export default {
 
