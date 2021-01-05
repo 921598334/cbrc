@@ -6,8 +6,8 @@ import zhCN from 'antd/es/locale/zh_CN';
 import { Collapse } from 'antd';
 import { connect } from 'dva';
 
-import { Table, Button, Spin, Row, Col, DatePicker, Select,Space } from 'antd';
-import { FileSearchOutlined } from '@ant-design/icons';
+import { Table, Button, Spin, Row, Col, DatePicker, Select, Space, Popconfirm } from 'antd';
+import { FileSearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 
 const { Option } = Select;
@@ -55,7 +55,7 @@ class BasicTable extends React.Component {
       fileType: '1',
       // queryData:'null',
       // orgList:'null',
-
+      taskStatus: '1'
     };
   }
 
@@ -141,7 +141,75 @@ class BasicTable extends React.Component {
 
 
 
-  
+
+  handlePass = (id) => {
+
+    console.log(id)
+
+    this.props.dispatch({
+      type: "queryNamespace/handlePass",
+      passInfo: {
+        id: id,
+        ...this.state
+      }
+    })
+      .then(result => {
+        if (result) {
+
+          this.props.dispatch({
+            type: "queryNamespace/query",
+            queryInfo: {
+              ...this.state
+
+            }
+          })
+            .then(result => {
+              if (result) {
+                //查询成功后
+
+              }
+            })
+
+        }
+      })
+  }
+
+
+  handleRefuse = (id) => {
+
+    console.log(id)
+
+    this.props.dispatch({
+      type: "queryNamespace/handleRefuse",
+      refuseInfo: {
+        id: id,
+        ...this.state
+      }
+    })
+      .then(result => {
+        if (result) {
+
+
+          this.props.dispatch({
+            type: "queryNamespace/query",
+            queryInfo: {
+              ...this.state
+
+            }
+          })
+            .then(result => {
+              if (result) {
+                //查询成功后
+
+              }
+            })
+
+        }
+      })
+  }
+
+
+
 
   allDownload = (id) => {
 
@@ -168,6 +236,68 @@ class BasicTable extends React.Component {
     }
 
   }
+
+  taskStatusChange = (e) => {
+
+    console.log(e)
+    this.setState({
+      taskStatus: e,
+    })
+  }
+
+
+
+  action(record) {
+
+    //待审核带数据
+    if (record.iscomplete == '0') {
+      console.log(record.iscomplete)
+      return (
+        <Space size="middle">
+          <h1>待完成</h1>
+        </Space>
+      )
+    } else if (record.iscomplete == '1') {
+      console.log(record.iscomplete)
+      return (
+        <Space size="middle">
+          <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
+
+          <a onClick={() => this.handleRefuse(record.taskcompleteid)}>驳回</a>
+
+          <a onClick={() => this.handlePass(record.taskcompleteid)}>通过</a>
+        </Space>
+
+      )
+    } else if (record.iscomplete == '2') {
+      console.log(record.iscomplete)
+      return (
+        <Space size="middle">
+          <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
+
+          <a onClick={() => this.handleRefuse(record.taskcompleteid)}>驳回</a>
+
+        </Space>
+
+      )
+    } else if (record.iscomplete == '3') {
+      console.log(record.iscomplete)
+      return (
+        <Space size="middle">
+          <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
+
+          <a onClick={() => this.handlePass(record.taskcompleteid)}>通过</a>
+        </Space>
+      )
+    }
+
+
+  }
+
+
+
+
+
 
 
 
@@ -223,8 +353,12 @@ class BasicTable extends React.Component {
         render: (text, record) =>
           <Space size="middle">
             <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
-            <a onClick={() => this.handleDownload(record.taskcompleteid)}>通过</a>
-            <a onClick={() => this.handleDownload(record.taskcompleteid)}>驳回</a>
+
+            <a onClick={() => this.handleRefuse(record.taskcompleteid)}>驳回</a>
+
+            <a onClick={() => this.handlePass(record.taskcompleteid)}>通过</a>
+
+
           </Space>
       },
 
@@ -271,8 +405,19 @@ class BasicTable extends React.Component {
           </Row>
 
           <Row gutter={[16, 24]} justify="space-between">
+
             <Col span={4}>
-              {/* <Input placeholder="机构列表" prefix={<SketchOutlined />} onChange={this.orgNameChange} /> */}
+              <h1>任务状态：</h1>
+              <Select defaultValue="待完成" onChange={this.taskStatusChange} >
+                {/* <Option value="0">待完成</Option> */}
+                <Option value="1">待审核</Option>
+                <Option value="2">已完成</Option>
+                <Option value="3">被驳回</Option>
+              </Select>
+            </Col>
+
+            <Col span={4}>
+              <h1>机构名称：</h1>
               <Select defaultValue="人身险机构" onChange={this.orgNameChange} >
                 {this.optionCreate(orgList)}
 
@@ -281,6 +426,7 @@ class BasicTable extends React.Component {
 
 
             <Col span={6}  >
+              <h1>报表类型：</h1>
               <Select defaultValue="重庆保险中介机构季度数据表-专业代理、经纪机构用表" onChange={this.tableNameChange} style={{ width: '300px' }}>
                 <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
                 <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
@@ -291,11 +437,13 @@ class BasicTable extends React.Component {
 
 
             <Col span={6}  >
+              <h1>完成起止日期：</h1>
               <RangePicker onChange={this.dateChange} format={dateFormat} />
             </Col>
 
 
             <Col span={4}  >
+              <h1>操作：</h1>
               <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
                 查询
               </Button>

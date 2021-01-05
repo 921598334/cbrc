@@ -11,7 +11,7 @@ import {
 
   DesktopOutlined,
   PieChartOutlined,
-  FileOutlined,
+  ClusterOutlined,
   
   DownOutlined,
 
@@ -154,9 +154,16 @@ class AdminPage extends React.Component {
                     <Menu.Item key="8"><Link to='/admin/historyTask'>历史任务</Link></Menu.Item>
                   </SubMenu>
 
-                  <Menu.Item key="9" icon={<FileOutlined />}>
+
+                  <SubMenu key="sub3" icon={<ClusterOutlined />} title="管理模块">
+                    <Menu.Item key="10"><Link to='/admin/userManager'>用户管理</Link></Menu.Item>
+                    <Menu.Item key="11"><Link to='/admin/orgManager'>机构管理</Link></Menu.Item>
+                  </SubMenu>
+
+
+                  {/* <Menu.Item key="9" icon={<FileOutlined />}>
                     Files
-                </Menu.Item>
+                  </Menu.Item> */}
 
                 </Menu>
               </Sider>
@@ -216,6 +223,9 @@ class AdminPage extends React.Component {
                   <Route exact path="/admin/rangeTable" component={RangeTable} />
                   <Route exact path="/admin/publishTask" component={PublishTask} />
                   <Route exact path="/admin/historyTask" component={HistoryTask} />
+
+                  <Route exact path="/admin/userManager" component={HistoryTask} />
+                  <Route exact path="/admin/orgManager" component={HistoryTask} />
 
 
                   

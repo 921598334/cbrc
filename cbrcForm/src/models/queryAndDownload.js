@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import { queryRequest, downloadRequest, collectDownloadRequest,getOrgTypeRequest,collectqQueryRequest } from '../services/queryServiceAndDownload'
+import { queryRequest, downloadRequest, collectDownloadRequest,getOrgTypeRequest,collectqQueryRequest,handlePassRequest,handleRefuseRequest } from '../services/queryServiceAndDownload'
 import Axios from 'axios';
 import Cookies from 'js-cookie'
 
@@ -18,6 +18,79 @@ export default {
   },
 
   effects: {
+
+
+    *handlePass({ passInfo }, { call, put }) {
+
+      console.log("*handlePass 开始执行")
+      console.log(passInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(handlePassRequest, passInfo);
+
+      console.log("*handlePass 返回为：")
+      console.log(response)
+
+
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '数据查询成功' })
+        yield put({ type: 'handlePassReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
+
+    *handleRefuse({ refuseInfo }, { call, put }) {
+
+      console.log("*handleRefuse 开始执行")
+      console.log(refuseInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(handleRefuseRequest, refuseInfo);
+
+      console.log("*handleRefuse 返回为：")
+      console.log(response)
+
+
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '数据查询成功' })
+        yield put({ type: 'handleRefuseReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
 
 
 
@@ -131,7 +204,7 @@ export default {
 
 
 
-
+    //管理员查询用户上传的任务
     *query({ queryInfo }, { call, put }) {
 
       console.log("*query开始执行")

@@ -4,6 +4,80 @@ import Axios from 'axios';
 
 
 
+
+
+export async function handlePassRequest(passInfo) {
+
+  console.log("handlePassRequest 开始执行")
+  
+ 
+  return await Axios({
+    method: 'post',
+    url: 'http://localhost:8080/handlePass',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+      ...passInfo,
+    }
+    
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
+
+
+
+
+
+
+export async function handleRefuseRequest(refuseInfo) {
+
+  console.log("handleRefuseRequest 开始执行")
+  
+ 
+  return await Axios({
+    method: 'post',
+    url: 'http://localhost:8080/handleRefuse',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+      ...refuseInfo,
+    }
+    
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function getOrgTypeRequest() {
 
   console.log("getOrgTypeRequest 开始执行")

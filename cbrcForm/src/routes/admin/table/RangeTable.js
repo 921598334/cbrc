@@ -251,15 +251,15 @@ class RangeTable extends React.Component {
 
           <Row gutter={[16, 24]} justify="space-between">
             <Col span={4}>
-              {/* <Input placeholder="机构列表" prefix={<SketchOutlined />} onChange={this.orgNameChange} /> */}
+              <h1>机构名称：</h1>
               <Select defaultValue="人身险机构" onChange={this.orgNameChange} >
                 {this.optionCreate(orgList)}
-
               </Select>
             </Col>
 
 
             <Col span={6}  >
+              <h1>报表类型：</h1>
               <Select defaultValue="重庆保险中介机构季度数据表-专业代理、经纪机构用表" onChange={this.tableNameChange} style={{ width: '300px' }}>
                 <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
                 <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
@@ -270,11 +270,13 @@ class RangeTable extends React.Component {
 
 
             <Col span={6}  >
+               <h1>完成起止时间：</h1>
               <RangePicker onChange={this.dateChange} format={dateFormat} />
             </Col>
 
 
             <Col span={4}  >
+             <h1>操作：</h1>
               <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
                 查询
               </Button>

@@ -155,7 +155,7 @@ class TaskComplete extends React.Component {
     } else if (record.iscomplete == '2') {
       console.log(record.iscomplete)
       return (
-        <h1 >成功</h1>
+        <h1 >通过审核</h1>
       )
     } else if (record.iscomplete == '3') {
       console.log(record.iscomplete)
@@ -280,8 +280,8 @@ class TaskComplete extends React.Component {
             <Select defaultValue="待完成" onChange={this.taskStatusChange} >
               <Option value="0">待完成</Option>
               <Option value="1">待审核</Option>
-              <Option value="3">已完成</Option>
-              <Option value="4">被驳回</Option>
+              <Option value="2">已完成</Option>
+              <Option value="3">被驳回</Option>
             </Select>
           </Col>
 

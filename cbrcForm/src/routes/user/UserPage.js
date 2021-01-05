@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import 'antd/dist/antd.css';
 import './userPage.css';
 import { connect } from 'dva';
-import { Layout, Menu, Carousel, Spin, Row, Col, Dropdown, notification,ConfigProvider } from 'antd';
+import { Layout, Menu, Carousel, Spin, Row, Col, Dropdown, notification, ConfigProvider } from 'antd';
 //import { Router,Route, Switch, Link, withRouter } from 'dva/router'; //天坑，局部路由跳转不能用dva的
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'      //局部路由跳转能用这个
 import zhCN from 'antd/es/locale/zh_CN';
@@ -13,9 +13,9 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UserOutlined,
- 
+
   ExceptionOutlined,
- 
+
   DownOutlined,
 
 } from '@ant-design/icons';
@@ -178,8 +178,9 @@ class UserPage extends React.Component {
 
 
                   <Menu.Item key="9" icon={<UserOutlined />}>
-                    用户信息设置
-                </Menu.Item>
+                    <Link to="/user/setting">用户信息设置</Link>
+
+                  </Menu.Item>
                 </Menu>
               </Sider>
               <Layout className="site-layout">
@@ -236,6 +237,7 @@ class UserPage extends React.Component {
                   <Route exact path="/user/table3" component={Table3} />
                   <Route exact path="/user/table4" component={Table4} />
                   <Route exact path="/user/taskcomplete" component={TaskComplete} />
+                  <Route exact path="/user/setting" component={TaskComplete} />
 
 
                 </Content>

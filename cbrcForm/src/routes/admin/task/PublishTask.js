@@ -178,7 +178,7 @@ class PublishTask extends React.Component {
           <Row gutter={[10, 24]} justify="space-between">
 
             <Col span={16}>
-              <TextArea placeholder="任务描述" prefix={<SketchOutlined />} onChange={this.taskDescribeChange} style={{height: '500px'}}/>
+              <TextArea placeholder="任务描述" prefix={<SketchOutlined />} onChange={this.taskDescribeChange} style={{height: '200px'}}/>
             </Col>
           </Row>
 
