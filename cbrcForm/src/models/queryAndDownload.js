@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import { queryRequest, downloadRequest, collectDownloadRequest,getOrgTypeRequest } from '../services/queryServiceAndDownload'
+import { queryRequest, downloadRequest, collectDownloadRequest,getOrgTypeRequest,collectqQueryRequest } from '../services/queryServiceAndDownload'
 import Axios from 'axios';
 import Cookies from 'js-cookie'
 
@@ -18,6 +18,50 @@ export default {
   },
 
   effects: {
+
+
+
+
+    //汇总查询    
+    *collectqQuery({ queryInfo }, { call, put }) {
+
+      console.log("*collectqQuery 开始执行")
+      console.log(queryInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(collectqQueryRequest, queryInfo);
+
+      console.log("*collectqQuery 返回为：")
+      console.log(response)
+
+
+       //如果出现异常
+       if(response.data == undefined){
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '数据查询成功' })
+        yield put({ type: 'collectqQueryReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
+
+
+
+
 
     *getOrgType({ queryInfo }, { call, put }) {
 
@@ -53,7 +97,7 @@ export default {
     //汇总下载
     *collectDownload({ queryInfo }, { call, put }) {
 
-      console.log("*collectDownload开始执行")
+      console.log("*collectDownload 开始执行")
       console.log(queryInfo)
 
 
@@ -62,7 +106,7 @@ export default {
 
       const response = yield call(collectDownloadRequest, queryInfo);
 
-      console.log("*query返回为：")
+      console.log("*collectDownload 返回为：")
       console.log(response)
 
 
@@ -71,6 +115,8 @@ export default {
         notification.error({ message: '网络异常错误，请稍后重试' })
         return false;
       }
+
+
 
       if (response.data.F) {
         notification.error({ message: response.data.F })
@@ -163,6 +209,17 @@ export default {
   reducers: {
 
 
+    collectqQueryReduce(state, action) {
+
+      console.log("collectqQueryReduce 开始执行")
+      console.log(action.payload.data)
+
+      return { ...state, collectqQuery: action.payload.data };
+    },
+
+
+
+
 
     getOrgTypeReduce(state, action) {
       console.log("getOrgTypeReduce 开始执行")
@@ -187,7 +244,9 @@ export default {
     downloadReduce(state, action) {
 
       console.log("downloadReduce开始执行")
-      console.log(action.payload.data)
+      console.log(action.payload)
+
+    
       state.downloadLink = action.payload.data
 
       return { ...state };

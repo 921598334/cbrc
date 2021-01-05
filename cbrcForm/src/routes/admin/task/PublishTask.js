@@ -35,8 +35,8 @@ class PublishTask extends React.Component {
       userid: Cookies.get('userid'),
       fileType: '1',
       isComplete: false,
-      selectedValue:[],
-      period:'1',
+      selectedValue: [],
+      period: '1',
     };
   }
 
@@ -103,7 +103,7 @@ class PublishTask extends React.Component {
   };
 
 
-  periodChage= value => {
+  periodChage = value => {
     console.log('periodChage ', value);
     this.setState({
       period: value
@@ -135,7 +135,7 @@ class PublishTask extends React.Component {
           if (result) {
             //查询成功后
             this.setState({
-              isComplete:true,
+              isComplete: true,
             })
           }
         })
@@ -169,7 +169,7 @@ class PublishTask extends React.Component {
 
           <Divider orientation="left">任务标题</Divider>
           <Row gutter={[10, 24]} justify="space-between">
-            <Col span={12}>
+            <Col span={16}>
               <Input placeholder="任务标题" prefix={<SketchOutlined />} onChange={this.taskTitleChange} />
             </Col>
           </Row>
@@ -177,8 +177,8 @@ class PublishTask extends React.Component {
           <Divider orientation="left">任务描述</Divider>
           <Row gutter={[10, 24]} justify="space-between">
 
-            <Col span={12}>
-              <TextArea placeholder="任务描述" prefix={<SketchOutlined />} onChange={this.taskDescribeChange} />
+            <Col span={16}>
+              <TextArea placeholder="任务描述" prefix={<SketchOutlined />} onChange={this.taskDescribeChange} style={{height: '500px'}}/>
             </Col>
           </Row>
 
@@ -187,7 +187,7 @@ class PublishTask extends React.Component {
           <Divider orientation="left">推送机构</Divider>
           <Row gutter={[10, 24]}  >
 
-            <Col span={12}>
+            <Col span={16}>
               <TreeSelect {...tProps} />
             </Col>
           </Row>
@@ -198,7 +198,7 @@ class PublishTask extends React.Component {
           <Divider orientation="left">推送表格</Divider>
           <Row gutter={[10, 24]} justify="space-between">
 
-            <Col span={12}>
+            <Col span={16}>
               <Select defaultValue="重庆保险中介机构季度数据表-专业代理、经纪机构用表" onChange={this.tableNameChange} >
                 <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
                 <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
@@ -211,14 +211,17 @@ class PublishTask extends React.Component {
           <Divider orientation="left">任务起止时间</Divider>
           <Row gutter={[10, 24]} justify="space-between">
 
-            <Col span={12}>
+            <Col span={16}>
               <RangePicker onChange={this.dateChange} format={dateFormat} />
             </Col>
+
           </Row>
 
           <Divider orientation="left">任务季度</Divider>
           <Row gutter={[10, 24]} justify="space-between">
-            <Col className="gutter-row" span={4}>
+
+
+            {/* <Col className="gutter-row" span={4}>
               <Select defaultValue="1" onChange={this.periodChage}>
                 <Option value="1">第1季度(1~3月)</Option>
                 <Option value="2">第2季度(4~6月)</Option>
@@ -226,6 +229,13 @@ class PublishTask extends React.Component {
                 <Option value="4">第4季度(10~12月)</Option>
               </Select>
             </Col>
+            
+            */}
+            <Col className="gutter-row" span={16}>
+              <DatePicker onChange={this.periodChage} picker="quarter" />
+            </Col>
+
+
           </Row>
 
           <Row gutter={[10, 24]} justify="space-between">
@@ -248,7 +258,7 @@ class PublishTask extends React.Component {
           status="success"
           title="您已经完成了任务发布!"
           subTitle="在查询界面可以查看已经发布的任务"
-        
+
         />)
     }
 

@@ -20,15 +20,13 @@ import { contentStyle } from './AdminPageCSS'
 import Cookies from 'js-cookie'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import BasicTable from './table/BasicTable'
+import RangeTable from './table/RangeTable'
 import HistoryTask from './task/HistoryTask'
 import PublishTask from './task/PublishTask'
 
-
-
-
-
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
+
 
 
 
@@ -63,6 +61,7 @@ class AdminPage extends React.Component {
       token:token,
     })
 
+   
   }
 
 
@@ -214,7 +213,7 @@ class AdminPage extends React.Component {
                   }}
                 >
                   <Route exact path="/admin/basicTable" component={BasicTable} />
-
+                  <Route exact path="/admin/rangeTable" component={RangeTable} />
                   <Route exact path="/admin/publishTask" component={PublishTask} />
                   <Route exact path="/admin/historyTask" component={HistoryTask} />
 

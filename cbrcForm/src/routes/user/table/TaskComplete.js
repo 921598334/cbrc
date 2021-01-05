@@ -287,14 +287,14 @@ class TaskComplete extends React.Component {
 
 
           <Col span={6}  >
-            <h1>任务创建时间：</h1>
+            <h1>任务发布时间：</h1>
             <RangePicker onChange={this.dateChange} format={dateFormat} />
           </Col>
 
 
 
           <Col span={4}  >
-            <h1> </h1>
+            <h1>操作：</h1>
             <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
               查询
             </Button>

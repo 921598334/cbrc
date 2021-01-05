@@ -29,12 +29,52 @@ export async function getOrgTypeRequest() {
 
 
 
+
+
+export async function collectqQueryRequest(queryInfo) {
+
+  console.log("collectqQueryRequest 开始执行")
+  console.log(queryInfo)
+
+  
+ 
+  return await Axios({
+    method: 'post',
+    url: 'http://localhost:8080/collectqQuery',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+      ...queryInfo,
+    }
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
+
+
+
+
 export async function collectDownloadRequest(queryInfo) {
 
   console.log("collectDownloadRequest开始执行")
   console.log(queryInfo)
 
-  
+  let collectTmp = {}
+  //queryInfo的collect需要转换为对象，而不是list
+  queryInfo.collect.map((item, key) => {
+    collectTmp[key] = item
+  })
+
+  queryInfo.collect = collectTmp
+
+
  
   return await Axios({
     method: 'post',

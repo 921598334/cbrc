@@ -3,10 +3,10 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import zhCN from 'antd/es/locale/zh_CN';
 
-import { Collapse } from 'antd';
+import { Collapse, notification } from 'antd';
 import { connect } from 'dva';
 
-import { Table, Button, Spin, Row, Col, DatePicker, Select,Space } from 'antd';
+import { Table, Button, Spin, Row, Col, DatePicker, Select } from 'antd';
 import { FileSearchOutlined } from '@ant-design/icons';
 
 
@@ -37,9 +37,7 @@ const dateFormat = 'YYYY/MM/DD';
 
 
 
-
-
-class BasicTable extends React.Component {
+class RangeTable extends React.Component {
 
   constructor(props) {
     super(props);
@@ -53,8 +51,7 @@ class BasicTable extends React.Component {
       fromDate: '',
       endDate: '',
       fileType: '1',
-      // queryData:'null',
-      // orgList:'null',
+    
 
     };
   }
@@ -114,47 +111,31 @@ class BasicTable extends React.Component {
   }
 
 
-
-  handleDownload = (id) => {
-
-    console.log(id)
-
-    this.props.dispatch({
-      type: "queryNamespace/download",
-      downloadInfo: {
-        id: id,
-        ...this.state
-      }
-    })
-      .then(result => {
-        if (result) {
-
-          console.log('下载连接：')
-          console.log(this.props.queryNamespace.downloadLink)
-
-          window.open('http://' + this.props.queryNamespace.downloadLink)
-        }
-      })
-  }
+  collectDownload = (record) => {
 
 
-
-
-
-  
-
-  allDownload = (id) => {
+    
+    let collect = record.collect
+    let period = record.period
+    let orgTypeName = record.orgTypeName
+    
 
     this.props.dispatch({
-      type: "queryNamespace/allDownload",
+      type: "queryNamespace/collectDownload",
       queryInfo: {
-        ...this.state
+        ...this.state,
+        collect,
+        period,
+        orgTypeName,
       }
     })
       .then(result => {
         if (result) {
-
-          window.open('http://' + this.props.queryNamespace.downloadLink)
+          if(this.props.queryNamespace.downloadLink==undefined || this.props.queryNamespace.downloadLink==''){
+            notification.info({message:'没有查询到数据'})
+          }else{
+            window.open('http://' + this.props.queryNamespace.downloadLink)
+          }      
         }
       })
   }
@@ -173,13 +154,9 @@ class BasicTable extends React.Component {
 
   render() {
 
-    console.log("basicTable的render开始执行")
+    console.log("rangeTable的render开始执行")
 
-
-
-    const { queryData, orgList } = this.props.queryNamespace
-
-
+    const { collectqQuery, orgList } = this.props.queryNamespace
 
     const columns = [
       // {
@@ -189,23 +166,29 @@ class BasicTable extends React.Component {
       //   hide:true,
       // },
       {
-        title: '机构名称',
-        dataIndex: 'orgName',
+        title: '机构',
+        dataIndex: 'orgTypeName',
         width: '30%',
 
       },
-      {
-        title: '任务标题',
-        dataIndex: 'tasktitle',
-        width: '20%',
+       {
+        title: '报表类型',
+        dataIndex: 'fileName',
+        width: '30%',
 
       },
-      {
-        title: '任务描述',
-        dataIndex: 'taskdescribe',
-        width: '20%',
+      // {
+      //   title: '任务标题',
+      //   dataIndex: 'tasktitle',
+      //   width: '20%',
 
-      },
+      // },
+      // {
+      //   title: '任务描述',
+      //   dataIndex: 'taskdescribe',
+      //   width: '20%',
+
+      // },
       {
         title: '季度',
         dataIndex: 'period',
@@ -221,11 +204,7 @@ class BasicTable extends React.Component {
         title: '操作',
         dataIndex: 'operation',
         render: (text, record) =>
-          <Space size="middle">
-            <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
-            <a onClick={() => this.handleDownload(record.taskcompleteid)}>通过</a>
-            <a onClick={() => this.handleDownload(record.taskcompleteid)}>驳回</a>
-          </Space>
+          <a onClick={() => this.collectDownload(record)}>下载</a>
       },
 
     ];
@@ -236,7 +215,7 @@ class BasicTable extends React.Component {
       console.log('query开始执行');
 
       this.props.dispatch({
-        type: "queryNamespace/query",
+        type: "queryNamespace/collectqQuery",
         queryInfo: {
           ...this.state
 
@@ -310,35 +289,24 @@ class BasicTable extends React.Component {
 
           <div>
             <div style={{ marginBottom: 16 }}>
-              <Button type="primary" onClick={this.allDownload} loading={false}>
+              {/* <Button type="primary" onClick={this.collectDownload} loading={false}>
                 全部下载
-              </Button>
-
+              </Button> */}
+              {/* <Button type="primary" onClick={this.collectDownload} loading={false} style={{ marginLeft: 8 }}>
+                汇总下载
+              </Button> */}
               <span style={{ marginLeft: 8 }}>
                 {/* {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''} */}
               </span>
             </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={queryData} pagination={false} />
+            <Table rowSelection={rowSelection} columns={columns} dataSource={collectqQuery} pagination={false} />
           </div>
-
-
-
         </div >
-
-
-
       </Spin>
 
-
-
     );
-
-
-
-
-
 
   }
 }
 
-export default BasicTable
+export default RangeTable
