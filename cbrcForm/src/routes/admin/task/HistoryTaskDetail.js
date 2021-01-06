@@ -265,14 +265,14 @@ class HistoryTaskDetail extends React.Component {
             </Col>
           </Row>
 
-          <Divider orientation="left">任务起止时间</Divider>
+          {/* <Divider orientation="left">任务起止时间</Divider>
           <Row gutter={[10, 24]} justify="space-between">
 
             <Col span={16}>
               <RangePicker onChange={this.dateChange} format={dateFormat} value={[moment(this.state.fromdate, dateFormat), moment(this.state.enddate, dateFormat)]}  allowClear={false}/>
             </Col>
 
-          </Row>
+          </Row> */}
 
           <Divider orientation="left">任务季度</Divider>
           <Row gutter={[10, 24]} justify="space-between">

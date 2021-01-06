@@ -4,8 +4,8 @@ import 'antd/dist/antd.css';
 
 import { connect } from 'dva';
 
-import { Table, Button, Row, Col, DatePicker ,   Space } from 'antd';
-import {  FileSearchOutlined  } from '@ant-design/icons';
+import { Table, Button, Row, Col, DatePicker, Space,Popconfirm,message } from 'antd';
+import { FileSearchOutlined,QuestionCircleOutlined} from '@ant-design/icons';
 
 
 
@@ -97,6 +97,7 @@ class HistoryTask extends React.Component {
   deleteTask = (id) => {
 
     console.log(id)
+    message.success('正在删除，请等待......');
 
     this.props.dispatch({
       type: "taskNamespace/deleteTask",
@@ -108,7 +109,23 @@ class HistoryTask extends React.Component {
       .then(result => {
         if (result) {
 
-        
+          //任务删除后重新获取任务
+
+          this.props.dispatch({
+            type: "taskNamespace/queryTask",
+            queryInfo: {
+              ...this.state
+
+            }
+          })
+            .then(result => {
+              if (result) {
+                //查询成功后
+
+              }
+            })
+
+
         }
       })
   }
@@ -119,12 +136,12 @@ class HistoryTask extends React.Component {
 
 
     //跳转到任务细节
-    
-    this.props.history.push({ pathname:'/admin/historyTaskDetail',state:{id : id } })
+
+    this.props.history.push({ pathname: '/admin/historyTaskDetail', state: { id: id } })
 
 
 
-  
+
   }
 
 
@@ -171,10 +188,13 @@ class HistoryTask extends React.Component {
         title: '操作',
         key: 'action',
         render: (text, record) => (
-          <Space size="middle">
 
-            <a onClick={() => this.deleteTask(record.id)}>删除</a>
-          </Space>
+
+          <Popconfirm title="删除后，用户已经完成的任务也会被删除，并且无法找回，您确定要删除吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.deleteTask(record.id)}>
+            <a >删除</a>
+          </Popconfirm>
+
+        
         ),
       },
     ];
@@ -211,7 +231,7 @@ class HistoryTask extends React.Component {
 
           if (result) {
             //查询成功后
-            
+
           }
         })
     };
@@ -232,7 +252,7 @@ class HistoryTask extends React.Component {
         </Row>
 
         <Row gutter={[16, 24]} justify="space-between">
-         
+
 
 
 
@@ -251,20 +271,9 @@ class HistoryTask extends React.Component {
 
         </Row>
 
-        <Row gutter={[16, 24]}  >
-
-        </Row>
-
-
-
-
-
         <div>
-
           <Table columns={columns} dataSource={queryData} />
         </div>
-
-
 
       </div >
 

@@ -24,6 +24,7 @@ import Table2 from './table/Table2'
 import Table3 from './table/Table3'
 import Table4 from './table/Table4'
 import TaskComplete from './table/TaskComplete'
+import UserInfoSetting from './UserInfoSetting'
 
 
 const { Header, Sider, Content } = Layout;
@@ -237,7 +238,7 @@ class UserPage extends React.Component {
                   <Route exact path="/user/table3" component={Table3} />
                   <Route exact path="/user/table4" component={Table4} />
                   <Route exact path="/user/taskcomplete" component={TaskComplete} />
-                  <Route exact path="/user/setting" component={TaskComplete} />
+                  <Route exact path="/user/setting" component={UserInfoSetting} />
 
 
                 </Content>

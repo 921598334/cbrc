@@ -4,8 +4,8 @@ import 'antd/dist/antd.css';
 
 import { connect } from 'dva';
 
-import { Table, Button, Spin, Row, Col, DatePicker, Select, Space } from 'antd';
-import { FileSearchOutlined } from '@ant-design/icons';
+import { Table, Button, Spin, Row, Col, DatePicker, Select, Space, Popconfirm } from 'antd';
+import { FileSearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 
 const { Option } = Select;
@@ -22,14 +22,9 @@ const dateFormat = 'YYYY/MM/DD';
 
 
 
-
-
-
 @connect(({ queryNamespace }) => ({
   queryNamespace,
 }))
-
-
 
 
 
@@ -51,7 +46,8 @@ class BasicTable extends React.Component {
       fileType: '1',
       // queryData:'null',
       // orgList:'null',
-      taskStatus: '1'
+      taskStatus: '1',
+      isUplaod: false,
     };
   }
 
@@ -259,9 +255,14 @@ class BasicTable extends React.Component {
         <Space size="middle">
           <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
-          <a onClick={() => this.handleRefuse(record.taskcompleteid)}>驳回</a>
+          <Popconfirm title="您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
+            <a >驳回</a>
+          </Popconfirm>
 
-          <a onClick={() => this.handlePass(record.taskcompleteid)}>通过</a>
+          <Popconfirm title="您确定要通过吗？" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
+            <a >通过</a>
+          </Popconfirm>
+
         </Space>
 
       )
@@ -271,7 +272,11 @@ class BasicTable extends React.Component {
         <Space size="middle">
           <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
-          <a onClick={() => this.handleRefuse(record.taskcompleteid)}>驳回</a>
+          <Popconfirm title="您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
+            <a >驳回</a>
+          </Popconfirm>
+
+
 
         </Space>
 
@@ -282,19 +287,15 @@ class BasicTable extends React.Component {
         <Space size="middle">
           <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
-          <a onClick={() => this.handlePass(record.taskcompleteid)}>通过</a>
+          <Popconfirm title="您确定要通过吗？" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
+            <a >通过</a>
+          </Popconfirm>
         </Space>
       )
     }
 
 
   }
-
-
-
-
-
-
 
 
   render() {
@@ -346,16 +347,19 @@ class BasicTable extends React.Component {
       {
         title: '操作',
         dataIndex: 'operation',
-        render: (text, record) =>
-          <Space size="middle">
-            <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
+        render: (text, record) => {this.action(record) }
+        // <Space size="middle">
+        //   <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
-            <a onClick={() => this.handleRefuse(record.taskcompleteid)}>驳回</a>
+        //   <Popconfirm title="您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
+        //     <a >驳回</a>
+        //   </Popconfirm>
 
-            <a onClick={() => this.handlePass(record.taskcompleteid)}>通过</a>
+        //   <Popconfirm title="您确定要通过吗？" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
+        //     <a >通过</a>
+        //   </Popconfirm>
 
-
-          </Space>
+        // </Space>
       },
 
     ];
@@ -365,6 +369,13 @@ class BasicTable extends React.Component {
     const query = values => {
       console.log('query开始执行');
 
+
+      this.setState({
+        isUplaod: true,
+
+      })
+
+
       this.props.dispatch({
         type: "queryNamespace/query",
         queryInfo: {
@@ -373,6 +384,11 @@ class BasicTable extends React.Component {
         }
       })
         .then(result => {
+
+          this.setState({
+            isUplaod: false,
+          })
+
           if (result) {
             //查询成功后
 
@@ -404,7 +420,7 @@ class BasicTable extends React.Component {
 
             <Col span={4}>
               <h1>任务状态：</h1>
-              <Select defaultValue="待审核" onChange={this.taskStatusChange} >
+              <Select defaultValue="待审核" onChange={this.taskStatusChange} style={{ width: '100px' }}>
                 {/* <Option value="0">待完成</Option> */}
                 <Option value="1">待审核</Option>
                 <Option value="2">已完成</Option>
@@ -412,9 +428,9 @@ class BasicTable extends React.Component {
               </Select>
             </Col>
 
-            <Col span={4}>
+            <Col span={6}>
               <h1>机构名称：</h1>
-              <Select defaultValue="人身险机构" onChange={this.orgNameChange} >
+              <Select defaultValue="人身险机构" onChange={this.orgNameChange} style={{ width: '200px' }}>
                 {this.optionCreate(orgList)}
 
               </Select>
@@ -422,12 +438,12 @@ class BasicTable extends React.Component {
 
 
             <Col span={6}  >
-              <h1>报表类型：</h1>
-              <Select defaultValue="重庆保险中介机构季度数据表-专业代理、经纪机构用表" onChange={this.tableNameChange} style={{ width: '200px' }}>
-                <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
-                <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
-                <Option value="3">重庆保险中介机构季度数据表-专业中介机构销售寿险公司长期保险产品统计表</Option>
-                <Option value="4">重庆保险中介机构季度数据表-银邮代理机构用表</Option>
+              <h1>重庆保险中介机构季度数据表 类型：</h1>
+              <Select defaultValue="专业代理、经纪机构用表" onChange={this.tableNameChange} style={{ width: '250px' }}>
+                <Option value="1">专业代理、经纪机构用表</Option>
+                <Option value="2">公估机构用表</Option>
+                <Option value="3">专业中介机构销售寿险公司长期保险产品统计表</Option>
+                <Option value="4">银邮代理机构用表</Option>
               </Select>
             </Col>
 
@@ -440,7 +456,7 @@ class BasicTable extends React.Component {
 
             <Col span={4}  >
               <h1>操作：</h1>
-              <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
+              <Button type="primary" icon={<FileSearchOutlined />} onClick={query} loading={this.state.isUplaod}>
                 查询
               </Button>
             </Col>
@@ -454,22 +470,18 @@ class BasicTable extends React.Component {
 
           <div>
             <div style={{ marginBottom: 16 }}>
-              <Button type="primary" onClick={this.allDownload} loading={false}>
+              {/* <Button type="primary" onClick={this.allDownload} loading={false}>
                 全部下载
-              </Button>
+              </Button> */}
 
               <span style={{ marginLeft: 8 }}>
                 {/* {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''} */}
               </span>
             </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={queryData}   />
+            <Table rowSelection={rowSelection} columns={columns} dataSource={queryData} />
           </div>
 
-
-
         </div >
-
-
 
       </Spin>
 

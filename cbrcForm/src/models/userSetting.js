@@ -5,7 +5,7 @@ import { publishRequest, queryRequest, queryTaskCompleteRequest,deleteTaskReques
 
 export default {
 
-  namespace: 'taskNamespace',
+  namespace: 'userSettingNameSpace',
 
   state: {
 

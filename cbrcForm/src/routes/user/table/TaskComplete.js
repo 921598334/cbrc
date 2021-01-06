@@ -47,7 +47,8 @@ class TaskComplete extends React.Component {
       endDate: '',
       fileType: '1',
       orgid: Cookies.get('orgid'),
-      taskStatus: '0'
+      taskStatus: '0',
+      isUplaod: false,
     };
   }
 
@@ -197,16 +198,16 @@ class TaskComplete extends React.Component {
         dataIndex: 'taskdescribe',
         key: 'taskdescribe',
       },
-      {
-        title: '开始时间',
-        dataIndex: 'fromdate',
-        key: 'fromdate',
-      },
-      {
-        title: '结束时间',
-        dataIndex: 'enddate',
-        key: 'enddate',
-      },
+      // {
+      //   title: '开始时间',
+      //   dataIndex: 'fromdate',
+      //   key: 'fromdate',
+      // },
+      // {
+      //   title: '结束时间',
+      //   dataIndex: 'enddate',
+      //   key: 'enddate',
+      // },
 
       // {
       //   title: '任务报表',
@@ -244,6 +245,10 @@ class TaskComplete extends React.Component {
     const query = values => {
       console.log('query开始执行');
 
+      this.setState({
+        isUplaod: true,
+      })
+
       this.props.dispatch({
         type: "taskNamespace/queryTaskComplete",
         queryInfo: {
@@ -252,6 +257,11 @@ class TaskComplete extends React.Component {
         }
       })
         .then(result => {
+
+          this.setState({
+            isUplaod: false,
+          })
+
           if (result) {
             //查询成功后
 
@@ -295,7 +305,7 @@ class TaskComplete extends React.Component {
 
           <Col span={4}  >
             <h1>操作：</h1>
-            <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
+            <Button type="primary" icon={<FileSearchOutlined />} onClick={query} loading={this.state.isUplaod}>
               查询
             </Button>
           </Col>
@@ -305,10 +315,6 @@ class TaskComplete extends React.Component {
         <Row gutter={[16, 24]}  >
 
         </Row>
-
-
-
-
 
         <div>
 

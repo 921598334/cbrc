@@ -48,7 +48,7 @@ class RangeTable extends React.Component {
       fromDate: '',
       endDate: '',
       fileType: '1',
-    
+      isUplaod: false,
 
     };
   }
@@ -162,12 +162,12 @@ class RangeTable extends React.Component {
       //   width: '30%',
       //   hide:true,
       // },
-      {
-        title: '机构',
-        dataIndex: 'orgTypeName',
-        width: '30%',
+      // {
+      //   title: '机构',
+      //   dataIndex: 'orgTypeName',
+      //   width: '30%',
 
-      },
+      // },
        {
         title: '报表类型',
         dataIndex: 'fileName',
@@ -211,6 +211,11 @@ class RangeTable extends React.Component {
     const query = values => {
       console.log('query开始执行');
 
+      this.setState({
+        isUplaod: true,
+
+      })
+
       this.props.dispatch({
         type: "queryNamespace/collectqQuery",
         queryInfo: {
@@ -219,6 +224,9 @@ class RangeTable extends React.Component {
         }
       })
         .then(result => {
+          this.setState({
+            isUplaod: false,
+          })
           if (result) {
             //查询成功后
 
@@ -247,12 +255,12 @@ class RangeTable extends React.Component {
           </Row>
 
           <Row gutter={[16, 24]} justify="space-between">
-            <Col span={4}>
+            {/* <Col span={4}>
               <h1>机构名称：</h1>
               <Select defaultValue="人身险机构" onChange={this.orgNameChange} >
                 {this.optionCreate(orgList)}
               </Select>
-            </Col>
+            </Col> */}
 
 
             <Col span={6}  >
@@ -274,7 +282,7 @@ class RangeTable extends React.Component {
 
             <Col span={4}  >
              <h1>操作：</h1>
-              <Button type="primary" icon={<FileSearchOutlined />} onClick={query}>
+              <Button type="primary" icon={<FileSearchOutlined />} onClick={query} loading={this.state.isUplaod}>
                 查询
               </Button>
             </Col>

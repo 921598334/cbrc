@@ -23,6 +23,11 @@ import HistoryTask from './task/HistoryTask'
 import PublishTask from './task/PublishTask'
 import HistoryTaskDetail from './task/HistoryTaskDetail'
 
+import OrgSetting from './manager/OrgSetting'
+import TimerSetting from './manager/TimerSetting'
+import UserSetting from './manager/UserSetting'
+
+
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
@@ -145,6 +150,9 @@ class AdminPage extends React.Component {
                   </SubMenu>
 
 
+
+
+
                   <SubMenu key="sub2" icon={<DesktopOutlined />} title="任务模块">
                     <Menu.Item key="6"><Link to='/admin/publishTask'>发布任务</Link></Menu.Item>
                     <Menu.Item key="8"><Link to='/admin/historyTask'>历史任务</Link></Menu.Item>
@@ -154,6 +162,7 @@ class AdminPage extends React.Component {
                   <SubMenu key="sub3" icon={<ClusterOutlined />} title="管理模块">
                     <Menu.Item key="10"><Link to='/admin/userManager'>用户管理</Link></Menu.Item>
                     <Menu.Item key="11"><Link to='/admin/orgManager'>机构管理</Link></Menu.Item>
+                    <Menu.Item key="12"><Link to='/admin/timerManager'>定时任务管理</Link></Menu.Item>
                   </SubMenu>
 
 
@@ -222,9 +231,9 @@ class AdminPage extends React.Component {
                   <Route exact path="/admin/historyTask" component={HistoryTask} />
                   <Route exact path="/admin/historyTaskDetail" component={HistoryTaskDetail} />
 
-                  <Route exact path="/admin/userManager" component={HistoryTask} />
-                  <Route exact path="/admin/orgManager" component={HistoryTask} />
-
+                  <Route exact path="/admin/userManager" component={UserSetting} />
+                  <Route exact path="/admin/orgManager" component={OrgSetting} />
+                  <Route exact path="/admin/timerManager" component={TimerSetting} />
 
                   
 

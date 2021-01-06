@@ -220,29 +220,19 @@ class PublishTask extends React.Component {
             </Col>
           </Row>
 
-          <Divider orientation="left">任务起止时间</Divider>
+          {/* <Divider orientation="left">任务起止时间</Divider>
           <Row gutter={[10, 24]} justify="space-between">
 
             <Col span={16}>
               <RangePicker onChange={this.dateChange} format={dateFormat} />
             </Col>
 
-          </Row>
+          </Row> */}
 
           <Divider orientation="left">任务季度</Divider>
           <Row gutter={[10, 24]} justify="space-between">
 
 
-            {/* <Col className="gutter-row" span={4}>
-              <Select defaultValue="1" onChange={this.periodChage}>
-                <Option value="1">第1季度(1~3月)</Option>
-                <Option value="2">第2季度(4~6月)</Option>
-                <Option value="3">第3季度(7~9月)</Option>
-                <Option value="4">第4季度(10~12月)</Option>
-              </Select>
-            </Col>
-            
-            */}
             <Col className="gutter-row" span={16}>
               <DatePicker onChange={this.periodChage} picker="quarter" />
             </Col>
