@@ -423,7 +423,7 @@ class BasicTable extends React.Component {
 
             <Col span={6}  >
               <h1>报表类型：</h1>
-              <Select defaultValue="重庆保险中介机构季度数据表-专业代理、经纪机构用表" onChange={this.tableNameChange} style={{ width: '300px' }}>
+              <Select defaultValue="重庆保险中介机构季度数据表-专业代理、经纪机构用表" onChange={this.tableNameChange} style={{ width: '200px' }}>
                 <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
                 <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
                 <Option value="3">重庆保险中介机构季度数据表-专业中介机构销售寿险公司长期保险产品统计表</Option>

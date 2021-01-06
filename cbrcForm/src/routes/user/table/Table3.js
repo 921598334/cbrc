@@ -154,7 +154,7 @@ class Table3 extends React.Component {
       {
         title: '统计期末累计实现代理保费收入',
         dataIndex: 'col6',
-        width: '20%',
+        width: '15%',
         editable: true,
       },
       {
@@ -172,13 +172,13 @@ class Table3 extends React.Component {
       {
         title: '首年保费机构佣金率（%）',
         dataIndex: 'col9',
-        width: '20%',
+        width: '15%',
         editable: true,
       },
       {
         title: '首个保单年度末退保现金价值率（%）',
         dataIndex: 'col10',
-        width: '20%',
+        width: '15%',
         editable: true,
       },
       {

@@ -37,6 +37,7 @@ class PublishTask extends React.Component {
       isComplete: false,
       selectedValue: [],
       period: '1',
+      isUplaod: false,
     };
   }
 
@@ -124,6 +125,12 @@ class PublishTask extends React.Component {
     const publish = values => {
       console.log('publish开始执行');
 
+
+      this.setState({
+        isUplaod: true,
+      })
+
+
       this.props.dispatch({
         type: "taskNamespace/publish",
         publishInfo: {
@@ -132,6 +139,11 @@ class PublishTask extends React.Component {
         }
       })
         .then(result => {
+
+          this.setState({
+            isUplaod: false,
+          })
+
           if (result) {
             //查询成功后
             this.setState({
@@ -240,7 +252,7 @@ class PublishTask extends React.Component {
 
           <Row gutter={[10, 24]} justify="space-between">
             <Col span={12}>
-              <Button type="primary" icon={<FileSearchOutlined />} onClick={publish}>
+              <Button type="primary" icon={<FileSearchOutlined />} onClick={publish} loading={this.state.isUplaod}>
                 发布
             </Button>
             </Col>
