@@ -226,7 +226,6 @@ class BasicTable extends React.Component {
         return <Option value={item.orgtype}>{item.typename}</Option>
       })
     }
-
   }
 
   taskStatusChange = (e) => {
