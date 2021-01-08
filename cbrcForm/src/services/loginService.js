@@ -1,5 +1,8 @@
 
 import Axios from 'axios';
+import {myUrl} from './ip'
+
+
 
 
 export async function loginRequest(loginInfo) {
@@ -7,9 +10,14 @@ export async function loginRequest(loginInfo) {
   console.log("loginRequest开始执行")
   console.log(loginInfo)
 
+  console.log("服务器的ip为：")
+  console.log(myUrl.localUrl)
+
+
+
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/login',
+    url: myUrl.localUrl+'login',
     params: {
       ...loginInfo
     }

@@ -1,6 +1,6 @@
 
 import Axios from 'axios';
-
+import {myUrl} from './ip'
 
 
 
@@ -13,7 +13,7 @@ export async function getOrgRequest() {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/getOrg',
+    url: myUrl.localUrl+'getOrg',
 
   }).then(function (response) {
 

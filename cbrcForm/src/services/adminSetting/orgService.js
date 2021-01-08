@@ -1,6 +1,6 @@
 
 import Axios from 'axios';
-
+import {myUrl} from '../ip'
 
 
 
@@ -16,7 +16,7 @@ export async function deleteOrgInfoRequest(deleteOrgInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/deleteOrgInfo',
+    url: myUrl.localUrl+'deleteOrgInfo',
     params: {
       orgid: deleteOrgInfo['orgid'],
 
@@ -49,7 +49,7 @@ export async function updateOrgInfoRequest(updateOrgInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/updateOrgInfo',
+    url: myUrl.localUrl+'updateOrgInfo',
     //url: 'http://localhost:8080/updateUserInfo',
 
     params: {
@@ -84,7 +84,7 @@ export async function inertOrgInfoRequest(insertOrgInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/insertOrgInfo',
+    url: myUrl.localUrl+'insertOrgInfo',
     params: {
 
       newManagerName: insertOrgInfo['newManagerName'],
@@ -116,7 +116,7 @@ export async function deleteOrgRequest(deleteInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/deleteOrg',
+    url: myUrl.localUrl+'deleteOrg',
     params: {
 
       id: deleteInfo['orgtype'],
@@ -146,7 +146,7 @@ export async function initOrgInfoRequest() {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/initOrgInfo',
+    url: myUrl.localUrl+'initOrgInfo',
     params: {
 
     }
@@ -179,7 +179,7 @@ export async function insertOrgRequest(insertInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/insertOrg',
+    url: myUrl.localUrl+'insertOrg',
     params: {
 
       orgName: insertInfo['newOrgName'],
@@ -209,7 +209,7 @@ export async function updateOrgRequest(updateInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/updateOrg',
+    url: myUrl.localUrl+'updateOrg',
     params: {
       udateOrgType: updateInfo['updateOrgType'][0],
       udateOrgName: updateInfo['updateOrgName'],
@@ -237,7 +237,7 @@ export async function initOrgRequest() {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/initOrg',
+    url: myUrl.localUrl+'initOrg',
     params: {
 
     }

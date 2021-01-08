@@ -1,5 +1,5 @@
 import Axios from 'axios';
-
+import {myUrl} from '../ip'
 
 
 
@@ -12,7 +12,7 @@ export async function updateUserInfoRequest(updateUserInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/updateUserInfo',
+    url: myUrl.localUrl+'updateUserInfo',
     params: {
       updateOrgType:updateUserInfo['updateOrgType'],
       updatePassword:updateUserInfo['updatePassword'],
@@ -47,7 +47,7 @@ export async function inertUserInfoRequest(insertUserInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/insertUser',
+    url: myUrl.localUrl+'insertUser',
     params: {
 
       newOrgType:insertUserInfo['newOrgType'],
@@ -82,7 +82,7 @@ export async function deleteUserInfoRequest(deleteUserInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/deleteUser',
+    url: myUrl.localUrl+'deleteUser',
     params: {
       userid: deleteUserInfo['userid'],
 
@@ -121,7 +121,7 @@ export async function initUserInfoRequest() {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/initUsers',
+    url: myUrl.localUrl+'initUsers',
 
 
   }).then(function (response) {

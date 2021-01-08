@@ -1,6 +1,6 @@
 
 import Axios from 'axios';
-
+import {myUrl} from './ip'
 
 export async function uploadRequest(uploadInfo) {
 
@@ -18,7 +18,7 @@ export async function uploadRequest(uploadInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/upload',
+    url: myUrl.localUrl+'upload',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -57,7 +57,7 @@ export async function getCellRequest() {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/getCellRequest',
+    url: myUrl.localUrl+'getCellRequest',
 
   }).then(function (response) {
 

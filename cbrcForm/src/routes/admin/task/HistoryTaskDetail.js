@@ -15,7 +15,7 @@ const { TextArea } = Input;
 
 const { Option } = Select;
 
-const { RangePicker } = DatePicker;
+
 
 const dateFormat = 'YYYY-MM-DD';
 

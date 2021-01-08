@@ -1,5 +1,4 @@
 import { notification } from "antd";
-import { getOrgRequest } from '../../services/orgService'
 import { initOrgRequest,updateOrgRequest,insertOrgRequest,deleteOrgRequest ,initOrgInfoRequest,inertOrgInfoRequest,updateOrgInfoRequest,deleteOrgInfoRequest} from '../../services/adminSetting/orgService'
 
 

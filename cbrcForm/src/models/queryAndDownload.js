@@ -175,7 +175,7 @@ export default {
 
       //检查输入是否合法
 
-
+      notification.info({ message: '正在获取数据，请等待....' })
       const response = yield call(collectDownloadRequest, queryInfo);
 
       console.log("*collectDownload 返回为：")
@@ -246,7 +246,7 @@ export default {
 
 
       //检查输入是否合法
-
+      notification.info({ message: '正在获取数据，请等待....' })
       const response = yield call(downloadRequest, downloadInfo);
 
       console.log("*download返回为：")

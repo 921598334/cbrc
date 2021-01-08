@@ -1,6 +1,6 @@
 
 import Axios from 'axios';
-
+import {myUrl} from './ip'
 
 
 
@@ -25,7 +25,7 @@ export async function updateRequest(publishInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/update',
+    url: myUrl.localUrl+'update',
     params: {
       ...publishInfo
     }
@@ -63,7 +63,7 @@ export async function queryTaskDetailRequest(queryDetailInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/queryTaskDetail',
+    url: myUrl.localUrl+'queryTaskDetail',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -103,7 +103,7 @@ export async function deleteTaskRequest(deleteInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/deleteTask',
+    url: myUrl.localUrl+'deleteTask',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -150,7 +150,7 @@ export async function queryTaskCompleteRequest(queryInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/queryTaskComplete',
+    url: myUrl.localUrl+'queryTaskComplete',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -192,7 +192,7 @@ export async function queryRequest(queryInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/queryTask',
+    url: myUrl.localUrl+'queryTask',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -235,7 +235,7 @@ export async function publishRequest(publishInfo) {
 
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/publish',
+    url: myUrl.localUrl+'publish',
     params: {
       ...publishInfo
     }

@@ -1,7 +1,7 @@
 
 import Axios from 'axios';
 
-
+import {myUrl} from './ip'
 
 
 
@@ -13,7 +13,7 @@ export async function handlePassRequest(passInfo) {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/handlePass',
+    url: myUrl.localUrl+'handlePass',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -44,7 +44,7 @@ export async function handleRefuseRequest(refuseInfo) {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/handleRefuse',
+    url: myUrl.localUrl+'handleRefuse',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -85,7 +85,7 @@ export async function getOrgTypeRequest() {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/getOrgType',
+    url: myUrl.localUrl+'getOrgType',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -114,7 +114,7 @@ export async function collectqQueryRequest(queryInfo) {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/collectqQuery',
+    url: myUrl.localUrl+'collectqQuery',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -152,7 +152,7 @@ export async function collectDownloadRequest(queryInfo) {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/collectDownload',
+    url: myUrl.localUrl+'collectDownload',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -188,7 +188,7 @@ export async function queryRequest(queryInfo) {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/query',
+    url: myUrl.localUrl+'query',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },
@@ -229,7 +229,7 @@ export async function downloadRequest(downloadInfo) {
  
   return await Axios({
     method: 'post',
-    url: 'http://localhost:8080/download',
+    url: myUrl.localUrl+'download',
     headers: {
       'Accept': 'application/json,text/plain,*/*'
     },

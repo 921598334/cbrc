@@ -65,45 +65,44 @@ export default {
     *upload({ uploadInfo }, { call, put }) {
 
       console.log("*upload开始执行")
-      console.log(uploadInfo)
+      const dataSource = uploadInfo.dataSource;
+      console.log(dataSource)
+
 
 
       //检查输入是否合法
-      for (let index in uploadInfo.dataSource) {
+      for (let index in dataSource) {
 
         //console.log(uploadInfo[index])
 
         //去除前后空格
-        //const amount = uploadInfo.dataSource[index]['amount'].replace(/\s*/g, '')
+        const amount = dataSource[index]['amount'].replace(/\s*/g, '')
 
 
-        // if(amount==='请输入'){
-        //   notification.error({message:'请输入 '+uploadInfo[index]['cellname']+' 的金额'})
-        //   return false
-        // }
+        if(amount==='请输入'){
+          notification.error({message:'请输入 '+dataSource[index]['cellname']+' 的金额'})
+          return false
+        }
 
-        // if(amount===''){
-        //   notification.error({message:'请输入 '+uploadInfo[index]['cellname']+' 的金额'})
-        //   return false
-        // }
+        if(amount===''){
+          notification.error({message:'请输入 '+dataSource[index]['cellname']+' 的金额'})
+          return false
+        }
 
-        // if(amount===null){
-        //   notification.error({message:'请输入 '+uploadInfo[index]['cellname']+' 的金额'})
-        //   return false
-        // }
+        if(amount===null){
+          notification.error({message:'请输入 '+dataSource[index]['cellname']+' 的金额'})
+          return false
+        }
 
-        // if( Number.isNaN(Number(amount)) ) {
-        //   notification.error({message:uploadInfo[index]['cellname']+' 需要输入数字'})
-        //   return false
-        // }
+        if( Number.isNaN(Number(amount)) ) {
+          notification.error({message:dataSource[index]['cellname']+' 需要输入数字'})
+          return false
+        }
 
       }
 
 
-     
-
-
-
+    
 
       uploadInfo.userid = Cookies.get('userid')
      
