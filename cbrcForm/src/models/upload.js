@@ -203,12 +203,12 @@ export default {
 
         //对数据进行筛选，没有'（'的需要滤除，
         if (key['cellname'].indexOf('（') == -1) {
-          console.log('过滤' + key['cellname'])
+          // console.log('过滤' + key['cellname'])
           continue
         }
         //有'备注'的需要滤除
         if (key['cellname'].indexOf('备注') != -1) {
-          console.log('过滤' + key['cellname'])
+          // console.log('过滤' + key['cellname'])
           continue
         }
 
@@ -222,8 +222,8 @@ export default {
         } else if (key['repid'] == 4) {
           table4Struct.push(key)
         } else {
-          console.log('没有找到repid')
-          console.log(key)
+          // console.log('没有找到repid')
+          // console.log(key)
         }
       }
 

@@ -1,5 +1,5 @@
 
-import React  from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 
 import Cookies from 'js-cookie'
@@ -7,8 +7,8 @@ import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
 
-import { Table,  Button,   Row, Col, DatePicker, Select,   Space } from 'antd';
-import {   FileSearchOutlined } from '@ant-design/icons';
+import { Table, Button, Row, Col, DatePicker, Select, Space } from 'antd';
+import { FileSearchOutlined } from '@ant-design/icons';
 
 
 const { Option } = Select;
@@ -22,8 +22,8 @@ const dateFormat = 'YYYY/MM/DD';
 
 
 
-@connect(({ taskNamespace }) => ({
-  taskNamespace,
+@connect(({ taskNamespace,queryNamespace }) => ({
+  taskNamespace,queryNamespace
 }))
 
 
@@ -140,8 +140,35 @@ class TaskComplete extends React.Component {
 
 
 
+  //下载
+  handleDownload = (id) => {
+
+    console.log(id)
+
+    this.props.dispatch({
+      type: "queryNamespace/download",
+      downloadInfo: {
+        id: id,
+        ...this.state
+      }
+    })
+      .then(result => {
+        if (result) {
+
+          console.log('下载连接：')
+          console.log(this.props.queryNamespace.downloadLink)
+
+          window.open('http://' + this.props.queryNamespace.downloadLink)
+        }
+      })
+  }
+
+
 
   action(record) {
+
+    console.log('选择了：')
+    console.log(record)
 
     if (record.iscomplete == '0') {
       console.log(record.iscomplete)
@@ -151,17 +178,20 @@ class TaskComplete extends React.Component {
     } else if (record.iscomplete == '1') {
       console.log(record.iscomplete)
       return (
-        <h1 >待审核</h1>
+        // <h1 >待审核</h1>
+        <a onClick={() => this.handleDownload(record.id)}>下载</a>
       )
     } else if (record.iscomplete == '2') {
       console.log(record.iscomplete)
       return (
-        <h1 >通过审核</h1>
+        // <h1 >通过审核</h1>
+        <a onClick={() => this.handleDownload(record.id)}>下载</a>
       )
     } else if (record.iscomplete == '3') {
       console.log(record.iscomplete)
       return (
-        <a onClick={(e) => { this.startTask(record) }}>重新完成</a>
+        // <a onClick={(e) => { this.startTask(record) }}>重新完成</a>
+        <a onClick={() => this.handleDownload(record.id)}>下载</a>
       )
     }
 

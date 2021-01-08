@@ -7,8 +7,8 @@ import Cookies from 'js-cookie'
 import { Collapse } from 'antd';
 import { connect } from 'dva';
 
-import { Table, Input, Button, Row, Col, Result, BackTop, Space, Popconfirm, Select } from 'antd';
-import { CloudUploadOutlined, SmileOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Table, Input, Button, Row, Col, Spin, BackTop, Space, Popconfirm, Select } from 'antd';
+import {  QuestionCircleOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -285,12 +285,9 @@ class OrgSetting extends React.Component {
 
 
 
-
-    if (!this.state.isComplete) {
-
       return (
 
-        <div>
+        <Spin spinning={orgData == undefined || orgInfoData==undefined} tip="数据加载中...">
 
           <Row gutter={[16, 24]}>
             <Col >
@@ -301,7 +298,7 @@ class OrgSetting extends React.Component {
 
 
 
-
+          {/* 添加机构类型 */}
           <Collapse  >
 
             <Panel header="机构类型管理" key="1">
@@ -339,8 +336,11 @@ class OrgSetting extends React.Component {
                             })
 
                             if (result) {
-                              //数据成功后
-
+                              // 机构类型添加成功后要清空
+                              this.setState({
+                                newOrgName:'',
+                               
+                              })
                             }
                           })
                       }}
@@ -406,7 +406,12 @@ class OrgSetting extends React.Component {
                             })
 
                             if (result) {
+                              // 机构类型保存后
+                              this.setState({
+                                updateOrgType:'',
+                                updateOrgName:''
 
+                              })
 
                             }
                           })
@@ -516,7 +521,7 @@ class OrgSetting extends React.Component {
 
                             if (result) {
                               //数据成功后
-                              //数据成功后
+                             
                               this.setState({
                                 newManagerName: '',
                                 newOrgInfoName: '',
@@ -676,18 +681,11 @@ class OrgSetting extends React.Component {
             }}>UP</div>
           </BackTop>
 
-        </div >
+        </Spin >
 
 
       );
-    } else {
-      return (
-        <Result
-          icon={<SmileOutlined />}
-          title="您的信息已经成功保存!"
-        // extra={<Button type="primary">Next</Button>}
-        />)
-    }
+    
 
   }
 }

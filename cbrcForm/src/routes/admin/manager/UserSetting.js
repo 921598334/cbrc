@@ -4,12 +4,12 @@ import 'antd/dist/antd.css';
 import '../table/tableCSS';
 
 import Cookies from 'js-cookie'
-import { Collapse } from 'antd';
-import { connect } from 'dva';
-import { Table, Input, Button, Form, Row, Col, Result, BackTop, Space, Popconfirm, Select } from 'antd';
-import { QuestionCircleOutlined, SmileOutlined } from '@ant-design/icons';
 
-const { Panel } = Collapse;
+import { connect } from 'dva';
+import { Table, Input, Button, Spin, Row, Col, BackTop, Space, Popconfirm, Select } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+
+
 const { Option } = Select;
 
 
@@ -137,9 +137,9 @@ class UserSetting extends React.Component {
                 console.log(record)
 
                 this.props.dispatch({
-                  type: "orgSettingNameSpace/deleteOrg",
-                  deleteInfo: {
-                    orgtype: record.orgtype
+                  type: "userSettingNameSpace/deleteUserInfo",
+                  deleteUserInfo: {
+                    userid: record.userid
                   }
                 })
                   .then(result => {
@@ -179,8 +179,8 @@ class UserSetting extends React.Component {
           updateTelphone: selectedRows[0]['telphone'],
           updateTrueName: selectedRows[0]['truename'],
           updateUserName: selectedRows[0]['username'],
-          updateOrgType:selectedRows[0]['orgid'],
-       
+          updateOrgType: selectedRows[0]['orgid'],
+
         })
       },
       getCheckboxProps: (record) => ({
@@ -192,282 +192,288 @@ class UserSetting extends React.Component {
 
 
 
-    if (!this.state.isComplete) {
+    return (
 
-      return (
+      <Spin spinning={userInfoData == undefined || orgInfoData==undefined} tip="数据加载中...">
 
-        <div>
-
-          <Row gutter={[16, 24]}>
-            <Col >
-              <h1>用户管理</h1>
-            </Col >
-          </Row>
+        <Row gutter={[16, 24]}>
+          <Col >
+            <h1>用户管理</h1>
+          </Col >
+        </Row>
 
 
 
 
-          <Row gutter={[16, 24]}>
+        <Row gutter={[16, 24]}>
 
-            <Col>
-              <Input placeholder="用户名"
-                value={this.state.newUserName}
-                onChange={(e) => {
+          <Col>
+            <Input placeholder="用户名"
+              value={this.state.newUserName}
+              onChange={(e) => {
 
-                  console.log(e.target.value)
-                  this.setState({
-                    newUserName: e.target.value
-                  })
-                }}
-              />
-            </Col>
-
-
-            <Col>
-              <Input placeholder="真实姓名"
-                value={this.state.newTrueUserName}
-                onChange={(e) => {
-
-                  console.log(e.target.value)
-                  this.setState({
-                    newTrueUserName: e.target.value
-                  })
-                }}
-              />
-            </Col>
-
-            <Col>
-              <Input placeholder="电话"
-                value={this.state.newTel}
-                onChange={(e) => {
-                  console.log(e.target.value)
-                  this.setState({
-                    newTel: e.target.value
-                  })
-                }}
-              />
-            </Col>
+                console.log(e.target.value)
+                this.setState({
+                  newUserName: e.target.value
+                })
+              }}
+            />
+          </Col>
 
 
-            <Col>
-              <Input.Password placeholder="密码"
-                value={this.state.newPassword}
-                onChange={(e) => {
+          <Col>
+            <Input placeholder="真实姓名"
+              value={this.state.newTrueUserName}
+              onChange={(e) => {
 
-                  console.log(e.target.value)
-                  this.setState({
-                    newPassword: e.target.value
-                  })
-                }}
-              />
-            </Col>
+                console.log(e.target.value)
+                this.setState({
+                  newTrueUserName: e.target.value
+                })
+              }}
+            />
+          </Col>
 
-            <Col>
-
-              <Select value={this.state.newOrgType} style={{ width: 120 }}
-                value={this.state.newOrgType}
-                onChange={(e) => {
-                  console.log('机构类型')
-                  console.log(e)
-                  this.setState({
-                    newOrgType: e
-                  })
-                }}
-              >
-                {this.optionCreate(orgInfoData)}
+          <Col>
+            <Input placeholder="电话"
+              value={this.state.newTel}
+              onChange={(e) => {
+                console.log(e.target.value)
+                this.setState({
+                  newTel: e.target.value
+                })
+              }}
+            />
+          </Col>
 
 
-              </Select>
+          <Col>
+            <Input.Password placeholder="密码"
+              value={this.state.newPassword}
+              onChange={(e) => {
 
-            </Col>
+                console.log(e.target.value)
+                this.setState({
+                  newPassword: e.target.value
+                })
+              }}
+            />
+          </Col>
+
+          <Col>
+
+            <Select value={this.state.newOrgType} style={{ width: 120 }}
+              value={this.state.newOrgType}
+              onChange={(e) => {
+                console.log('机构类型')
+                console.log(e)
+                this.setState({
+                  newOrgType: e
+                })
+              }}
+            >
+              {this.optionCreate(orgInfoData)}
 
 
-            <Col span={4}>
-              <Button
-                onClick={() => {
+            </Select>
 
-                  this.props.dispatch({
-                    type: "userSettingNameSpace/inertUserInfo",
-                    insertUserInfo: {
-                      ...this.state
-                    }
-                  })
-                    .then(result => {
+          </Col>
 
+
+          <Col span={4}>
+            <Button
+              onClick={() => {
+
+                this.props.dispatch({
+                  type: "userSettingNameSpace/inertUserInfo",
+                  insertUserInfo: {
+                    ...this.state
+                  }
+                })
+                  .then(result => {
+
+                    this.setState({
+                      isUplaod: false,
+                    })
+
+                    if (result) {
+                      //用户插入成功后
                       this.setState({
-                        isUplaod: false,
+                        newOrgType: '',
+                        newPassword: '',
+                        newTel: '',
+                        newTrueUserName: '',
+                        newUserName: '',
+
                       })
 
-                      if (result) {
-                        //数据成功后
-
-                      }
-                    })
-                }}
-                type="primary"
-                style={{
-                  marginBottom: 16,
-                }}
-              >
-                添加用户
+                    }
+                  })
+              }}
+              type="primary"
+              style={{
+                marginBottom: 16,
+              }}
+            >
+              添加用户
               </Button>
-            </Col>
+          </Col>
 
-          </Row>
-
-
-          <Row gutter={[16, 24]}>
-            <Col span={24}>
-              <Table
-                columns={columns}
-                dataSource={userInfoData}
-                rowSelection={{
-                  type: 'radio',
-                  ...rowSelection,
-                }} />
-            </Col>
+        </Row>
 
 
-
-          </Row>
-
-          <Row gutter={[16, 24]}>
-
-
-            <Col>
-              <Input placeholder="用户名"
-                value={this.state.updateUserName}
-                onChange={(e) => {
-                  console.log(e.target.value)
-                  this.setState({
-                    updateUserName: e.target.value
-                  })
-                }}
-              />
-            </Col>
+        <Row gutter={[16, 24]}>
+          <Col span={24}>
+            <Table
+              columns={columns}
+              dataSource={userInfoData}
+              rowSelection={{
+                type: 'radio',
+                ...rowSelection,
+              }} />
+          </Col>
 
 
-            <Col>
-              <Input placeholder="真实姓名"
-                value={this.state.updateTrueName}
-                onChange={(e) => {
 
-                  console.log(e.target.value)
-                  this.setState({
-                    updateTrueName: e.target.value
-                  })
-                }}
-              />
-            </Col>
+        </Row>
 
-            <Col>
-              <Input placeholder="电话"
-                value={this.state.updateTelphone}
-                onChange={(e) => {
-
-                  console.log(e.target.value)
-                  this.setState({
-                    updateTelphone: e.target.value
-                  })
-                }}
-              />
-            </Col>
+        <Row gutter={[16, 24]}>
 
 
-            <Col>
-              <Input.Password placeholder="密码"
-                value={this.state.updatePassword}
-                onChange={(e) => {
-
-                  console.log(e.target.value)
-                  this.setState({
-                    updatePassword: e.target.value
-                  })
-                }}
-              />
-            </Col>
-
-            <Col>
-
-              <Select value={this.state.updateOrgType} style={{ width: 120 }}
-                value={this.state.updateOrgType}
-                onChange={(e) => {
-                  console.log('机构类型')
-                  console.log(e)
-                  this.setState({
-                    updateOrgType: e
-                  })
-                }}
-              >
-                {this.optionCreate(orgInfoData)}
+          <Col>
+            <Input placeholder="用户名"
+              value={this.state.updateUserName}
+              onChange={(e) => {
+                console.log(e.target.value)
+                this.setState({
+                  updateUserName: e.target.value
+                })
+              }}
+            />
+          </Col>
 
 
-              </Select>
+          <Col>
+            <Input placeholder="真实姓名"
+              value={this.state.updateTrueName}
+              onChange={(e) => {
 
-            </Col>
+                console.log(e.target.value)
+                this.setState({
+                  updateTrueName: e.target.value
+                })
+              }}
+            />
+          </Col>
+
+          <Col>
+            <Input placeholder="电话"
+              value={this.state.updateTelphone}
+              onChange={(e) => {
+
+                console.log(e.target.value)
+                this.setState({
+                  updateTelphone: e.target.value
+                })
+              }}
+            />
+          </Col>
 
 
-            <Col span={4}>
-              <Button
-                onClick={() => {
-                  console.log('保存点击了')
-                  this.props.dispatch({
-                    type: "userSettingNameSpace/updateUserInfo",
-                    updateUserInfo: {
-                      ...this.state
+          <Col>
+            <Input.Password placeholder="密码"
+              value={this.state.updatePassword}
+              onChange={(e) => {
+
+                console.log(e.target.value)
+                this.setState({
+                  updatePassword: e.target.value
+                })
+              }}
+            />
+          </Col>
+
+          <Col>
+
+            <Select value={this.state.updateOrgName} style={{ width: 120 }}
+
+              onChange={(e) => {
+                console.log('机构类型')
+                console.log(e)
+                this.setState({
+                  updateOrgType: e
+                })
+              }}
+            >
+              {this.optionCreate(orgInfoData)}
+
+
+            </Select>
+
+          </Col>
+
+
+          <Col span={4}>
+            <Button
+              onClick={() => {
+                console.log('保存点击了')
+                this.props.dispatch({
+                  type: "userSettingNameSpace/updateUserInfo",
+                  updateUserInfo: {
+                    ...this.state
+                  }
+                })
+                  .then(result => {
+
+                    this.setState({
+                      isUplaod: false,
+                    })
+
+                    if (result) {
+                      this.setState({
+                        updateOrgType: '',
+                        updatePassword: '',
+                        updateTelphone: '',
+                        updateTrueName: '',
+                        userid: '',
+                        updateUserName: '',
+                      })
                     }
                   })
-                    .then(result => {
-
-                      this.setState({
-                        isUplaod: false,
-                      })
-
-                      if (result) {
-
-                      }
-                    })
-                }}
-                type="primary"
-                style={{
-                  marginBottom: 16,
-                }}
-              >
-                保存
+              }}
+              type="primary"
+              style={{
+                marginBottom: 16,
+              }}
+            >
+              保存
                     </Button>
-            </Col>
+          </Col>
 
-          </Row>
-
-
+        </Row>
 
 
 
-          <BackTop>
-            <div style={{
-              height: 40,
-              width: 40,
-              lineHeight: '40px',
-              borderRadius: 4,
-              backgroundColor: '#1088e9',
-              color: '#fff',
-              textAlign: 'center',
-              fontSize: 14,
-            }}>UP</div>
-          </BackTop>
-
-        </div >
 
 
-      );
-    } else {
-      return (
-        <Result
-          icon={<SmileOutlined />}
-          title="您的信息已经成功保存!"
-        // extra={<Button type="primary">Next</Button>}
-        />)
-    }
+        <BackTop>
+          <div style={{
+            height: 40,
+            width: 40,
+            lineHeight: '40px',
+            borderRadius: 4,
+            backgroundColor: '#1088e9',
+            color: '#fff',
+            textAlign: 'center',
+            fontSize: 14,
+          }}>UP</div>
+        </BackTop>
+
+      </Spin >
+
+
+    );
+
 
 
 

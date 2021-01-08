@@ -4,10 +4,10 @@ import 'antd/dist/antd.css';
 import './table/tableCSS';
 
 import Cookies from 'js-cookie'
-import { Collapse } from 'antd';
+
 import { connect } from 'dva';
-import { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button,  Form, Row, Col, Result, BackTop } from 'antd';
+
+import {   Button,  Row, Col, Result, BackTop } from 'antd';
 import {  CloudUploadOutlined, SmileOutlined } from '@ant-design/icons';
 
 

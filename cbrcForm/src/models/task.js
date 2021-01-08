@@ -50,7 +50,7 @@ export default {
       } else {
 
         yield put({ type: 'updateReduce', payload: { ...response } });
-        notification.success({ message: '初始化成功' })
+        //notification.success({ message: '初始化成功' })
         return true;
       }
 
@@ -125,7 +125,7 @@ export default {
         notification.error({ message: response.data.F })
         return false;
       } else {
-        notification.success({ message: '任务查询成功' })
+        //notification.success({ message: '任务查询成功' })
         yield put({ type: 'queryTaskDetailReduce', payload: { ...response } });
         return true;
       }
@@ -163,7 +163,7 @@ export default {
         notification.error({ message: response.data.F })
         return false;
       } else {
-        notification.success({ message: '任务查询成功' })
+        //notification.success({ message: '任务查询成功' })
         yield put({ type: 'queryTaskCompleteReduce', payload: { ...response } });
         return true;
       }
@@ -199,7 +199,7 @@ export default {
         notification.error({ message: response.data.F })
         return false;
       } else {
-        notification.success({ message: '任务列表获取成功' })
+        //notification.success({ message: '任务列表获取成功' })
         yield put({ type: 'queryTaskReduce', payload: { ...response } });
         return true;
       }
@@ -234,7 +234,7 @@ export default {
       } else {
 
         yield put({ type: 'getOrgReduce', payload: { ...response } });
-        notification.success({ message: '初始化成功' })
+        //notification.success({ message: '初始化成功' })
         return true;
       }
     },
@@ -322,11 +322,11 @@ export default {
       //得到的结果有很多条任务，现在需要把这些任务的
       for (let i in action.payload.data) {
         const taskinfo = action.payload.data[i].taskinfo
-        console.log('taskinfo:')
-        console.log(taskinfo)
+        // console.log('taskinfo:')
+        // console.log(taskinfo)
 
-        console.log('action.payload.data[i]:')
-        console.log(action.payload.data[i])
+        // console.log('action.payload.data[i]:')
+        // console.log(action.payload.data[i])
 
         action.payload.data[i]['createtime'] = taskinfo['createtime']
         action.payload.data[i]['enddate'] = taskinfo['enddate']
@@ -336,8 +336,8 @@ export default {
         action.payload.data[i]['orgtype'] = taskinfo['orgtype']
         action.payload.data[i]['taskdescribe'] = taskinfo['taskdescribe']
         action.payload.data[i]['tasktitle'] = taskinfo['tasktitle']
-
-
+        
+        
 
         if (action.payload.data[i]['iscomplete'] == 0) {
           action.payload.data[i]['taskStatus'] = '待完成'
@@ -389,6 +389,11 @@ export default {
         orgTmp['value'] = orgData[index]['orgtype'] + ''
 
         const orgChildrens = orgData[index]['orgs']
+
+        //如果该机构类型下面没有子机构，就不把他进行展示
+        if(orgChildrens==null || orgChildrens.length == 0){
+          continue;
+        }
 
         var orgChildrenList = []
         for (let childIndex in orgChildrens) {

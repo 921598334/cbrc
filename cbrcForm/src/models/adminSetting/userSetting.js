@@ -88,7 +88,7 @@ export default {
         yield put({ type: 'updateUserInfoReduce', payload: { ...response } });
 
         //重新获取数据
-        yield put({ type: 'initOrgInfo' });
+        yield put({ type: 'initUserInfo' });
 
         notification.success({ message: '更新成功' })
         return true;
@@ -128,8 +128,10 @@ export default {
 
         yield put({ type: 'inertUserInfoReduce', payload: { ...response } });
 
-        //重新获取数据
-        yield put({ type: 'initOrgInfo' });
+        
+         //重新获取数据
+         yield put({ type: 'initUserInfo' });
+
 
         notification.success({ message: '插入成功' })
         return true;
@@ -169,7 +171,7 @@ export default {
 
        
         yield put({ type: 'initUserInfoReduce', payload: { ...response } });
-        notification.success({ message: '初始化成功' })
+        // notification.success({ message: '初始化成功' })
         return true;
       }
 

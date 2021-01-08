@@ -4,11 +4,11 @@ import 'antd/dist/antd.css';
 import '../table/tableCSS';
 
 import Cookies from 'js-cookie'
-import { Collapse } from 'antd';
+
 import { connect } from 'dva';
-import { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button,  Form, Row, Col, Result, BackTop } from 'antd';
-import {  CloudUploadOutlined, SmileOutlined } from '@ant-design/icons';
+
+import {   Row, Col, Result, BackTop } from 'antd';
+import {   SmileOutlined } from '@ant-design/icons';
 
 
 
@@ -72,7 +72,7 @@ class TimerSetting extends React.Component {
   render() {
 
 
-    console.log("adminNameSpace 的render开始执行")
+    console.log("TimerSetting 的render开始执行")
     
 
 
@@ -90,7 +90,7 @@ class TimerSetting extends React.Component {
             </Col >
           </Row>
 
-          <Row gutter={[16, 24]} align="middle">
+          {/* <Row gutter={[16, 24]} align="middle">
          
 
             <Col className="gutter-row" span={4}>
@@ -98,7 +98,7 @@ class TimerSetting extends React.Component {
                 保存
             </Button>
             </Col>
-          </Row>
+          </Row> */}
 
 
 

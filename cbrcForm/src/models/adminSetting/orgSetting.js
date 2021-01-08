@@ -271,7 +271,7 @@ export default {
       } else {
 
         yield put({ type: 'initReduce', payload: { ...response } });
-        notification.success({ message: '初始化成功' })
+        // notification.success({ message: '初始化成功' })
         return true;
       }
 

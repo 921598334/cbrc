@@ -140,7 +140,7 @@ class AdminPage extends React.Component {
                 }
 
                 />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" defaultOpenKeys={['sub1','sub2','sub3']}>
 
 
                   <SubMenu key="sub1" icon={<PieChartOutlined />} title="监管数据查看">
@@ -236,6 +236,8 @@ class AdminPage extends React.Component {
                   <Route exact path="/admin/timerManager" component={TimerSetting} />
 
                   
+                  
+
 
                 </Content>
               </Layout>

@@ -254,11 +254,11 @@ class BasicTable extends React.Component {
         <Space size="middle">
           <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
-          <Popconfirm title="您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
+          <Popconfirm title="驳回后会重新为该用户生成新的任务，您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
             <a >驳回</a>
           </Popconfirm>
 
-          <Popconfirm title="您确定要通过吗？" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
+          <Popconfirm title="您确定要通过吗？通过后仍然可以重新驳回" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
             <a >通过</a>
           </Popconfirm>
 
@@ -271,7 +271,7 @@ class BasicTable extends React.Component {
         <Space size="middle">
           <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
-          <Popconfirm title="您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
+          <Popconfirm title="驳回后会重新为该用户生成新的任务，您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
             <a >驳回</a>
           </Popconfirm>
 
@@ -286,11 +286,13 @@ class BasicTable extends React.Component {
         <Space size="middle">
           <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
-          <Popconfirm title="您确定要通过吗？" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
+          {/* <Popconfirm title="您确定要通过吗？" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
             <a >通过</a>
-          </Popconfirm>
+          </Popconfirm> */}
         </Space>
       )
+    } else {
+      console.log('未知');
     }
 
 
@@ -346,7 +348,16 @@ class BasicTable extends React.Component {
       {
         title: '操作',
         dataIndex: 'operation',
-        render: (text, record) => {this.action(record) }
+        render: (text, record) => (
+
+          <Space size="middle">
+
+            { this.action(record)}
+
+          </Space>
+
+
+        )
         // <Space size="middle">
         //   <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>
 
