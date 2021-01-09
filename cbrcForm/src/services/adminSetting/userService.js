@@ -18,7 +18,7 @@ export async function updateUserInfoRequest(updateUserInfo) {
       updatePassword:updateUserInfo['updatePassword'],
       updateTelphone:updateUserInfo['updateTelphone'] ,
       updateTrueName:updateUserInfo['updateTrueName'] ,
-      updateUserId:updateUserInfo['userid'],
+      updateUserId:updateUserInfo['updateUserId'],
       updateUserName:updateUserInfo['updateUserName'],
     
     }

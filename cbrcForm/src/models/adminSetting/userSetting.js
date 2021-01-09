@@ -68,6 +68,62 @@ export default {
 
       console.log(updateUserInfo)
 
+
+
+
+      if (updateUserInfo.updateUserName == null) {
+        notification.error({ message: '用户名不能为空' })
+        return
+      }
+      var tmp = updateUserInfo.updateUserName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '用户名不能全为空格' })
+        return
+      }
+
+
+      if (updateUserInfo.updateTrueName == null) {
+        notification.error({ message: '真实姓名不能为空' })
+        return
+      }
+       tmp = updateUserInfo.updateTrueName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '真实姓名不能全为空格' })
+        return
+      }
+
+
+      if (updateUserInfo.updateTelphone == null) {
+        notification.error({ message: '电话不能为空' })
+        return
+      }
+       tmp = updateUserInfo.updateTelphone.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '电话不能全为空格' })
+        return
+      }
+
+      if (updateUserInfo.updatePassword == null) {
+        notification.error({ message: '密码不能为空' })
+        return
+      }
+       tmp = updateUserInfo.updatePassword.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '密码不能全为空格' })
+        return
+      }
+
+
+
+      if (updateUserInfo.updateOrgType == null) {
+        notification.error({ message: '请选择机构类型' })
+        return
+      }
+
+
+
+
+
       const response = yield call(updateUserInfoRequest, updateUserInfo);
 
       console.log("*updateUserInfo")
@@ -108,6 +164,60 @@ export default {
       console.log("*inertUserInfo 开始执行")
 
       console.log(insertUserInfo)
+
+
+
+      if (insertUserInfo.newUserName == null) {
+        notification.error({ message: '用户名不能为空' })
+        return
+      }
+      var tmp = insertUserInfo.newUserName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '用户名不能全为空格' })
+        return
+      }
+
+
+      if (insertUserInfo.newTrueUserName == null) {
+        notification.error({ message: '真实姓名不能为空' })
+        return
+      }
+       tmp = insertUserInfo.newTrueUserName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '真实姓名不能全为空格' })
+        return
+      }
+
+
+      if (insertUserInfo.newTel == null) {
+        notification.error({ message: '电话不能为空' })
+        return
+      }
+       tmp = insertUserInfo.newTel.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '电话不能全为空格' })
+        return
+      }
+
+      if (insertUserInfo.newPassword == null) {
+        notification.error({ message: '密码不能为空' })
+        return
+      }
+       tmp = insertUserInfo.newPassword.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '密码不能全为空格' })
+        return
+      }
+
+
+
+      if (insertUserInfo.newOrgType == null) {
+        notification.error({ message: '请选择机构类型' })
+        return
+      }
+
+
+
 
       const response = yield call(inertUserInfoRequest, insertUserInfo);
 

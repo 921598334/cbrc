@@ -48,6 +48,8 @@ class BasicTable extends React.Component {
       // orgList:'null',
       taskStatus: '1',
       isUplaod: false,
+      //初始化是否加载完成标记
+      isLoading: true,
     };
   }
 
@@ -66,6 +68,12 @@ class BasicTable extends React.Component {
 
     })
       .then(result => {
+
+        this.setState({
+          isLoading: false,
+        })
+
+
         if (result) {
           //查询成功后
 
@@ -407,7 +415,7 @@ class BasicTable extends React.Component {
     };
 
 
-    const { loading, selectedRowKeys } = this.state;
+    const {  selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -416,7 +424,7 @@ class BasicTable extends React.Component {
 
     return (
 
-      <Spin spinning={orgList == undefined} tip="数据加载中...">
+      <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
         <div>
 

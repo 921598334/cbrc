@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 
 import { connect } from 'dva';
 
-import { Table, Button, Row, Col, DatePicker, Space,Popconfirm,message } from 'antd';
+import { Table, Button, Row, Col, DatePicker, Space,Popconfirm,message,Spin } from 'antd';
 import { FileSearchOutlined,QuestionCircleOutlined} from '@ant-design/icons';
 
 
@@ -47,6 +47,8 @@ class HistoryTask extends React.Component {
       endDate: '',
       fileType: '1',
       isUplaod: false,
+      //初始化是否加载完成标记
+      isLoading:true,
     };
   }
 
@@ -61,6 +63,11 @@ class HistoryTask extends React.Component {
       }
     })
       .then(result => {
+
+        this.setState({
+          isLoading: false,
+        })
+
         if (result) {
           //查询成功后
 
@@ -243,7 +250,7 @@ class HistoryTask extends React.Component {
 
     return (
 
-      <div>
+      <Spin  spinning={this.state.isLoading} tip="数据加载中...">
 
         <Row gutter={[16, 24]}>
           <Col >
@@ -275,7 +282,7 @@ class HistoryTask extends React.Component {
           <Table columns={columns} dataSource={queryData} />
         </div>
 
-      </div >
+      </Spin >
 
 
     );

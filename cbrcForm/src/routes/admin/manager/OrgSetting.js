@@ -4,15 +4,14 @@ import 'antd/dist/antd.css';
 import '../table/tableCSS';
 
 import Cookies from 'js-cookie'
-import { Collapse } from 'antd';
 import { connect } from 'dva';
 
-import { Table, Input, Button, Row, Col, Spin, BackTop, Space, Popconfirm, Select } from 'antd';
-import {  QuestionCircleOutlined } from '@ant-design/icons';
+import { Table, Input, Button, Row, Col, Spin, BackTop, Space, Popconfirm, Select, Tabs } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
-const { Panel } = Collapse;
+
 const { Option } = Select;
-
+const { TabPane } = Tabs;
 
 
 @connect(({ orgSettingNameSpace }) => ({
@@ -36,10 +35,16 @@ class OrgSetting extends React.Component {
       userid: Cookies.get('userid'),
 
       count: 0,
-      isUplaod: false,
+
+      isUplaod1: false,
+      isUplaod2: false,
+      isUplaod3: false,
+      isUplaod4: false,
+
       isComplete: false,
       fileType: 1,
-
+      //初始化是否加载完成标记
+      isLoading: true,
 
     };
   }
@@ -53,22 +58,24 @@ class OrgSetting extends React.Component {
 
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     console.log("OrgSetting 的componentWillmount开始执行")
 
     //得到机构类型
-    this.props.dispatch({
+    await this.props.dispatch({
       type: "orgSettingNameSpace/initOrg",
 
     })
 
     //得到所有机构信息
-    this.props.dispatch({
+    await  this.props.dispatch({
       type: "orgSettingNameSpace/initOrgInfo",
 
     })
 
-
+    this.setState({
+      isLoading: false,
+    })
   }
 
 
@@ -121,7 +128,7 @@ class OrgSetting extends React.Component {
         render: (text, record) => (
           <Space size="middle">
 
-            <Popconfirm title="删除后，该机构类型下的所有机构与用户信息均会被删除，并且无法恢复，您确定要删除吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            <Popconfirm title=" 您确定要删除吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
 
               onConfirm={() => {
                 console.log('点击了删除,删除的ID：')
@@ -192,7 +199,7 @@ class OrgSetting extends React.Component {
         render: (text, record) => (
           <Space size="middle">
 
-            <Popconfirm title="删除后，该机构下的用户信息均会被删除，并且无法恢复，您确定要删除吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            <Popconfirm title=" 您确定要删除吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
 
               onConfirm={() => {
                 console.log('点击了删除,删除的ID：')
@@ -285,407 +292,410 @@ class OrgSetting extends React.Component {
 
 
 
-      return (
+    return (
 
-        <Spin spinning={orgData == undefined || orgInfoData==undefined} tip="数据加载中...">
+      <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
-          <Row gutter={[16, 24]}>
-            <Col >
-              <h1>机构设置</h1>
-            </Col >
-          </Row>
-
-
+        <Row gutter={[16, 24]}>
+          <Col >
+            <h1>机构管理</h1>
+          </Col >
+        </Row>
 
 
-          {/* 添加机构类型 */}
-          <Collapse  >
 
-            <Panel header="机构类型管理" key="1">
-              <div>
 
-                <Row>
+        <Tabs defaultActiveKey="1" >
 
-                  <Col>
-                    <Input placeholder="机构类型"
-                      onChange={(e) => {
-                        console.log('添加按钮的机构类型变化了')
-                        console.log(e.target.value)
-                        this.setState({
-                          newOrgName: e.target.value
-                        })
-                      }}
-                    />
-                  </Col>
+          <TabPane tab="机构类型管理" key="1">
 
-                  <Col span={4}>
-                    <Button
-                      onClick={() => {
-                        console.log('添加按钮点击了')
+            <div>
 
-                        this.props.dispatch({
-                          type: "orgSettingNameSpace/inertOrg",
-                          insertInfo: {
-                            ...this.state
+              <Row>
+
+                <Col>
+                  <Input placeholder="机构类型"
+                    value={this.state.newOrgName}
+                    onChange={(e) => {
+                      console.log('添加按钮的机构类型变化了')
+                      console.log(e.target.value)
+                      this.setState({
+                        newOrgName: e.target.value
+                      })
+
+                    }}
+                  />
+                </Col>
+
+                <Col span={4}>
+                  <Button
+
+
+                    loading={this.state.isUplaod1}
+                    onClick={() => {
+                      console.log('添加按钮点击了')
+
+                      this.state.isUplaod1 = true;
+
+                      this.props.dispatch({
+                        type: "orgSettingNameSpace/inertOrg",
+                        insertInfo: {
+                          ...this.state
+                        }
+                      })
+                        .then(result => {
+
+                          this.setState({
+                            isUplaod1: false,
+                          })
+                          console.log(this.state.isUplaod1)
+                          if (result) {
+                            // 机构类型添加成功后要清空
+                            this.setState({
+                              newOrgName: '',
+
+                            })
                           }
                         })
-                          .then(result => {
+                    }}
+                    type="primary"
+                    style={{
+                      marginBottom: 16,
+                    }}
 
+                  >
+                    添加机构类型
+                </Button>
+                </Col>
+
+              </Row>
+
+
+              <Table
+                columns={columns}
+                dataSource={orgData}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }} />
+
+
+
+              <Row>
+
+                <Col>
+                  <Input placeholder="机构类型"
+
+                    onChange={(e) => {
+                      console.log('保存的机构类型变化了')
+                      console.log(e.target.value)
+                      this.setState({
+                        updateOrgName: e.target.value
+                      })
+                    }}
+                    value={this.state.updateOrgName}
+                  />
+                </Col>
+
+                <Col span={4}>
+                  <Button
+                    loading={this.state.isUplaod2}
+                    onClick={() => {
+                      console.log('保存点击了')
+                      console.log(this.state.isUplaod2)
+                      this.setState({
+                        isUplaod2: true,
+                      })
+                      this.props.dispatch({
+                        type: "orgSettingNameSpace/updateOrg",
+                        updateInfo: {
+                          ...this.state
+                        }
+                      })
+                        .then(result => {
+
+                          this.setState({
+                            isUplaod2: false,
+                          })
+
+                          console.log(this.state.isUplaod2)
+
+                          if (result) {
+                            // 机构类型保存后
                             this.setState({
-                              isUplaod: false,
+                              updateOrgType: '',
+                              updateOrgName: ''
+
                             })
 
-                            if (result) {
-                              // 机构类型添加成功后要清空
-                              this.setState({
-                                newOrgName:'',
-                               
-                              })
-                            }
-                          })
-                      }}
-                      type="primary"
-                      style={{
-                        marginBottom: 16,
-                      }}
-
-                    >
-                      添加机构类型
-              </Button>
-                  </Col>
-
-                </Row>
-
-
-
-                <Table
-                  columns={columns}
-                  dataSource={orgData}
-                  rowSelection={{
-                    type: 'radio',
-                    ...rowSelection,
-                  }} />
-
-
-
-
-
-
-
-
-                <Row>
-
-                  <Col>
-                    <Input placeholder="机构类型"
-
-                      onChange={(e) => {
-                        console.log('保存的机构类型变化了')
-                        console.log(e.target.value)
-                        this.setState({
-                          updateOrgName: e.target.value
-                        })
-                      }}
-                      value={this.state.updateOrgName}
-                    />
-                  </Col>
-
-                  <Col span={4}>
-                    <Button
-                      onClick={() => {
-                        console.log('保存点击了')
-                        this.props.dispatch({
-                          type: "orgSettingNameSpace/updateOrg",
-                          updateInfo: {
-                            ...this.state
                           }
                         })
-                          .then(result => {
+
+
+                    }}
+                    type="primary"
+                    style={{
+                      marginBottom: 16,
+                    }}
+                  >
+                    修改
+                </Button>
+                </Col>
+
+              </Row>
+
+
+            </div>
+
+
+          </TabPane>
+
+
+          <TabPane tab="机构信息管理" key="2">
+
+
+            <div>
+
+              <Row>
+
+                <Col>
+                  <Input placeholder="机构名称"
+                    value={this.state.newOrgInfoName}
+                    onChange={(e) => {
+                      console.log('机构名称')
+                      console.log(e.target.value)
+                      this.setState({
+                        newOrgInfoName: e.target.value
+                      })
+                    }}
+                  />
+                </Col>
+
+                <Col>
+
+
+                  <Select value={this.state.newOrgType} style={{ width: 120 }}
+                    onChange={(e) => {
+                      console.log('机构类型')
+                      console.log(e)
+                      this.setState({
+                        newOrgType: e
+                      })
+                    }}
+                  >
+                    {this.optionCreate(orgData)}
+
+
+                  </Select>
+
+
+
+                </Col>
+                <Col>
+                  <Input placeholder="管理者姓名"
+                    value={this.state.newManagerName}
+                    onChange={(e) => {
+                      console.log('管理者姓名')
+                      console.log(e.target.value)
+                      this.setState({
+                        newManagerName: e.target.value
+                      })
+                    }}
+                  />
+                </Col>
+
+                <Col span={4}>
+                  <Button
+                    loading={this.state.isUplaod3}
+                    onClick={() => {
+                      console.log('添加按钮点击了')
+
+                      this.setState({
+                        isUplaod3:true
+                      })
+
+                      this.props.dispatch({
+                        type: "orgSettingNameSpace/inertOrgInfo",
+                        insertOrgInfo: {
+                          ...this.state
+                        }
+                      })
+                        .then(result => {
+
+                          this.setState({
+                            isUplaod3: false,
+                          })
+
+                          if (result) {
+                            //数据成功后
 
                             this.setState({
-                              isUplaod: false,
+                              newManagerName: '',
+                              newOrgInfoName: '',
+                              newOrgType: '',
                             })
-
-                            if (result) {
-                              // 机构类型保存后
-                              this.setState({
-                                updateOrgType:'',
-                                updateOrgName:''
-
-                              })
-
-                            }
-                          })
-
-
-                      }}
-                      type="primary"
-                      style={{
-                        marginBottom: 16,
-                      }}
-                    >
-                      保存
-                    </Button>
-                  </Col>
-
-                </Row>
-
-
-              </div>
-
-
-
-
-            </Panel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <Panel header="机构信息" key="2">
-
-
-              <div>
-
-                <Row>
-
-                  <Col>
-                    <Input placeholder="机构名称"
-                      value={this.state.newOrgInfoName}
-                      onChange={(e) => {
-                        console.log('机构名称')
-                        console.log(e.target.value)
-                        this.setState({
-                          newOrgInfoName: e.target.value
-                        })
-                      }}
-                    />
-                  </Col>
-
-                  <Col>
-
-
-                    <Select value={this.state.newOrgType} style={{ width: 120 }}
-                      onChange={(e) => {
-                        console.log('机构类型')
-                        console.log(e)
-                        this.setState({
-                          newOrgType: e
-                        })
-                      }}
-                    >
-                      {this.optionCreate(orgData)}
-
-
-                    </Select>
-
-
-
-                  </Col>
-                  <Col>
-                    <Input placeholder="管理者姓名"
-                      value={this.state.newManagerName}
-                      onChange={(e) => {
-                        console.log('管理者姓名')
-                        console.log(e.target.value)
-                        this.setState({
-                          newManagerName: e.target.value
-                        })
-                      }}
-                    />
-                  </Col>
-
-                  <Col span={4}>
-                    <Button
-                      onClick={() => {
-                        console.log('添加按钮点击了')
-
-                        this.props.dispatch({
-                          type: "orgSettingNameSpace/inertOrgInfo",
-                          insertOrgInfo: {
-                            ...this.state
                           }
                         })
-                          .then(result => {
+                    }}
+                    type="primary"
+                    style={{
+                      marginBottom: 16,
+                    }}
 
+                  >
+                    添加机构
+                </Button>
+                </Col>
+
+              </Row>
+
+
+
+
+              <Table
+                columns={columnOrgInfo}
+                dataSource={orgInfoData}
+                rowSelection={{
+                  type: 'radio',
+                  ...orgInfoRowSelection,
+                }} />
+
+
+
+
+
+
+              <Row>
+
+                <Col>
+                  <Input placeholder="机构名称"
+                    value={this.state.updateOrgname}
+                    onChange={(e) => {
+                      console.log('机构名称')
+                      console.log(e.target.value)
+                      this.setState({
+                        updateOrgname: e.target.value
+                      })
+                    }}
+                  />
+                </Col>
+
+                <Col>
+
+
+                  <Select value={this.state.updateOrgTypeName} style={{ width: 120 }}
+                    onChange={(e) => {
+                      console.log('机构类型')
+                      console.log(e)
+                      this.setState({
+                        updateOrgtype: e
+                      })
+                    }}
+                  >
+                    {this.optionCreate(orgData)}
+
+                  </Select>
+
+                </Col>
+                <Col>
+                  <Input placeholder="管理者姓名"
+                    value={this.state.updateManager}
+                    onChange={(e) => {
+                      console.log('管理者姓名')
+                      console.log(e.target.value)
+                      this.setState({
+                        updateManager: e.target.value
+                      })
+                    }}
+                  />
+                </Col>
+
+
+
+                <Col span={4}>
+                  <Button
+                    loading={this.state.isUplaod4}
+                    onClick={() => {
+                      console.log('保存点击了')
+                      this.setState({
+                        isUplaod4:true
+                      })
+
+                      this.props.dispatch({
+                        type: "orgSettingNameSpace/updateOrgInfo",
+                        updateOrgInfo: {
+                          ...this.state
+                        }
+                      })
+                        .then(result => {
+
+                          this.setState({
+                            isUplaod4: false,
+                          })
+
+                          if (result) {
+                            //数据成功后
+                            //数据成功后
                             this.setState({
-                              isUplaod: false,
+                              updateManager: '',
+                              updateOrgTypeName: '',
+                              updateOrgid: '',
+                              updateOrgname: '',
+                              updateOrgtype: '',
+                              updatekey: '',
                             })
-
-                            if (result) {
-                              //数据成功后
-                             
-                              this.setState({
-                                newManagerName: '',
-                                newOrgInfoName: '',
-                                newOrgType: '',
-                              })
-                            }
-                          })
-                      }}
-                      type="primary"
-                      style={{
-                        marginBottom: 16,
-                      }}
-
-                    >
-                      添加机构
-                    </Button>
-                  </Col>
-
-                </Row>
-
-
-
-
-
-
-
-
-
-
-                <Table
-                  columns={columnOrgInfo}
-                  dataSource={orgInfoData}
-                  rowSelection={{
-                    type: 'radio',
-                    ...orgInfoRowSelection,
-                  }} />
-
-
-
-
-
-
-
-
-
-
-                <Row>
-
-                  <Col>
-                    <Input placeholder="机构名称"
-                      value={this.state.updateOrgname}
-                      onChange={(e) => {
-                        console.log('机构名称')
-                        console.log(e.target.value)
-                        this.setState({
-                          updateOrgname: e.target.value
-                        })
-                      }}
-                    />
-                  </Col>
-
-                  <Col>
-
-
-                    <Select value={this.state.updateOrgTypeName} style={{ width: 120 }}
-                      onChange={(e) => {
-                        console.log('机构类型')
-                        console.log(e)
-                        this.setState({
-                          updateOrgtype: e
-                        })
-                      }}
-                    >
-                      {this.optionCreate(orgData)}
-
-                    </Select>
-
-                  </Col>
-                  <Col>
-                    <Input placeholder="管理者姓名"
-                      value={this.state.updateManager}
-                      onChange={(e) => {
-                        console.log('管理者姓名')
-                        console.log(e.target.value)
-                        this.setState({
-                          updateManager: e.target.value
-                        })
-                      }}
-                    />
-                  </Col>
-
-                  
-
-                  <Col span={4}>
-                    <Button
-
-                      onClick={() => {
-                        console.log('保存点击了')
-                        this.props.dispatch({
-                          type: "orgSettingNameSpace/updateOrgInfo",
-                          updateOrgInfo: {
-                            ...this.state
                           }
                         })
-                          .then(result => {
-
-                            if (result) {
-                              //数据成功后
-                              //数据成功后
-                              this.setState({
-                                updateManager: '',
-                                updateOrgTypeName: '',
-                                updateOrgid: '',
-                                updateOrgname: '',
-                                updateOrgtype: '',
-                                updatekey: '',
-                              })
-                            }
-                          })
 
 
-                      }}
+                    }}
 
-                      type="primary"
-                      style={{
-                        marginBottom: 16,
-                      }}
-                    >
-                      保存
-                   </Button>
-                  </Col>
+                    type="primary"
+                    style={{
+                      marginBottom: 16,
+                    }}
+                  >
+                    保存
+                  </Button>
+                </Col>
 
-                </Row>
-
-
-              </div>
+              </Row>
 
 
-            </Panel>
+            </div>
 
-          </Collapse>
+
+          </TabPane>
+
+        </Tabs>
 
 
 
 
 
-          <BackTop>
-            <div style={{
-              height: 40,
-              width: 40,
-              lineHeight: '40px',
-              borderRadius: 4,
-              backgroundColor: '#1088e9',
-              color: '#fff',
-              textAlign: 'center',
-              fontSize: 14,
-            }}>UP</div>
-          </BackTop>
-
-        </Spin >
 
 
-      );
-    
+
+
+
+        <BackTop>
+          <div style={{
+            height: 40,
+            width: 40,
+            lineHeight: '40px',
+            borderRadius: 4,
+            backgroundColor: '#1088e9',
+            color: '#fff',
+            textAlign: 'center',
+            fontSize: 14,
+          }}>UP</div>
+        </BackTop>
+
+      </Spin >
+
+
+    );
+
 
   }
 }

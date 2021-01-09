@@ -17,11 +17,6 @@ const { Option } = Select;
 
 
 
-const dateFormat = 'YYYY-MM-DD';
-
-
-
-
 @connect(({ taskNamespace }) => ({
   taskNamespace,
 }))
@@ -41,7 +36,8 @@ class HistoryTimerTaskDetail extends React.Component {
       period: '2000-01-01',
       enddate: '2000-01-01',
       fromdate: '2000-01-02',
-
+      //初始化是否加载完成标记
+      isLoading: true,
       isUplaod: false,
     };
   }
@@ -82,14 +78,16 @@ class HistoryTimerTaskDetail extends React.Component {
             filetype: queryTimerTaskDetailData.filetype,
             id: queryTimerTaskDetailData.id,
             selectedValue: queryTimerTaskDetailData.orgtype,
-
+            isenable:queryTimerTaskDetailData.isenable,
           })
 
           console.log('state修改完成：')
         }
       })
 
-
+    this.setState({
+      isLoading: false,
+    })
 
     console.log("HistoryTaskDetail 的componentWillmount 执行结束")
 
@@ -214,7 +212,8 @@ class HistoryTimerTaskDetail extends React.Component {
 
       return (
 
-        <Spin spinning={(treeData == undefined || treeData == []) || (queryTimerTaskDetailData == undefined || queryTimerTaskDetailData == [])} tip="数据加载中...">
+        // <Spin spinning={(treeData == undefined || treeData == []) || (queryTimerTaskDetailData == undefined || queryTimerTaskDetailData == [])} tip="数据加载中...">
+        <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
 
           <Row gutter={[16, 24]}>
@@ -268,7 +267,7 @@ class HistoryTimerTaskDetail extends React.Component {
 
           <Row gutter={[10, 24]} justify="space-between">
             <Col span={12}>
-              <Switch checkedChildren="开启" unCheckedChildren="关闭" defaultChecked value={this.state.isenable}
+              <Switch checkedChildren="开启" unCheckedChildren="关闭"  checked={this.state.isenable=='1'}
                 onChange={(e) => {
                   console.log('开关状态')
                   console.log(e)

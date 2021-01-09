@@ -3,7 +3,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 
 
-import {   notification } from 'antd';
+import { notification } from 'antd';
 import { connect } from 'dva';
 
 import { Table, Button, Spin, Row, Col, DatePicker, Select } from 'antd';
@@ -49,7 +49,8 @@ class RangeTable extends React.Component {
       endDate: '',
       fileType: '1',
       isUplaod: false,
-
+      //初始化是否加载完成标记
+      isLoading: true,
     };
   }
 
@@ -68,6 +69,11 @@ class RangeTable extends React.Component {
 
     })
       .then(result => {
+
+        this.setState({
+          isLoading: false,
+        })
+
         if (result) {
           //查询成功后
 
@@ -111,11 +117,11 @@ class RangeTable extends React.Component {
   collectDownload = (record) => {
 
 
-    
+
     let collect = record.collect
     let period = record.period
     let orgTypeName = record.orgTypeName
-    
+
 
     this.props.dispatch({
       type: "queryNamespace/collectDownload",
@@ -128,11 +134,11 @@ class RangeTable extends React.Component {
     })
       .then(result => {
         if (result) {
-          if(this.props.queryNamespace.downloadLink==undefined || this.props.queryNamespace.downloadLink==''){
-            notification.info({message:'没有查询到数据'})
-          }else{
+          if (this.props.queryNamespace.downloadLink == undefined || this.props.queryNamespace.downloadLink == '') {
+            notification.info({ message: '没有查询到数据' })
+          } else {
             window.open('http://' + this.props.queryNamespace.downloadLink)
-          }      
+          }
         }
       })
   }
@@ -153,7 +159,7 @@ class RangeTable extends React.Component {
 
     console.log("rangeTable的render开始执行")
 
-    const { collectqQuery, orgList } = this.props.queryNamespace
+    const { collectqQuery } = this.props.queryNamespace
 
     const columns = [
       // {
@@ -168,7 +174,7 @@ class RangeTable extends React.Component {
       //   width: '30%',
 
       // },
-       {
+      {
         title: '报表类型',
         dataIndex: 'fileName',
         width: '30%',
@@ -235,7 +241,7 @@ class RangeTable extends React.Component {
     };
 
 
-    const { loading, selectedRowKeys } = this.state;
+    const {  selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -244,7 +250,7 @@ class RangeTable extends React.Component {
 
     return (
 
-      <Spin spinning={orgList == undefined} tip="数据加载中...">
+      <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
         <div>
 
@@ -275,13 +281,13 @@ class RangeTable extends React.Component {
 
 
             <Col span={6}  >
-               <h1>完成起止时间：</h1>
+              <h1>完成起止时间：</h1>
               <RangePicker onChange={this.dateChange} format={dateFormat} />
             </Col>
 
 
             <Col span={4}  >
-             <h1>操作：</h1>
+              <h1>操作：</h1>
               <Button type="primary" icon={<FileSearchOutlined />} onClick={query} loading={this.state.isUplaod}>
                 查询
               </Button>
@@ -306,7 +312,7 @@ class RangeTable extends React.Component {
                 {/* {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''} */}
               </span>
             </div>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={collectqQuery}   />
+            <Table rowSelection={rowSelection} columns={columns} dataSource={collectqQuery} />
           </div>
         </div >
       </Spin>

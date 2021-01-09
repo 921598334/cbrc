@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
 
-import { Table, Button, Row, Col, DatePicker, Select, Space } from 'antd';
+import { Table, Button, Row, Col, DatePicker, Select, Space,Spin } from 'antd';
 import { FileSearchOutlined } from '@ant-design/icons';
 
 
@@ -22,8 +22,8 @@ const dateFormat = 'YYYY/MM/DD';
 
 
 
-@connect(({ taskNamespace,queryNamespace }) => ({
-  taskNamespace,queryNamespace
+@connect(({ taskNamespace, queryNamespace }) => ({
+  taskNamespace, queryNamespace
 }))
 
 
@@ -48,7 +48,11 @@ class TaskComplete extends React.Component {
       fileType: '1',
       orgid: Cookies.get('orgid'),
       taskStatus: '0',
+       //用户点击按钮上传标记
       isUplaod: false,
+
+      //初始化是否加载完成标记
+      isLoading: true,
     };
   }
 
@@ -64,9 +68,14 @@ class TaskComplete extends React.Component {
       }
     })
       .then(result => {
+
+        this.setState({
+          isLoading:false,
+        })
+        
         if (result) {
           //查询成功后
-
+         
         }
       })
   }
@@ -267,10 +276,6 @@ class TaskComplete extends React.Component {
 
 
 
-
-
-
-
     //点击查询
     const query = values => {
       console.log('query开始执行');
@@ -301,12 +306,9 @@ class TaskComplete extends React.Component {
 
 
 
-
-
-
     return (
 
-      <div>
+      <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
         <Row gutter={[16, 24]}>
           <Col >
@@ -353,7 +355,7 @@ class TaskComplete extends React.Component {
 
 
 
-      </div >
+      </Spin >
 
 
     );

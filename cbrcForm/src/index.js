@@ -19,6 +19,7 @@ app.model(require('./models/admin').default);
 app.model(require('./models/task').default);
 app.model(require('./models/adminSetting/orgSetting').default);
 app.model(require('./models/adminSetting/userSetting').default);
+app.model(require('./models/userSetting').default);
 
 // 4. Router
 app.router(require('./router').default);

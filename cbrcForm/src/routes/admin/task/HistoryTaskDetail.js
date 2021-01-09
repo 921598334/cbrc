@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
 
-import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result, Tabs,Table } from 'antd';
+import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result, Tabs, Table } from 'antd';
 import { SketchOutlined, FileSearchOutlined } from '@ant-design/icons';
 import moment from 'moment';
 const { TabPane } = Tabs;
@@ -18,7 +18,6 @@ const { Option } = Select;
 
 
 const dateFormat = 'YYYY-MM-DD';
-
 
 
 
@@ -43,7 +42,8 @@ class HistoryTaskDetail extends React.Component {
       period: '2000-01-01',
       enddate: '2000-01-01',
       fromdate: '2000-01-02',
-
+      //初始化是否加载完成标记
+      isLoading: true,
       isUplaod: false,
     };
   }
@@ -109,7 +109,9 @@ class HistoryTaskDetail extends React.Component {
 
 
 
-
+    this.setState({
+      isLoading: false,
+    })
 
 
 
@@ -179,7 +181,7 @@ class HistoryTaskDetail extends React.Component {
   render() {
     console.log("HistoryTaskDetail 的render开始执行")
 
-    const { treeData, taskDetail,completedOrg } = this.props.taskNamespace
+    const { treeData, completedOrg } = this.props.taskNamespace
 
 
 
@@ -272,7 +274,7 @@ class HistoryTaskDetail extends React.Component {
 
       return (
 
-        <Spin spinning={(treeData == undefined || treeData == []) || (taskDetail == undefined || taskDetail == [])} tip="数据加载中...">
+        <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
 
           <Row gutter={[16, 24]}>

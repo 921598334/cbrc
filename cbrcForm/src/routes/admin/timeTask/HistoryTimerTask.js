@@ -4,21 +4,8 @@ import 'antd/dist/antd.css';
 
 import { connect } from 'dva';
 
-import { Table, Tag, Row, Col, DatePicker, Space, Popconfirm, message } from 'antd';
+import { Table, Tag, Row, Col, Space, Popconfirm, message,Spin } from 'antd';
 import {  QuestionCircleOutlined } from '@ant-design/icons';
-
-
-
-const { RangePicker } = DatePicker;
-
-
-
-
-const dateFormat = 'YYYY/MM/DD';
-
-
-
-
 
 
 
@@ -47,6 +34,8 @@ class HistoryTimerTask extends React.Component {
       endDate: '',
       fileType: '1',
       isUplaod: false,
+      //初始化是否加载完成标记
+      isLoading:true,
     };
   }
 
@@ -63,7 +52,9 @@ class HistoryTimerTask extends React.Component {
       .then(result => {
         if (result) {
           //查询成功后
-
+          this.setState({
+            isLoading:false,
+          })
         }
       })
   }
@@ -216,34 +207,34 @@ class HistoryTimerTask extends React.Component {
 
 
     //点击查询任务列表
-    const query = values => {
-      console.log('query开始执行');
+    // const query = values => {
+    //   console.log('query开始执行');
 
 
-      this.setState({
-        isUplaod: true,
+    //   this.setState({
+    //     isUplaod: true,
 
-      })
+    //   })
 
-      this.props.dispatch({
-        type: "taskNamespace/queryTimerTask",
-        queryTimerInfo: {
-          ...this.state
+    //   this.props.dispatch({
+    //     type: "taskNamespace/queryTimerTask",
+    //     queryTimerInfo: {
+    //       ...this.state
 
-        }
-      })
-        .then(result => {
+    //     }
+    //   })
+    //     .then(result => {
 
-          this.setState({
-            isUplaod: false,
-          })
+    //       this.setState({
+    //         isUplaod: false,
+    //       })
 
-          if (result) {
-            //查询成功后
+    //       if (result) {
+    //         //查询成功后
 
-          }
-        })
-    };
+    //       }
+    //     })
+    // };
 
 
 
@@ -252,7 +243,7 @@ class HistoryTimerTask extends React.Component {
 
     return (
 
-      <div>
+      <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
         <Row gutter={[16, 24]}>
           <Col >
@@ -284,7 +275,7 @@ class HistoryTimerTask extends React.Component {
           <Table columns={columns} dataSource={queryTImerTaskData} />
         </div>
 
-      </div >
+      </Spin >
 
 
     );

@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
 
-import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result } from 'antd';
+import { Spin, Input, Button, Row, Col, Select, TreeSelect, Divider, Result } from 'antd';
 import {  SketchOutlined, FileSearchOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
@@ -20,9 +20,6 @@ const { Option } = Select;
 @connect(({ taskNamespace }) => ({
   taskNamespace,
 }))
-
-
-
 
 
 
@@ -48,6 +45,8 @@ class PublishTimerTask extends React.Component {
       selectedValue: [],
       period: '1',
       isUplaod: false,
+      //初始化是否加载完成标记
+      isLoading:true,
     };
   }
 
@@ -60,6 +59,11 @@ class PublishTimerTask extends React.Component {
 
     })
       .then(result => {
+        
+        this.setState({
+          isLoading: false,
+        })
+
         if (result) {
 
 
@@ -169,7 +173,7 @@ class PublishTimerTask extends React.Component {
     if (!this.state.isComplete) {
       return (
 
-        <Spin spinning={treeData == undefined || treeData == []} tip="数据加载中...">
+        <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
           <Row gutter={[16, 24]}>
             <Col >

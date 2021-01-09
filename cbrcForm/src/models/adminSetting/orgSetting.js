@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import { initOrgRequest,updateOrgRequest,insertOrgRequest,deleteOrgRequest ,initOrgInfoRequest,inertOrgInfoRequest,updateOrgInfoRequest,deleteOrgInfoRequest} from '../../services/adminSetting/orgService'
+import { initOrgRequest, updateOrgRequest, insertOrgRequest, deleteOrgRequest, initOrgInfoRequest, inertOrgInfoRequest, updateOrgInfoRequest, deleteOrgInfoRequest } from '../../services/adminSetting/orgService'
 
 
 export default {
@@ -19,9 +19,9 @@ export default {
   effects: {
 
 
-    
 
-    
+
+
     *deleteOrgInfo({ deleteOrgInfo }, { call, put }) {
 
       console.log("*deleteOrgInfo 开始执行")
@@ -66,6 +66,41 @@ export default {
 
       console.log(updateOrgInfo)
 
+
+      if (updateOrgInfo.updateManager == null) {
+        notification.error({ message: '输入的管理人姓名不能为空' })
+        return
+      }
+      var tmp = updateOrgInfo.updateManager.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '输入的管理人姓名不能全为空格' })
+        return
+      }
+
+
+      if (updateOrgInfo.updateOrgname == null) {
+        notification.error({ message: '输入的机构名称不能为空' })
+        return
+      }
+       tmp = updateOrgInfo.updateOrgname.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '输入的机构名称不能全为空格' })
+        return
+      }
+
+
+      if (updateOrgInfo.updateOrgtype == null) {
+        notification.error({ message: '请选择机构类型' })
+        return
+      }
+
+
+
+
+
+
+
+
       const response = yield call(updateOrgInfoRequest, updateOrgInfo);
 
       console.log("*updateOrgInfo")
@@ -94,18 +129,52 @@ export default {
 
     },
 
-   
 
 
 
 
 
-    
+
+
     *inertOrgInfo({ insertOrgInfo }, { call, put }) {
 
       console.log("*inertOrgInfo 开始执行")
 
       console.log(insertOrgInfo)
+
+
+      if (insertOrgInfo.newManagerName == null) {
+        notification.error({ message: '输入的管理人姓名不能为空' })
+        return
+      }
+      var tmp = insertOrgInfo.newManagerName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '输入的管理人姓名不能全为空格' })
+        return
+      }
+
+
+      if (insertOrgInfo.newOrgInfoName == null) {
+        notification.error({ message: '输入的机构名称不能为空' })
+        return
+      }
+       tmp = insertOrgInfo.newOrgInfoName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '输入的机构名称不能全为空格' })
+        return
+      }
+
+
+      if (insertOrgInfo.newOrgType == null) {
+        notification.error({ message: '请选择机构类型' })
+        return
+      }
+
+
+
+
+
+
 
       const response = yield call(inertOrgInfoRequest, insertOrgInfo);
 
@@ -139,7 +208,7 @@ export default {
 
 
 
-    
+
     *deleteOrg({ deleteInfo }, { call, put }) {
 
       console.log("*deleteInfo 开始执行")
@@ -175,12 +244,30 @@ export default {
     },
 
 
-    
+
     *inertOrg({ insertInfo }, { call, put }) {
 
       console.log("*inertOrg 开始执行")
 
       console.log(insertInfo)
+
+
+
+
+      if (insertInfo.newOrgName == null) {
+        notification.error({ message: '输入的机构类型不能为空' })
+        return
+      }
+      const tmp = insertInfo.newOrgName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '输入的机构类型不能全为空格' })
+        return
+      }
+
+
+
+
+
 
       const response = yield call(insertOrgRequest, insertInfo);
 
@@ -212,12 +299,14 @@ export default {
 
 
 
-    
+
     *initOrgInfo({ publishInfo }, { call, put }) {
 
       console.log("*initOrgInfo 开始执行")
 
       console.log(publishInfo)
+
+
 
       const response = yield call(initOrgInfoRequest);
 
@@ -237,7 +326,7 @@ export default {
       } else {
 
         yield put({ type: 'initOrgInfoReduce', payload: { ...response } });
-        notification.success({ message: '初始化成功' })
+        
         return true;
       }
 
@@ -284,6 +373,21 @@ export default {
 
       console.log(updateInfo)
 
+      if (updateInfo.updateOrgName == null) {
+        notification.error({ message: '输入的机构类型不能为空' })
+        return
+      }
+      const tmp = updateInfo.updateOrgName.replace(/\s*/g, '')
+      if (tmp == '') {
+        notification.error({ message: '输入的机构类型不能全为空格' })
+        return
+      }
+
+
+
+
+
+
       const response = yield call(updateOrgRequest, updateInfo);
 
       console.log("*updateOrg")
@@ -312,8 +416,8 @@ export default {
 
     },
 
-   
-    
+
+
 
 
   },
@@ -325,22 +429,22 @@ export default {
       console.log("deleteOrgInfoReduce")
       console.log(action.payload.data)
 
-      return { ...state};
+      return { ...state };
     },
 
 
-    
+
     updateOrgInfoReduce(state, action) {
 
       console.log("updateOrgInfoReduce")
       console.log(action.payload.data)
 
-      return { ...state};
+      return { ...state };
     },
 
 
 
-    
+
     inertOrgInfoReduce(state, action) {
 
       console.log("inertOrgInfoReduce")
@@ -352,47 +456,48 @@ export default {
 
 
 
-    
+
     deleteOrgReduce(state, action) {
 
       console.log("deleteOrgReduce")
       console.log(action.payload.data)
-      return { ...state};
+      return { ...state };
     },
 
 
 
-    
+
     inertOrgReduce(state, action) {
 
       console.log("inertOrgReduce")
       console.log(action.payload.data)
-      return { ...state};
+      return { ...state };
     },
 
 
 
 
-    
+
     initOrgInfoReduce(state, action) {
 
       console.log("initOrgInfoReduce")
       console.log(action.payload.data)
 
 
-     
+
 
       //需要添加key，key采用orgtyoe
-      for(let index in action.payload.data){
+      for (let index in action.payload.data) {
         action.payload.data[index]['key'] = action.payload.data[index]['orgid']
       }
 
 
-      
 
-      return { ...state,
-        orgInfoData:action.payload.data,
-        
+
+      return {
+        ...state,
+        orgInfoData: action.payload.data,
+
       };
     },
 
@@ -408,31 +513,32 @@ export default {
       console.log(action.payload.data)
 
 
-    
+
       //需要添加key，key采用orgtyoe
-      for(let index in action.payload.data){
+      for (let index in action.payload.data) {
         action.payload.data[index]['key'] = action.payload.data[index]['orgtype']
       }
 
 
-      
 
-      return { ...state,
-        orgData:action.payload.data,
-        
+
+      return {
+        ...state,
+        orgData: action.payload.data,
+
       };
     },
 
 
 
 
-    
+
     updateOrgReduce(state, action) {
 
       console.log("updateOrgReduce")
       console.log(action.payload.data)
 
-      return { ...state};
+      return { ...state };
     },
 
   },

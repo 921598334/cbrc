@@ -44,6 +44,8 @@ class UserSetting extends React.Component {
       isUplaod: false,
       isComplete: false,
       fileType: 1,
+      isUplaod1: false,
+      isUplaod2: false,
     };
   }
 
@@ -130,7 +132,7 @@ class UserSetting extends React.Component {
         render: (text, record) => (
           <Space size="middle">
 
-            <Popconfirm title="删除后，该机构类型下的所有机构与用户信息均会被删除，并且无法恢复，您确定要删除吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            <Popconfirm title="您确定要删除吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
 
               onConfirm={() => {
                 console.log('点击了删除,删除的ID：')
@@ -194,7 +196,7 @@ class UserSetting extends React.Component {
 
     return (
 
-      <Spin spinning={userInfoData == undefined || orgInfoData==undefined} tip="数据加载中...">
+      <Spin spinning={userInfoData == undefined || orgInfoData == undefined} tip="数据加载中...">
 
         <Row gutter={[16, 24]}>
           <Col >
@@ -282,7 +284,12 @@ class UserSetting extends React.Component {
 
           <Col span={4}>
             <Button
+              loading={this.state.isUplaod1}
               onClick={() => {
+
+                this.setState({
+                  isUplaod1: true,
+                })
 
                 this.props.dispatch({
                   type: "userSettingNameSpace/inertUserInfo",
@@ -293,7 +300,7 @@ class UserSetting extends React.Component {
                   .then(result => {
 
                     this.setState({
-                      isUplaod: false,
+                      isUplaod1: false,
                     })
 
                     if (result) {
@@ -415,7 +422,12 @@ class UserSetting extends React.Component {
 
           <Col span={4}>
             <Button
+              loading={this.state.isUplaod2}
               onClick={() => {
+                this.setState({
+                  isUplaod2: true,
+                })
+
                 console.log('保存点击了')
                 this.props.dispatch({
                   type: "userSettingNameSpace/updateUserInfo",
@@ -426,7 +438,7 @@ class UserSetting extends React.Component {
                   .then(result => {
 
                     this.setState({
-                      isUplaod: false,
+                      isUplaod2: false,
                     })
 
                     if (result) {
