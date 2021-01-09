@@ -12,7 +12,7 @@ import {
   PieChartOutlined,
   ClusterOutlined,
   DownOutlined,
-
+  HistoryOutlined,
 } from '@ant-design/icons';
 
 import Cookies from 'js-cookie'
@@ -24,8 +24,12 @@ import PublishTask from './task/PublishTask'
 import HistoryTaskDetail from './task/HistoryTaskDetail'
 
 import OrgSetting from './manager/OrgSetting'
-import TimerSetting from './manager/TimerSetting'
+
 import UserSetting from './manager/UserSetting'
+import PublishTimerTask from './timeTask/PublishTimerTask'
+import HistoryTimerTask from './timeTask/HistoryTimerTask'
+import HistoryTimerTaskDetail from './timeTask/HistoryTimerTaskDetail'
+
 
 
 const { Header, Sider, Content } = Layout;
@@ -140,7 +144,7 @@ class AdminPage extends React.Component {
                 }
 
                 />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" defaultOpenKeys={['sub1','sub2','sub3']}>
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" defaultOpenKeys={['sub1','sub2','sub3','sub4']}>
 
 
                   <SubMenu key="sub1" icon={<PieChartOutlined />} title="监管数据查看">
@@ -153,16 +157,22 @@ class AdminPage extends React.Component {
 
 
 
-                  <SubMenu key="sub2" icon={<DesktopOutlined />} title="任务模块">
+                  <SubMenu key="sub2" icon={<DesktopOutlined />} title="常规任务模块">
                     <Menu.Item key="6"><Link to='/admin/publishTask'>发布任务</Link></Menu.Item>
-                    <Menu.Item key="8"><Link to='/admin/historyTask'>历史任务</Link></Menu.Item>
+                    <Menu.Item key="8"><Link to='/admin/historyTask'>任务管理</Link></Menu.Item>
                   </SubMenu>
 
 
-                  <SubMenu key="sub3" icon={<ClusterOutlined />} title="管理模块">
-                    <Menu.Item key="10"><Link to='/admin/userManager'>用户管理</Link></Menu.Item>
-                    <Menu.Item key="11"><Link to='/admin/orgManager'>机构管理</Link></Menu.Item>
-                    <Menu.Item key="12"><Link to='/admin/timerManager'>定时任务管理</Link></Menu.Item>
+                  <SubMenu key="sub3" icon={<HistoryOutlined />} title="定时任务模块">
+                    <Menu.Item key="9"><Link to='/admin/publishTimerTask'>发布定时任务</Link></Menu.Item>
+                    <Menu.Item key="10"><Link to='/admin/timerTaskManage'>定时任务管理</Link></Menu.Item>
+                  </SubMenu>
+
+
+                  <SubMenu key="sub4" icon={<ClusterOutlined />} title="管理模块">
+                    <Menu.Item key="11"><Link to='/admin/userManager'>用户管理</Link></Menu.Item>
+                    <Menu.Item key="12"><Link to='/admin/orgManager'>机构管理</Link></Menu.Item>
+                    
                   </SubMenu>
 
 
@@ -227,16 +237,16 @@ class AdminPage extends React.Component {
                   <Route exact path="/admin/basicTable" component={BasicTable} />
                   <Route exact path="/admin/rangeTable" component={RangeTable} />
                   <Route exact path="/admin/publishTask" component={PublishTask} />
-
                   <Route exact path="/admin/historyTask" component={HistoryTask} />
                   <Route exact path="/admin/historyTaskDetail" component={HistoryTaskDetail} />
 
                   <Route exact path="/admin/userManager" component={UserSetting} />
                   <Route exact path="/admin/orgManager" component={OrgSetting} />
-                  <Route exact path="/admin/timerManager" component={TimerSetting} />
 
-                  
-                  
+
+                  <Route exact path="/admin/publishTimerTask" component={PublishTimerTask} />
+                  <Route exact path="/admin/timerTaskManage" component={HistoryTimerTask} />
+                  <Route exact path="/admin/historyTimerTaskDetail" component={HistoryTimerTaskDetail} />
 
 
                 </Content>

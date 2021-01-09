@@ -43,6 +43,39 @@ export async function updateRequest(publishInfo) {
 
 
 
+export async function updateTimeTaskRequest(publishTimerTaskInfo) {
+
+  console.log("updateTimeTaskRequest 开始执行")
+
+  var orgTypesTmp = {}
+
+  //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
+  publishTimerTaskInfo.selectedValue.map((item, key) => {
+    orgTypesTmp[key] = item
+  })
+
+  publishTimerTaskInfo.selectedValue = orgTypesTmp
+
+  console.log(publishTimerTaskInfo)
+
+
+  return await Axios({
+    method: 'post',
+    url: myUrl.localUrl+'updateTimerTask',
+    params: {
+      ...publishTimerTaskInfo
+    }
+
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
 
 
 
@@ -89,6 +122,67 @@ export async function queryTaskDetailRequest(queryDetailInfo) {
 
 
 
+export async function queryCompletedOrgRequest(queryCompletedOrgInfo) {
+
+  console.log("queryCompletedOrgRequest 开始执行")
+  console.log(queryCompletedOrgInfo)
+
+  return await Axios({
+    method: 'post',
+    url: myUrl.localUrl+'queryCompletedOrg',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+      ...queryCompletedOrgInfo,
+    }
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
+
+
+
+
+export async function queryTimerTaskDetailRequest(queryTimerTaskDetailInfo) {
+
+  console.log("queryTimerTaskDetailRequest 开始执行")
+  console.log(queryTimerTaskDetailInfo)
+
+ 
+
+  return await Axios({
+    method: 'post',
+    url: myUrl.localUrl+'queryTimerTaskDetail',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+
+      ...queryTimerTaskDetailInfo,
+
+    }
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
+
+
+
+
+
 export async function deleteTaskRequest(deleteInfo) {
 
   console.log("deleteTaskRequest 开始执行")
@@ -127,6 +221,33 @@ export async function deleteTaskRequest(deleteInfo) {
 
 
 
+export async function deleteTimerTaskRequest(deleteTimerInfo) {
+
+  console.log("deleteTimerTaskRequest 开始执行")
+  console.log(deleteTimerInfo)
+
+  
+  return await Axios({
+    method: 'post',
+    url: myUrl.localUrl+'deleteTimerTask',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+
+      ...deleteTimerInfo,
+
+    }
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
 
 
 
@@ -217,6 +338,39 @@ export async function queryRequest(queryInfo) {
 
 
 
+
+export async function queryTimerTaskRequest(queryTimerInfo) {
+
+  console.log("queryTimerTaskRequest 开始执行")
+  console.log(queryTimerInfo)
+
+  return await Axios({
+    method: 'post',
+    url: myUrl.localUrl+'queryTimerTask',
+    headers: {
+      'Accept': 'application/json,text/plain,*/*'
+    },
+    params: {
+
+      ...queryTimerInfo,
+
+    }
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}
+
+
+
+
+
+
 export async function publishRequest(publishInfo) {
 
   console.log("publishRequest开始执行")
@@ -252,3 +406,39 @@ export async function publishRequest(publishInfo) {
 }
 
 
+
+
+
+export async function publishTimerTaskRequest(publishInfo) {
+
+  console.log("publishTimerTaskRequest 开始执行")
+
+  var orgTypesTmp = {}
+
+  //把list变为map,不知道为什么，如果不这样操作会出现跨域异常
+  publishInfo.selectedValue.map((item, key) => {
+    orgTypesTmp[key] = item
+  })
+
+  publishInfo.selectedValue = orgTypesTmp
+
+  console.log(publishInfo)
+
+
+  return await Axios({
+    method: 'post',
+    url: myUrl.localUrl+'publishTimerTask',
+    params: {
+      ...publishInfo
+    }
+
+  }).then(function (response) {
+
+    return response
+
+  }).catch(function (error) {
+    console.log('出现了错误，错误信息为：');
+    console.log(error);
+    return error
+  });
+}

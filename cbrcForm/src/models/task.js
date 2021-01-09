@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { getOrgRequest } from '../services/orgService'
-import { publishRequest, queryRequest, queryTaskCompleteRequest,deleteTaskRequest,queryTaskDetailRequest,updateRequest } from '../services/taskService'
+import { publishRequest, queryRequest, queryTaskCompleteRequest, deleteTaskRequest, queryTaskDetailRequest, updateRequest, publishTimerTaskRequest, queryTimerTaskRequest,deleteTimerTaskRequest,queryTimerTaskDetailRequest,updateTimeTaskRequest,queryCompletedOrgRequest } from '../services/taskService'
 
 
 export default {
@@ -19,6 +19,106 @@ export default {
 
   effects: {
 
+
+
+
+    *publishTimerTask({ publishInfo }, { call, put }) {
+
+      console.log("*publish开始执行")
+
+      console.log(publishInfo)
+
+      const response = yield call(publishTimerTaskRequest, publishInfo);
+
+      console.log("*publish返回为：")
+      console.log(response)
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+
+        yield put({ type: 'publishTimerTaskReduce', payload: { ...response } });
+        notification.success({ message: '任务发布成功' })
+        return true;
+      }
+
+    },
+
+    //查询定时任务
+    *queryTimerTask({ queryTimerInfo }, { call, put }) {
+
+      console.log("*queryTimerTask 开始执行")
+      console.log(queryTimerInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(queryTimerTaskRequest, queryTimerInfo);
+
+      console.log("*queryTimerTask 返回为：")
+      console.log(response)
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        //notification.success({ message: '任务列表获取成功' })
+        yield put({ type: 'queryTimerTaskReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
+
+    //删除任务
+    *deleteTimerTask({ deleteTimerInfo }, { call, put }) {
+
+      console.log("*deleteTask 开始执行")
+      console.log(deleteTimerInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(deleteTimerTaskRequest, deleteTimerInfo);
+
+      console.log("*deleteTask 返回为：")
+      console.log(response)
+
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        notification.success({ message: '任务删除成功' })
+        yield put({ type: 'deleteTimerTaskReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
 
 
 
@@ -55,6 +155,41 @@ export default {
       }
 
     },
+
+
+
+
+    // 定时任务更新
+    *updateTimerTask({ publishTimerTaskInfo }, { call, put }) {
+
+      console.log("*updateTimerTask 开始执行")
+
+      console.log(publishTimerTaskInfo)
+
+      const response = yield call(updateTimeTaskRequest, publishTimerTaskInfo);
+
+      console.log("*updateTimerTask 返回为：")
+      console.log(response)
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+
+        yield put({ type: 'updateTimerTaskReduce', payload: { ...response } });
+        //notification.success({ message: '初始化成功' })
+        return true;
+      }
+
+    },
+
 
 
 
@@ -131,6 +266,86 @@ export default {
       }
 
     },
+
+
+
+
+    //查询已经完成的任务，某个机构下
+    *queryCompletedOrg({ queryCompletedOrgInfo }, { call, put }) {
+
+      console.log("*queryCompletedOrg 开始执行")
+      console.log(queryCompletedOrgInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(queryCompletedOrgRequest, queryCompletedOrgInfo);
+
+      console.log("*queryCompletedOrg 返回为：")
+      console.log(response)
+
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        //notification.success({ message: '任务查询成功' })
+        yield put({ type: 'queryCompletedOrgReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
+    
+
+
+    
+    *queryTimerTaskDetail({ queryTimerTaskDetailInfo }, { call, put }) {
+
+      console.log("*queryTaskDetail 开始执行")
+      console.log(queryTimerTaskDetailInfo)
+
+
+      //检查输入是否合法
+
+
+      const response = yield call(queryTimerTaskDetailRequest, queryTimerTaskDetailInfo);
+
+      console.log("*queryTimerTaskDetail 返回为：")
+      console.log(response)
+
+
+      //如果出现异常
+      if (response.data == undefined) {
+        notification.error({ message: '网络异常错误，请稍后重试' })
+        return false;
+      }
+
+
+      if (response.data.F) {
+        notification.error({ message: response.data.F })
+        return false;
+      } else {
+        //notification.success({ message: '任务查询成功' })
+        yield put({ type: 'queryTimerTaskDetailReduce', payload: { ...response } });
+        return true;
+      }
+
+    },
+
+
+   
+
+
 
 
 
@@ -285,6 +500,17 @@ export default {
     },
 
 
+
+    
+    updateTimerTaskReduce(state, action) {
+
+      console.log("updateTimerTaskReduce")
+      console.log(action.payload.data)
+
+      return { ...state };
+    },
+
+
     deleteTaskReduce(state, action) {
 
       console.log("deleteTaskReduce")
@@ -292,6 +518,17 @@ export default {
 
       return { ...state };
     },
+
+
+    
+    deleteTimerTaskReduce(state, action) {
+
+      console.log("deleteTimerTaskReduce")
+      console.log(action.payload.data)
+
+      return { ...state };
+    },
+
 
 
     queryTaskDetailReduce(state, action) {
@@ -303,13 +540,19 @@ export default {
 
       action.payload.data.orgtype = orgtypeTmp
 
-    
+
 
       return { ...state, taskDetail: action.payload.data };
     },
 
 
+    queryCompletedOrgReduce(state, action) {
 
+      console.log("queryCompletedOrgReduce")
+      console.log(action.payload.data)
+
+      return { ...state, completedOrg: action.payload.data };
+    },
 
 
 
@@ -336,8 +579,8 @@ export default {
         action.payload.data[i]['orgtype'] = taskinfo['orgtype']
         action.payload.data[i]['taskdescribe'] = taskinfo['taskdescribe']
         action.payload.data[i]['tasktitle'] = taskinfo['tasktitle']
-        
-        
+
+
 
         if (action.payload.data[i]['iscomplete'] == 0) {
           action.payload.data[i]['taskStatus'] = '待完成'
@@ -370,6 +613,34 @@ export default {
 
 
 
+    
+    queryTimerTaskDetailReduce(state, action) {
+
+      console.log("queryTimerTaskDetailReduce")
+      console.log(action.payload.data)
+
+
+      const orgtypeTmp = JSON.parse(action.payload.data.orgtype)
+
+      action.payload.data.orgtype = orgtypeTmp
+
+
+
+      return { ...state, queryTimerTaskDetailData: action.payload.data };
+    },
+
+
+
+    queryTimerTaskReduce(state, action) {
+
+      console.log("queryTimerTaskReduce")
+      console.log(action.payload.data)
+
+      return { ...state, queryTImerTaskData: action.payload.data };
+    },
+
+
+
 
     getOrgReduce(state, action) {
 
@@ -391,7 +662,7 @@ export default {
         const orgChildrens = orgData[index]['orgs']
 
         //如果该机构类型下面没有子机构，就不把他进行展示
-        if(orgChildrens==null || orgChildrens.length == 0){
+        if (orgChildrens == null || orgChildrens.length == 0) {
           continue;
         }
 
@@ -425,6 +696,11 @@ export default {
       return { ...state }
     },
 
+
+
+    publishTimerTaskReduce(state, action) {
+      return { ...state }
+    },
 
   },
 

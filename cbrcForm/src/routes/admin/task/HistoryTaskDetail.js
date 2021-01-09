@@ -6,10 +6,10 @@ import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
 
-import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result } from 'antd';
+import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result, Tabs,Table } from 'antd';
 import { SketchOutlined, FileSearchOutlined } from '@ant-design/icons';
 import moment from 'moment';
-
+const { TabPane } = Tabs;
 const { TextArea } = Input;
 
 
@@ -30,6 +30,8 @@ class HistoryTaskDetail extends React.Component {
   constructor(props) {
     super(props);
 
+
+
     this.state = {
 
       tasktitle: '',
@@ -49,7 +51,7 @@ class HistoryTaskDetail extends React.Component {
   async componentWillMount() {
     console.log("HistoryTaskDetail 的componentWillmount 开始执行")
 
-     await this.props.dispatch({
+    await this.props.dispatch({
       type: "taskNamespace/getOrg",
 
     })
@@ -89,6 +91,26 @@ class HistoryTaskDetail extends React.Component {
           console.log('state修改完成：')
         }
       })
+
+
+
+    //查询该任务下已经完成的机构
+    await this.props.dispatch({
+      type: "taskNamespace/queryCompletedOrg",
+      queryCompletedOrgInfo: {
+        taskid: this.props.location.state.id,
+      }
+    })
+      .then(result => {
+        if (result) {
+
+        }
+      })
+
+
+
+
+
 
 
 
@@ -145,7 +167,7 @@ class HistoryTaskDetail extends React.Component {
 
 
   periodChage = value => {
-    
+
     console.log(value.format('YYYY-MM-DD'))
     this.setState({
       period: value.format('YYYY-MM-DD')
@@ -157,7 +179,42 @@ class HistoryTaskDetail extends React.Component {
   render() {
     console.log("HistoryTaskDetail 的render开始执行")
 
-    const { treeData, taskDetail } = this.props.taskNamespace
+    const { treeData, taskDetail,completedOrg } = this.props.taskNamespace
+
+
+
+
+
+    const columns = [
+      {
+        title: '机构名称',
+        dataIndex: 'orgName',
+        key: 'orgName',
+
+      },
+
+      {
+        title: '管理人',
+        dataIndex: 'manager',
+        key: 'manager',
+      },
+      {
+        title: '机构类型',
+        dataIndex: 'typeName',
+        key: 'typeName',
+      },
+
+      // {
+      //   title: '操作',
+      //   key: 'action',
+
+      // },
+    ];
+
+
+
+
+
 
 
     //点击更新
@@ -220,52 +277,56 @@ class HistoryTaskDetail extends React.Component {
 
           <Row gutter={[16, 24]}>
             <Col >
-              <h1>任务发布模块</h1>
+              <h1>任务管理模块</h1>
             </Col >
           </Row>
 
-          <Divider orientation="left">任务标题</Divider>
-          <Row gutter={[10, 24]} justify="space-between">
-            <Col span={16}>
-              <Input placeholder="任务标题" prefix={<SketchOutlined />} onChange={this.taskTitleChange} value={this.state.tasktitle} />
-            </Col>
-          </Row>
 
-          <Divider orientation="left">任务描述</Divider>
-          <Row gutter={[10, 24]} justify="space-between">
+          <Tabs defaultActiveKey="1" >
+            <TabPane tab="当前任务" key="1">
 
-            <Col span={16}>
-              <TextArea placeholder="任务描述" prefix={<SketchOutlined />} onChange={this.taskDescribeChange} style={{ height: '200px' }} value={this.state.taskDescribe} />
-            </Col>
-          </Row>
+              <Divider orientation="left">任务标题</Divider>
+              <Row gutter={[10, 24]} justify="space-between">
+                <Col span={16}>
+                  <Input placeholder="任务标题" prefix={<SketchOutlined />} onChange={this.taskTitleChange} value={this.state.tasktitle} />
+                </Col>
+              </Row>
 
+              <Divider orientation="left">任务描述</Divider>
+              <Row gutter={[10, 24]} justify="space-between">
 
-
-          <Divider orientation="left">推送机构</Divider>
-          <Row gutter={[10, 24]}  >
-
-            <Col span={16}>
-              <TreeSelect {...tProps} />
-            </Col>
-          </Row>
+                <Col span={16}>
+                  <TextArea placeholder="任务描述" prefix={<SketchOutlined />} onChange={this.taskDescribeChange} style={{ height: '200px' }} value={this.state.taskDescribe} />
+                </Col>
+              </Row>
 
 
 
+              <Divider orientation="left">推送机构</Divider>
+              <Row gutter={[10, 24]}  >
 
-          <Divider orientation="left">推送表格</Divider>
-          <Row gutter={[10, 24]} justify="space-between">
+                <Col span={16}>
+                  <TreeSelect {...tProps} />
+                </Col>
+              </Row>
 
-            <Col span={16}>
-              <Select value={this.state.filetype} onChange={this.tableNameChange} >
-                <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
-                <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
-                <Option value="3">重庆保险中介机构季度数据表-专业中介机构销售寿险公司长期保险产品统计表</Option>
-                <Option value="4">重庆保险中介机构季度数据表-银邮代理机构用表</Option>
-              </Select>
-            </Col>
-          </Row>
 
-          {/* <Divider orientation="left">任务起止时间</Divider>
+
+
+              <Divider orientation="left">推送表格</Divider>
+              <Row gutter={[10, 24]} justify="space-between">
+
+                <Col span={16}>
+                  <Select value={this.state.filetype} onChange={this.tableNameChange} >
+                    <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
+                    <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
+                    <Option value="3">重庆保险中介机构季度数据表-专业中介机构销售寿险公司长期保险产品统计表</Option>
+                    <Option value="4">重庆保险中介机构季度数据表-银邮代理机构用表</Option>
+                  </Select>
+                </Col>
+              </Row>
+
+              {/* <Divider orientation="left">任务起止时间</Divider>
           <Row gutter={[10, 24]} justify="space-between">
 
             <Col span={16}>
@@ -274,24 +335,38 @@ class HistoryTaskDetail extends React.Component {
 
           </Row> */}
 
-          <Divider orientation="left">任务季度</Divider>
-          <Row gutter={[10, 24]} justify="space-between">
+              <Divider orientation="left">任务季度</Divider>
+              <Row gutter={[10, 24]} justify="space-between">
 
 
-            <Col className="gutter-row" span={16}>
-              <DatePicker onChange={this.periodChage} picker="quarter" value={moment(this.state.period, dateFormat)} allowClear={false}/>
-            </Col>
+                <Col className="gutter-row" span={16}>
+                  <DatePicker onChange={this.periodChage} picker="quarter" value={moment(this.state.period, dateFormat)} allowClear={false} />
+                </Col>
 
 
-          </Row>
+              </Row>
 
-          <Row gutter={[10, 24]} justify="space-between">
-            <Col span={12}>
-              <Button type="primary" icon={<FileSearchOutlined />} onClick={update} loading={this.state.isUplaod}>
-                更新
-            </Button>
-            </Col>
-          </Row>
+              <Row gutter={[10, 24]} justify="space-between">
+                <Col span={12}>
+                  <Button type="primary" icon={<FileSearchOutlined />} onClick={update} loading={this.state.isUplaod}>
+                    更新
+                  </Button>
+                </Col>
+              </Row>
+
+
+            </TabPane>
+
+            <TabPane tab="完成情况" key="2">
+
+              <Table columns={columns} dataSource={completedOrg} />
+
+            </TabPane>
+
+          </Tabs>
+
+
+
 
 
 
