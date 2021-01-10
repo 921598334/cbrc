@@ -17,7 +17,7 @@ export default {
   },
 
   subscriptions: {
-   
+
   },
 
   effects: {
@@ -41,8 +41,8 @@ export default {
       console.log(response)
 
 
-       //如果出现异常
-       if(response.data == undefined){
+      //如果出现异常
+      if (response.data == undefined) {
         notification.error({ message: '网络异常错误，请稍后重试' })
         return false;
       }
@@ -68,44 +68,170 @@ export default {
       const dataSource = uploadInfo.dataSource;
       console.log(dataSource)
 
+      if (uploadInfo.fileType == 3) {
+
+        if (dataSource.length == 0) {
+          notification.error({ message: '请输入数据' })
+          return false
+        } else {
+
+          for (let index in dataSource) {
+           
+            var amount = dataSource[index]['col1'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第1列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第1列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col2'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第2列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第2列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col3'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第3列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第3列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col4'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第4列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第4列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col5'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第5列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第5列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col6'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第6列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第6列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col7'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第7列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第7列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col8'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第8列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第8列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col9'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第9列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第9列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col10'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第10列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第10列'  })
+              return false
+            }
+
+             amount = dataSource[index]['col11'].replace(/\s*/g, '')
+            if (amount === '') {
+              notification.error({ message: '第11列不能全为空格' })
+              return false
+            }
+            if (amount === null) {
+              notification.error({ message: '请输入第11列'  })
+              return false
+            }
 
 
-      //检查输入是否合法
-      // for (let index in dataSource) {
+          }
 
-      //   //console.log(uploadInfo[index])
+        }
 
-      //   //去除前后空格
-      //   const amount = dataSource[index]['amount'].replace(/\s*/g, '')
+      } else {
+        //检查输入是否合法
+        for (let index in dataSource) {
 
+          //console.log(uploadInfo[index])
 
-      //   if(amount==='请输入'){
-      //     notification.error({message:'请输入 '+dataSource[index]['cellname']+' 的金额'})
-      //     return false
-      //   }
-
-      //   if(amount===''){
-      //     notification.error({message:'请输入 '+dataSource[index]['cellname']+' 的金额'})
-      //     return false
-      //   }
-
-      //   if(amount===null){
-      //     notification.error({message:'请输入 '+dataSource[index]['cellname']+' 的金额'})
-      //     return false
-      //   }
-
-      //   if( Number.isNaN(Number(amount)) ) {
-      //     notification.error({message:dataSource[index]['cellname']+' 需要输入数字'})
-      //     return false
-      //   }
-
-      // }
+          //去除前后空格
+          const amount = dataSource[index]['amount'].replace(/\s*/g, '')
 
 
-    
+          if (amount === '请输入') {
+            notification.error({ message: '请输入 ' + dataSource[index]['cellname'] + ' 的金额' })
+            return false
+          }
+
+          if (amount === '') {
+            notification.error({ message: '请输入 ' + dataSource[index]['cellname'] + ' 的金额' })
+            return false
+          }
+
+          if (amount === null) {
+            notification.error({ message: '请输入 ' + dataSource[index]['cellname'] + ' 的金额' })
+            return false
+          }
+
+          if (Number.isNaN(Number(amount))) {
+            notification.error({ message: dataSource[index]['cellname'] + ' 需要输入数字' })
+            return false
+          }
+
+        }
+      }
+
+
+
+
+
 
       uploadInfo.userid = Cookies.get('userid')
-     
+
 
 
       const response = yield call(uploadRequest, uploadInfo);
@@ -113,8 +239,8 @@ export default {
       console.log("*upload返回为：")
       console.log(response)
 
-       //如果出现异常
-       if(response.data == undefined){
+      //如果出现异常
+      if (response.data == undefined) {
         notification.error({ message: '网络异常错误，请稍后重试' })
         return false;
       }

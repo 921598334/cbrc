@@ -238,7 +238,7 @@ class PublishTask extends React.Component {
 
 
             <Col className="gutter-row" span={16}>
-              <DatePicker onChange={this.periodChage} picker="quarter" />
+              <DatePicker onChange={this.periodChage} picker="quarter"  />
             </Col>
 
 

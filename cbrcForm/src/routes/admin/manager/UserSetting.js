@@ -40,7 +40,8 @@ class UserSetting extends React.Component {
       token: Cookies.get('token'),
       userid: Cookies.get('userid'),
 
-
+      //初始化是否加载完成标记
+      isLoading: true,
       isUplaod: false,
       isComplete: false,
       fileType: 1,
@@ -49,15 +50,18 @@ class UserSetting extends React.Component {
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     console.log("UserSetting 的componentWillmount开始执行")
 
     //得到机构类型和所有用户
-    this.props.dispatch({
+    await this.props.dispatch({
       type: "userSettingNameSpace/initUserInfo",
 
     })
 
+    this.setState({
+      isLoading: false,
+    })
 
   }
 
@@ -196,7 +200,7 @@ class UserSetting extends React.Component {
 
     return (
 
-      <Spin spinning={userInfoData == undefined || orgInfoData == undefined} tip="数据加载中...">
+      <Spin spinning={this.state.isLoading} tip="数据加载中...">
 
         <Row gutter={[16, 24]}>
           <Col >
@@ -405,7 +409,7 @@ class UserSetting extends React.Component {
             <Select
 
               //value={'32-0'}
-               value={this.state.updateOrgType}
+              value={this.state.updateOrgType}
               style={{ width: 120 }}
 
               onChange={(e) => {

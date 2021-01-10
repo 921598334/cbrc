@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { getOrgRequest } from '../services/orgService'
-import { publishRequest, queryRequest, queryTaskCompleteRequest, deleteTaskRequest, queryTaskDetailRequest, updateRequest, publishTimerTaskRequest, queryTimerTaskRequest,deleteTimerTaskRequest,queryTimerTaskDetailRequest,updateTimeTaskRequest,queryCompletedOrgRequest } from '../services/taskService'
+import { publishRequest, queryRequest, queryTaskCompleteRequest, deleteTaskRequest, queryTaskDetailRequest, updateRequest, publishTimerTaskRequest, queryTimerTaskRequest, deleteTimerTaskRequest, queryTimerTaskDetailRequest, updateTimeTaskRequest, queryCompletedOrgRequest } from '../services/taskService'
 
 
 export default {
@@ -24,9 +24,46 @@ export default {
 
     *publishTimerTask({ publishInfo }, { call, put }) {
 
-      console.log("*publish开始执行")
+      console.log("*publishTimerTask 开始执行")
 
       console.log(publishInfo)
+
+      //去除前后空格
+      var title = publishInfo['taskTitle'].replace(/\s*/g, '')
+
+      if (title === '') {
+        notification.error({ message: '标题不能全为空格' })
+        return false
+      }
+
+      if (title === null) {
+        notification.error({ message: '请输入标题' })
+        return false
+      }
+
+
+      var taskDescribe = publishInfo['taskDescribe'].replace(/\s*/g, '')
+
+      if (taskDescribe === '') {
+        notification.error({ message: '描述不能全为空格' })
+        return false
+      }
+
+      if (taskDescribe === null) {
+        notification.error({ message: '请输入描述' })
+        return false
+      }
+
+
+      var selectedValue = publishInfo['selectedValue']
+      if (selectedValue.length == 0) {
+        notification.error({ message: '请选择要推送的机构' })
+        return false
+      }
+
+
+    
+
 
       const response = yield call(publishTimerTaskRequest, publishInfo);
 
@@ -132,6 +169,51 @@ export default {
 
       console.log(publishInfo)
 
+
+
+      //去除前后空格
+      var title = publishInfo['tasktitle'].replace(/\s*/g, '')
+
+      if (title === '') {
+        notification.error({ message: '标题不能全为空格' })
+        return false
+      }
+
+      if (title === null) {
+        notification.error({ message: '请输入标题' })
+        return false
+      }
+
+
+      var taskDescribe = publishInfo['taskDescribe'].replace(/\s*/g, '')
+
+      if (taskDescribe === '') {
+        notification.error({ message: '描述不能全为空格' })
+        return false
+      }
+
+      if (taskDescribe === null) {
+        notification.error({ message: '请输入描述' })
+        return false
+      }
+
+
+      var selectedValue = publishInfo['selectedValue']
+      if (selectedValue.length == 0) {
+        notification.error({ message: '请选择要推送的机构' })
+        return false
+      }
+
+
+      var period = publishInfo['period']
+      if (period == '1') {
+        notification.error({ message: '请选择季度' })
+        return false
+      }
+
+
+
+
       const response = yield call(updateRequest, publishInfo);
 
       console.log("*publish返回为：")
@@ -165,6 +247,43 @@ export default {
       console.log("*updateTimerTask 开始执行")
 
       console.log(publishTimerTaskInfo)
+
+
+        //去除前后空格
+        var title = publishTimerTaskInfo['tasktitle'].replace(/\s*/g, '')
+
+        if (title === '') {
+          notification.error({ message: '标题不能全为空格' })
+          return false
+        }
+  
+        if (title === null) {
+          notification.error({ message: '请输入标题' })
+          return false
+        }
+  
+  
+        var taskDescribe = publishTimerTaskInfo['taskDescribe'].replace(/\s*/g, '')
+  
+        if (taskDescribe === '') {
+          notification.error({ message: '描述不能全为空格' })
+          return false
+        }
+  
+        if (taskDescribe === null) {
+          notification.error({ message: '请输入描述' })
+          return false
+        }
+  
+  
+        var selectedValue = publishTimerTaskInfo['selectedValue']
+        if (selectedValue.length == 0) {
+          notification.error({ message: '请选择要推送的机构' })
+          return false
+        }
+
+
+
 
       const response = yield call(updateTimeTaskRequest, publishTimerTaskInfo);
 
@@ -305,10 +424,10 @@ export default {
     },
 
 
-    
 
 
-    
+
+
     *queryTimerTaskDetail({ queryTimerTaskDetailInfo }, { call, put }) {
 
       console.log("*queryTaskDetail 开始执行")
@@ -343,7 +462,7 @@ export default {
     },
 
 
-   
+
 
 
 
@@ -461,6 +580,51 @@ export default {
 
       console.log(publishInfo)
 
+
+
+      //去除前后空格
+      var title = publishInfo['taskTitle'].replace(/\s*/g, '')
+
+      if (title === '') {
+        notification.error({ message: '标题不能全为空格' })
+        return false
+      }
+
+      if (title === null) {
+        notification.error({ message: '请输入标题' })
+        return false
+      }
+
+
+      var taskDescribe = publishInfo['taskDescribe'].replace(/\s*/g, '')
+
+      if (taskDescribe === '') {
+        notification.error({ message: '描述不能全为空格' })
+        return false
+      }
+
+      if (taskDescribe === null) {
+        notification.error({ message: '请输入描述' })
+        return false
+      }
+
+
+      var selectedValue = publishInfo['selectedValue']
+      if (selectedValue.length == 0) {
+        notification.error({ message: '请选择要推送的机构' })
+        return false
+      }
+
+
+      var period = publishInfo['period']
+      if (period == '1') {
+        notification.error({ message: '请选择季度' })
+        return false
+      }
+
+
+
+
       const response = yield call(publishRequest, publishInfo);
 
       console.log("*publish返回为：")
@@ -501,7 +665,7 @@ export default {
 
 
 
-    
+
     updateTimerTaskReduce(state, action) {
 
       console.log("updateTimerTaskReduce")
@@ -520,7 +684,7 @@ export default {
     },
 
 
-    
+
     deleteTimerTaskReduce(state, action) {
 
       console.log("deleteTimerTaskReduce")
@@ -613,7 +777,7 @@ export default {
 
 
 
-    
+
     queryTimerTaskDetailReduce(state, action) {
 
       console.log("queryTimerTaskDetailReduce")

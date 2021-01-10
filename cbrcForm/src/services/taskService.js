@@ -27,7 +27,8 @@ export async function updateRequest(publishInfo) {
     method: 'post',
     url: myUrl.localUrl+'update',
     params: {
-      ...publishInfo
+      ...publishInfo,
+      filetype:publishInfo.fileType
     }
 
   }).then(function (response) {
