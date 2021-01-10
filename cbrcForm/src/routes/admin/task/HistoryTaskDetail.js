@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
 
-import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result, Tabs, Table } from 'antd';
+import { Spin, Input, Button, Row, Col, DatePicker, Select, TreeSelect, Divider, Result, Tabs, Table,Space } from 'antd';
 import { SketchOutlined, FileSearchOutlined } from '@ant-design/icons';
 import moment from 'moment';
 const { TabPane } = Tabs;
@@ -21,8 +21,8 @@ const dateFormat = 'YYYY-MM-DD';
 
 
 
-@connect(({ taskNamespace }) => ({
-  taskNamespace,
+@connect(({ taskNamespace,queryNamespace }) => ({
+  taskNamespace,queryNamespace
 }))
 class HistoryTaskDetail extends React.Component {
 
@@ -36,7 +36,7 @@ class HistoryTaskDetail extends React.Component {
       tasktitle: '',
       taskDescribe: '',
       userid: Cookies.get('userid'),
-      filetype: '1',
+      fileType: '1',
       isComplete: false,
       selectedValue: [],
       period: '2000-01-01',
@@ -82,10 +82,11 @@ class HistoryTaskDetail extends React.Component {
             taskDescribe: taskDetail.taskdescribe,
             enddate: taskDetail.enddate,
             fromdate: taskDetail.fromdate,
-            filetype: taskDetail.filetype,
+            fileType: taskDetail.filetype,
             id: taskDetail.id,
             selectedValue: taskDetail.orgtype,
             period: taskDetail.period,
+
           })
 
           console.log('state修改完成：')
@@ -103,6 +104,7 @@ class HistoryTaskDetail extends React.Component {
     })
       .then(result => {
         if (result) {
+
 
         }
       })
@@ -154,7 +156,7 @@ class HistoryTaskDetail extends React.Component {
     console.log('表发生了变化')
     console.log(e)
     this.setState({
-      filetype: e,
+      fileType: e,
     })
   }
 
@@ -175,6 +177,109 @@ class HistoryTaskDetail extends React.Component {
       period: value.format('YYYY-MM-DD')
     });
   };
+
+
+
+
+
+
+  handleDownload = (record) => {
+    console.log('下载记录的record')
+    console.log(record)
+
+    this.props.dispatch({
+      type: "queryNamespace/download",
+      downloadInfo: {
+        
+        ...this.state,
+        id: record.taskcompleteid,
+        fileType:record.fileType
+      }
+    })
+      .then(result => {
+        if (result) {
+
+          console.log('下载连接：')
+          console.log(this.props.queryNamespace.downloadLink)
+
+          window.open('http://' + this.props.queryNamespace.downloadLink)
+        }
+      })
+  }
+
+
+
+
+
+
+  handlePass = (id) => {
+
+    console.log(id)
+
+    this.props.dispatch({
+      type: "queryNamespace/handlePass",
+      passInfo: {
+        id: id,
+        ...this.state
+      }
+    })
+      .then(result => {
+        if (result) {
+
+          this.props.dispatch({
+            type: "queryNamespace/query",
+            queryInfo: {
+              ...this.state
+
+            }
+          })
+            .then(result => {
+              if (result) {
+                //查询成功后
+
+              }
+            })
+
+        }
+      })
+  }
+
+
+  handleRefuse = (id) => {
+
+    console.log(id)
+
+    this.props.dispatch({
+      type: "queryNamespace/handleRefuse",
+      refuseInfo: {
+        id: id,
+        ...this.state
+      }
+    })
+      .then(result => {
+        if (result) {
+
+
+          this.props.dispatch({
+            type: "queryNamespace/query",
+            queryInfo: {
+              ...this.state
+
+            }
+          })
+            .then(result => {
+              if (result) {
+                //查询成功后
+
+              }
+            })
+
+        }
+      })
+  }
+
+
+
 
 
 
@@ -206,11 +311,27 @@ class HistoryTaskDetail extends React.Component {
         key: 'typeName',
       },
 
-      // {
-      //   title: '操作',
-      //   key: 'action',
+      {
+        title: '操作',
+        key: 'action',
+        render: (text, record) => (
 
-      // },
+          <Space size="middle">
+
+            <a onClick={() => this.handleDownload(record)}>下载</a>
+
+            {/* <Popconfirm title="驳回后会重新为该用户生成新的任务，您确定要驳回吗？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={() => this.handleRefuse(record.taskcompleteid)}>
+              <a >驳回</a>
+            </Popconfirm>
+
+            <Popconfirm title="您确定要通过吗？通过后仍然可以重新驳回" icon={<QuestionCircleOutlined style={{ color: 'green' }} />} onConfirm={() => this.handlePass(record.taskcompleteid)}>
+              <a >通过</a>
+            </Popconfirm> */}
+
+          </Space>
+        )
+
+      },
     ];
 
 
@@ -319,7 +440,7 @@ class HistoryTaskDetail extends React.Component {
               <Row gutter={[10, 24]} justify="space-between">
 
                 <Col span={16}>
-                  <Select value={this.state.filetype} onChange={this.tableNameChange} >
+                  <Select value={this.state.fileType} onChange={this.tableNameChange} >
                     <Option value="1">重庆保险中介机构季度数据表-专业代理、经纪机构用表</Option>
                     <Option value="2">重庆保险中介机构季度数据表-公估机构用表</Option>
                     <Option value="3">重庆保险中介机构季度数据表-专业中介机构销售寿险公司长期保险产品统计表</Option>

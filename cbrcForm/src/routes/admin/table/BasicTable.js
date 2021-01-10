@@ -363,8 +363,6 @@ class BasicTable extends React.Component {
             { this.action(record)}
 
           </Space>
-
-
         )
         // <Space size="middle">
         //   <a onClick={() => this.handleDownload(record.taskcompleteid)}>下载</a>

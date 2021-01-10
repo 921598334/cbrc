@@ -1,5 +1,4 @@
 import { notification } from "antd";
-import { getOrgRequest } from '../services/orgService'
 import { getUserRequest, updateUserRequest } from '../services/userService'
 
 //普通用户的设置

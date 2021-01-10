@@ -154,7 +154,7 @@ class HistoryTimerTaskDetail extends React.Component {
   render() {
     console.log("HistoryTaskDetail 的render开始执行")
 
-    const { treeData, queryTimerTaskDetailData } = this.props.taskNamespace
+    const { treeData } = this.props.taskNamespace
 
 
     //点击更新

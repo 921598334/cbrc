@@ -150,15 +150,18 @@ class TaskComplete extends React.Component {
 
 
   //下载
-  handleDownload = (id) => {
+  handleDownload = (record) => {
 
-    console.log(id)
+    console.log(record)
 
     this.props.dispatch({
       type: "queryNamespace/download",
       downloadInfo: {
-        id: id,
-        ...this.state
+        
+        ...this.state,
+        id: record.id,
+        fileType:record.filetype,
+
       }
     })
       .then(result => {
@@ -188,19 +191,19 @@ class TaskComplete extends React.Component {
       console.log(record.iscomplete)
       return (
         // <h1 >待审核</h1>
-        <a onClick={() => this.handleDownload(record.id)}>下载</a>
+        <a onClick={() => this.handleDownload(record)}>下载</a>
       )
     } else if (record.iscomplete == '2') {
       console.log(record.iscomplete)
       return (
         // <h1 >通过审核</h1>
-        <a onClick={() => this.handleDownload(record.id)}>下载</a>
+        <a onClick={() => this.handleDownload(record)}>下载</a>
       )
     } else if (record.iscomplete == '3') {
       console.log(record.iscomplete)
       return (
         // <a onClick={(e) => { this.startTask(record) }}>重新完成</a>
-        <a onClick={() => this.handleDownload(record.id)}>下载</a>
+        <a onClick={() => this.handleDownload(record)}>下载</a>
       )
     }
 

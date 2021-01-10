@@ -402,7 +402,11 @@ class UserSetting extends React.Component {
 
           <Col>
 
-            <Select value={this.state.updateOrgName} style={{ width: 120 }}
+            <Select
+
+              //value={'32-0'}
+               value={this.state.updateOrgType}
+              style={{ width: 120 }}
 
               onChange={(e) => {
                 console.log('机构类型')

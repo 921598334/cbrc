@@ -235,7 +235,9 @@ export async function downloadRequest(downloadInfo) {
     },
     params: {
 
-      ...downloadInfo,
+      //...downloadInfo,
+      id:downloadInfo.id,
+      fileType:downloadInfo.fileType
     
     }
   }).then(function (response) {

@@ -64,13 +64,11 @@ class OrgSetting extends React.Component {
     //得到机构类型
     await this.props.dispatch({
       type: "orgSettingNameSpace/initOrg",
-
     })
 
     //得到所有机构信息
-    await  this.props.dispatch({
+    await this.props.dispatch({
       type: "orgSettingNameSpace/initOrgInfo",
-
     })
 
     this.setState({
@@ -222,8 +220,6 @@ class OrgSetting extends React.Component {
 
                     }
                   })
-
-
               }}
 
             >
@@ -272,7 +268,7 @@ class OrgSetting extends React.Component {
           updateOrgTypeName: selectedRows[0]['orgTypeName'],
           updateOrgid: selectedRows[0]['orgid'],
           updateOrgname: selectedRows[0]['orgname'],
-          updateOrgtype: selectedRows[0]['orgtype'],
+          updateOrgtype: parseInt(selectedRows[0]['orgtype']),
 
         })
 
@@ -511,7 +507,7 @@ class OrgSetting extends React.Component {
                       console.log('添加按钮点击了')
 
                       this.setState({
-                        isUplaod3:true
+                        isUplaod3: true
                       })
 
                       this.props.dispatch({
@@ -583,7 +579,10 @@ class OrgSetting extends React.Component {
                 <Col>
 
 
-                  <Select value={this.state.updateOrgTypeName} style={{ width: 120 }}
+                  <Select
+                   // value={331}
+                    value={this.state.updateOrgtype}
+                    style={{ width: 120 }}
                     onChange={(e) => {
                       console.log('机构类型')
                       console.log(e)
@@ -618,7 +617,7 @@ class OrgSetting extends React.Component {
                     onClick={() => {
                       console.log('保存点击了')
                       this.setState({
-                        isUplaod4:true
+                        isUplaod4: true
                       })
 
                       this.props.dispatch({

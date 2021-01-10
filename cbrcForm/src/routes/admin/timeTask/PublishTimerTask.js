@@ -39,7 +39,7 @@ class PublishTimerTask extends React.Component {
 
       taskTitle: '',
       taskDescribe: '',
-      userid: Cookies.get('userid'),
+      
       fileType: '1',
       isComplete: false,
       selectedValue: [],
