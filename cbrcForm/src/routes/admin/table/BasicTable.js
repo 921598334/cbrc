@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 
 import { connect } from 'dva';
 
-import { Table, Button, Spin, Row, Col, DatePicker, Select, Space, Popconfirm } from 'antd';
+import { Table, Button, Spin, Row, Col, DatePicker, Select, Space, Popconfirm, Input } from 'antd';
 import { FileSearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 
@@ -76,9 +76,18 @@ class BasicTable extends React.Component {
 
         if (result) {
           //查询成功后
-
+          const { orgList } = this.props.queryNamespace
+          console.log('orgList')
+          console.log(orgList[0])    
+          this.setState({
+            orgType: orgList[0].orgtype,
+            typename: orgList[0].typename,
+          })
         }
       })
+
+
+
 
   }
 
@@ -87,6 +96,7 @@ class BasicTable extends React.Component {
     console.log(e)
     this.setState({
       orgType: e
+      
     })
   }
   tableNameChange = (e) => {
@@ -245,6 +255,16 @@ class BasicTable extends React.Component {
   }
 
 
+  orgNameeeeChange= (e) => {
+
+    console.log('机构名称改变')
+    console.log(e.target.value)
+
+    this.setState({
+      ortNameee: e.target.value,
+    })
+  }
+
 
   action(record) {
 
@@ -383,8 +403,9 @@ class BasicTable extends React.Component {
 
     //点击查询
     const query = values => {
-      console.log('query开始执行');
+      console.log('query1开始执行');
 
+      
 
       this.setState({
         isUplaod: true,
@@ -413,7 +434,7 @@ class BasicTable extends React.Component {
     };
 
 
-    const {  selectedRowKeys } = this.state;
+    const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -432,7 +453,7 @@ class BasicTable extends React.Component {
             </Col >
           </Row>
 
-          <Row gutter={[16, 24]} justify="space-between">
+          <Row gutter={[16, 24]} justify="start">
 
             <Col span={4}>
               <h1>任务状态：</h1>
@@ -445,15 +466,19 @@ class BasicTable extends React.Component {
             </Col>
 
             <Col span={6}>
-              <h1>机构名称：</h1>
-              <Select defaultValue="人身险机构" onChange={this.orgNameChange} style={{ width: '200px' }}>
+              <h1>机构类型：</h1>
+              <Select defaultValue='管理机构' onChange={this.orgNameChange} style={{ width: '200px' }}>
                 {this.optionCreate(orgList)}
-
               </Select>
             </Col>
 
+            <Col span={4}>
+              <h1>机构名称·：</h1>
+              <Input placeholder="请输入机构名称"  onChange={this.orgNameeeeChange}></Input>
+            </Col>
 
-            <Col span={6}  >
+
+            <Col span={8}  >
               <h1>重庆保险中介机构季度数据表 类型：</h1>
               <Select defaultValue="专业代理、经纪机构用表" onChange={this.tableNameChange} style={{ width: '250px' }}>
                 <Option value="1">专业代理、经纪机构用表</Option>

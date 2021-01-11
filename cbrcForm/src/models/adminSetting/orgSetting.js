@@ -369,9 +369,19 @@ export default {
 
     *updateOrg({ updateInfo }, { call, put }) {
 
-      console.log("*updateOrg 开始执行")
-
+      console.log("*updateOrg111 开始执行")
       console.log(updateInfo)
+
+      console.log('准备')
+      console.log(updateInfo.updateOrgType)
+      console.log(updateInfo.updateOrgType==undefined)
+
+      if(updateInfo.updateOrgType==undefined){
+        notification.error({ message: '请选择一个机构后再操作' })
+        return
+      }
+
+      console.log('结束')
 
       if (updateInfo.updateOrgName == null) {
         notification.error({ message: '输入的机构类型不能为空' })
