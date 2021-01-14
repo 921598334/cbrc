@@ -69,6 +69,11 @@ export default {
       console.log(updateUserInfo)
 
 
+      if(updateUserInfo.updateUserId==undefined){
+        notification.error({ message: '请选择一个用户后再操作' })
+        return
+      }
+
 
 
       if (updateUserInfo.updateUserName == null) {

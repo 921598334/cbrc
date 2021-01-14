@@ -161,7 +161,7 @@ class AdminPage extends React.Component {
 
                 >
                   
-                  {/* <h1 style={{color:"#FFFFFF"}}>数据上报管理系统</h1> */}
+                  <h1 style={{color:"#FFFFFF"}}>线填报系统</h1>
                 </div>
               <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" defaultOpenKeys={['sub1', 'sub2', 'sub3', 'sub4']}>
 
@@ -176,19 +176,19 @@ class AdminPage extends React.Component {
 
 
 
-                <SubMenu key="sub2" icon={<DesktopOutlined />} title="常规任务模块" disabled={!this.state.isSuperAdmin}>
+                <SubMenu key="sub2" icon={<DesktopOutlined />} title="常规任务模块" hidden={!this.state.isSuperAdmin}>
                   <Menu.Item key="6"><Link to='/admin/publishTask'>发布任务</Link></Menu.Item>
                   <Menu.Item key="8"><Link to='/admin/historyTask'>任务管理</Link></Menu.Item>
                 </SubMenu>
 
 
-                <SubMenu key="sub3" icon={<HistoryOutlined />} title="定时任务模块" disabled={!this.state.isSuperAdmin}>
+                <SubMenu key="sub3" icon={<HistoryOutlined />} title="定时任务模块" hidden={!this.state.isSuperAdmin}>
                   <Menu.Item key="9"><Link to='/admin/publishTimerTask'>发布定时任务</Link></Menu.Item>
                   <Menu.Item key="10"><Link to='/admin/timerTaskManage'>定时任务管理</Link></Menu.Item>
                 </SubMenu>
 
 
-                <SubMenu key="sub4" icon={<ClusterOutlined />} title="管理模块" disabled={!this.state.isSuperAdmin}>
+                <SubMenu key="sub4" icon={<ClusterOutlined />} title="管理模块" hidden={!this.state.isSuperAdmin}>
                   <Menu.Item key="11"><Link to='/admin/userManager'>用户管理</Link></Menu.Item>
                   <Menu.Item key="12"><Link to='/admin/orgManager'>机构管理</Link></Menu.Item>
 

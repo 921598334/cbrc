@@ -1,10 +1,10 @@
 
-import React  from 'react';
+import React from 'react';
 // import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './userPage.css';
 import { connect } from 'dva';
-import { Layout, Menu , Spin, Row,  Dropdown, notification, ConfigProvider } from 'antd';
+import { Layout, Menu, Spin, Row, Dropdown, notification, ConfigProvider } from 'antd';
 //import { Router,Route, Switch, Link, withRouter } from 'dva/router'; //天坑，局部路由跳转不能用dva的
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'      //局部路由跳转能用这个
 import zhCN from 'antd/es/locale/zh_CN';
@@ -152,11 +152,19 @@ class UserPage extends React.Component {
                   height: '32px',
                   background: 'rgba(255, 255, 255, 0.3)',
                   margin: '16px',
+                  display: 'flex',
+                  alignItem: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'justify',
+                  verticalAlign: 'middle',
                 }
 
                 }
 
-                />
+                >
+
+                  <h1 style={{ color: "#FFFFFF" }}>线填报系统</h1>
+                </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
 
                   {/* <SubMenu key="1" icon={<PieChartOutlined />} title="基础数据上报">
