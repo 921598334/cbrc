@@ -202,7 +202,7 @@ export default {
           const amount = dataSource[index]['amount'].replace(/\s*/g, '')
 
 
-          if (amount === '请输入') {
+          if (amount === '无') {
             notification.error({ message: '请输入 ' + dataSource[index]['cellname'] + ' 的金额' })
             return false
           }

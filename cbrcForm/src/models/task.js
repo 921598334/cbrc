@@ -61,8 +61,14 @@ export default {
         return false
       }
 
+      var cron = publishInfo['cron']
 
-    
+      if (cron === '') {
+        notification.error({ message: 'cron表达式不能为空' })
+        return false
+      }
+
+
 
 
       const response = yield call(publishTimerTaskRequest, publishInfo);
@@ -249,38 +255,48 @@ export default {
       console.log(publishTimerTaskInfo)
 
 
-        //去除前后空格
-        var title = publishTimerTaskInfo['tasktitle'].replace(/\s*/g, '')
+      //去除前后空格
+      var title = publishTimerTaskInfo['tasktitle'].replace(/\s*/g, '')
 
-        if (title === '') {
-          notification.error({ message: '标题不能全为空格' })
-          return false
-        }
-  
-        if (title === null) {
-          notification.error({ message: '请输入标题' })
-          return false
-        }
-  
-  
-        var taskDescribe = publishTimerTaskInfo['taskDescribe'].replace(/\s*/g, '')
-  
-        if (taskDescribe === '') {
-          notification.error({ message: '描述不能全为空格' })
-          return false
-        }
-  
-        if (taskDescribe === null) {
-          notification.error({ message: '请输入描述' })
-          return false
-        }
-  
-  
-        var selectedValue = publishTimerTaskInfo['selectedValue']
-        if (selectedValue.length == 0) {
-          notification.error({ message: '请选择要推送的机构' })
-          return false
-        }
+      if (title === '') {
+        notification.error({ message: '标题不能全为空格' })
+        return false
+      }
+
+      if (title === null) {
+        notification.error({ message: '请输入标题' })
+        return false
+      }
+
+
+      var taskDescribe = publishTimerTaskInfo['taskDescribe'].replace(/\s*/g, '')
+
+      if (taskDescribe === '') {
+        notification.error({ message: '描述不能全为空格' })
+        return false
+      }
+
+      if (taskDescribe === null) {
+        notification.error({ message: '请输入描述' })
+        return false
+      }
+
+
+      var selectedValue = publishTimerTaskInfo['selectedValue']
+      if (selectedValue.length == 0) {
+        notification.error({ message: '请选择要推送的机构' })
+        return false
+      }
+
+
+      var cron = publishTimerTaskInfo['cron']
+
+      if (cron === '') {
+        notification.error({ message: 'cron表达式不能为空' })
+        return false
+      }
+
+
 
 
 

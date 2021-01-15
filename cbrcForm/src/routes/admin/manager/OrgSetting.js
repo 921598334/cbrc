@@ -6,7 +6,7 @@ import '../table/tableCSS';
 import Cookies from 'js-cookie'
 import { connect } from 'dva';
 
-import { Table, Input, Button, Row, Col, Spin, BackTop, Space, Popconfirm, Select, Tabs } from 'antd';
+import { Table, Input, Button, Row, Col, Spin, BackTop, Space, Popconfirm, Select, Tabs,notification } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 
@@ -131,6 +131,11 @@ class OrgSetting extends React.Component {
               onConfirm={() => {
                 console.log('点击了删除,删除的ID：')
                 console.log(record)
+
+                if(record.key==10){
+                  notification.warn({message:'该机构无法删除'})
+                  return;
+                }
 
                 this.props.dispatch({
                   type: "orgSettingNameSpace/deleteOrg",

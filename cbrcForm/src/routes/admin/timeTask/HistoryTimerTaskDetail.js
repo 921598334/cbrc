@@ -6,9 +6,9 @@ import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
 
-import { Spin, Input, Button, Row, Col, Switch, Select, TreeSelect, Divider, Result } from 'antd';
-import { SketchOutlined, FileSearchOutlined } from '@ant-design/icons';
-
+import { Spin, Input, Button, Row, Col, Switch, Select, TreeSelect, Divider, Result, Typography,Popover } from 'antd';
+import { SketchOutlined, FileSearchOutlined, FieldTimeOutlined } from '@ant-design/icons';
+const { Title, Paragraph } = Typography;
 
 const { TextArea } = Input;
 
@@ -16,6 +16,151 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 
+const content = (
+  <div>
+    <Title>
+      Cron表达式是一个字符串，每一个域代表一个含义
+    </Title>
+    <Paragraph>
+      <table border="1">
+        <tr>
+          <th>位置</th>
+          <th>时间域</th>
+          <th>允许值</th>
+        </tr>
+        <tr>
+          <th>1</th>
+          <th>秒</th>
+          <th>0-59</th>
+        </tr>
+        <tr>
+          <th>2</th>
+          <th>分钟</th>
+          <th>0-59</th>
+        </tr>
+        <tr>
+          <th>3</th>
+          <th>小时</th>
+          <th>0-23</th>
+        </tr>
+        <tr>
+          <th>4</th>
+          <th>日期</th>
+          <th>1-31</th>
+        </tr>
+        <tr>
+          <th>4</th>
+          <th>日期</th>
+          <th>1-31</th>
+        </tr>
+        <tr>
+          <th>5</th>
+          <th>月份</th>
+          <th>1-12</th>
+        </tr>
+        <tr>
+          <th>6</th>
+          <th>星期</th>
+          <th>1-7</th>
+        </tr>
+
+      </table>
+    </Paragraph>
+
+    <Paragraph>
+      (1) *：表示匹配该域的任意值。
+      (2) ? :只能用在DayofMonth和DayofWeek两个域。
+      (3) - :表示范围。
+      (4)/：表示起始时间开始触发，然后每隔固定时间触发一次。
+      (5) , :表示列出枚举值值。
+      (6) L :表示最后。
+      (7) W: 表示有效工作日(周一到周五)。
+      (8) LW :表示在某个月最后一个工作日，即最后一个星期五。
+      (9) # :用于确定每个月第几个星期几。
+    </Paragraph>
+
+
+
+    {/* <Paragraph>
+      (1) *：表示匹配该域的任意值。
+    </Paragraph>
+    <Paragraph>
+      (2) ? :只能用在DayofMonth和DayofWeek两个域。
+    </Paragraph>
+
+    <Paragraph>
+      (3) - :表示范围。
+    </Paragraph>
+
+    <Paragraph>
+      (4)/：表示起始时间开始触发，然后每隔固定时间触发一次。
+    </Paragraph>
+
+    <Paragraph>
+      (5) , :表示列出枚举值值。
+    </Paragraph>
+
+    <Paragraph>
+      (6) L :表示最后。
+    </Paragraph>
+
+    <Paragraph>
+      (7) W: 表示有效工作日(周一到周五)。
+    </Paragraph>
+
+    <Paragraph>
+      (8) LW :这两个字符可以连用，表示在某个月最后一个工作日，即最后一个星期五。
+    </Paragraph>
+
+    <Paragraph>
+      (9) # :用于确定每个月第几个星期几。
+    </Paragraph> */}
+
+
+
+    <Title>
+      常用例子
+    </Title>
+    <Paragraph>
+      <table border="1">
+        <tr>
+          <th>cron表达式</th>
+          <th>描述</th>
+
+        </tr>
+        <tr>
+          <th>0 0 10,15,16 * * ?  </th>
+          <th>每天上午10点，下午3点，4点</th>
+
+        </tr>
+        <tr>
+          <th>0 0/30 9-17 * * ?</th>
+          <th>朝九晚五工作时间内每半小时</th>
+
+        </tr>
+        <tr>
+          <th>0 0 12 * * ?</th>
+          <th>每天中午12点触发</th>
+
+        </tr>
+        <tr>
+          <th>0 00 1 1 4,7,10,1 ?</th>
+          <th>每季度第一天，1点发布任务</th>
+
+        </tr>
+        <tr>
+          <th>0 59 23 L 3,6,9,12 ?</th>
+          <th>每季度最后一天23点59分执行任务</th>
+
+        </tr>
+
+
+      </table>
+    </Paragraph>
+
+
+  </div>
+);
 
 @connect(({ taskNamespace }) => ({
   taskNamespace,
@@ -78,7 +223,8 @@ class HistoryTimerTaskDetail extends React.Component {
             filetype: queryTimerTaskDetailData.filetype,
             id: queryTimerTaskDetailData.id,
             selectedValue: queryTimerTaskDetailData.orgtype,
-            isenable:queryTimerTaskDetailData.isenable,
+            isenable: queryTimerTaskDetailData.isenable,
+            cron: queryTimerTaskDetailData.cron
           })
 
           console.log('state修改完成：')
@@ -91,6 +237,15 @@ class HistoryTimerTaskDetail extends React.Component {
 
     console.log("HistoryTaskDetail 的componentWillmount 执行结束")
 
+  }
+
+
+  cronChange = e => {
+    console.log('e.target.value')
+    console.log(e.target.value)
+    this.setState({
+      cron: e.target.value,
+    })
   }
 
 
@@ -264,10 +419,21 @@ class HistoryTimerTaskDetail extends React.Component {
           </Row>
 
 
+          <Divider orientation="left">执行时间</Divider>
+          <Row gutter={[10, 24]} justify="space-between">
+
+            <Col span={16}>
+              <Popover content={content} title="注意" trigger="focus">
+                <Input placeholder="Cron表达式" prefix={<FieldTimeOutlined />} onChange={this.cronChange} value={this.state.cron} />
+              </Popover>
+            </Col>
+          </Row>
+
+
 
           <Row gutter={[10, 24]} justify="space-between">
             <Col span={12}>
-              <Switch checkedChildren="开启" unCheckedChildren="关闭"  checked={this.state.isenable=='1'}
+              <Switch checkedChildren="开启" unCheckedChildren="关闭" checked={this.state.isenable == '1'}
                 onChange={(e) => {
                   console.log('开关状态')
                   console.log(e)
