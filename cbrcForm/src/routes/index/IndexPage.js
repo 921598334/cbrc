@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-
+import 'babel-polyfill';
 import { Form, Input, Button, Carousel, Row, Col, ConfigProvider } from 'antd';
 import 'antd/dist/antd.css';
 import { styleTopSpan, layout, tailLayout } from './indexPageCSS'
