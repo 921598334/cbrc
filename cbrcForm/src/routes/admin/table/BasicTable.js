@@ -1,7 +1,7 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-
+import {myUrl} from '../../../services/ip'
 import { connect } from 'dva';
 
 import { Table, Button, Spin, Row, Col, DatePicker, Select, Space, Popconfirm, Input } from 'antd';
@@ -142,7 +142,11 @@ class BasicTable extends React.Component {
           console.log('下载连接：')
           console.log(this.props.queryNamespace.downloadLink)
 
-          window.open('http://' + this.props.queryNamespace.downloadLink)
+
+          console.log('组装后的下载连接：')
+          console.log( myUrl.localUrl + this.props.queryNamespace.downloadLink)
+
+          window.open( myUrl.localUrl + this.props.queryNamespace.downloadLink)
         }
       })
   }

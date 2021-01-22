@@ -2,7 +2,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-
+import {myUrl} from '../../../services/ip'
 import { notification } from 'antd';
 import { connect } from 'dva';
 
@@ -137,7 +137,18 @@ class RangeTable extends React.Component {
           if (this.props.queryNamespace.downloadLink == undefined || this.props.queryNamespace.downloadLink == '') {
             notification.info({ message: '没有查询到数据' })
           } else {
-            window.open('http://' + this.props.queryNamespace.downloadLink)
+
+
+            console.log('下载连接：')
+            console.log(this.props.queryNamespace.downloadLink)
+  
+  
+            console.log('组装后的下载连接：')
+            console.log( myUrl.localUrl +  this.props.queryNamespace.downloadLink)
+  
+            window.open( myUrl.localUrl + this.props.queryNamespace.downloadLink)
+
+
           }
         }
       })

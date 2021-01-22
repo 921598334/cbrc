@@ -1,7 +1,7 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-import './adminPage.css';
+// import './adminPage.css';
 import zhCN from 'antd/es/locale/zh_CN';
 import { Layout, Menu, Spin, ConfigProvider, Dropdown, Row } from 'antd';
 import { connect } from 'dva';

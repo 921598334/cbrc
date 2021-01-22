@@ -2,6 +2,7 @@ import dva from 'dva';
 import './index.css';
 import 'babel-polyfill';
 
+
 // 1. Initialize
 const app = dva();
 
@@ -23,6 +24,7 @@ app.model(require('./models/userSetting').default);
 
 // 4. Router
 app.router(require('./router').default);
+
 
 // 5. Start
 app.start('#root');

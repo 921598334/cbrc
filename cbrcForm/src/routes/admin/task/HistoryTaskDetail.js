@@ -1,7 +1,7 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-
+import {myUrl} from '../../../services/ip'
 import Cookies from 'js-cookie'
 
 import { connect } from 'dva';
@@ -199,10 +199,17 @@ class HistoryTaskDetail extends React.Component {
       .then(result => {
         if (result) {
 
+
           console.log('下载连接：')
           console.log(this.props.queryNamespace.downloadLink)
 
-          window.open('http://' + this.props.queryNamespace.downloadLink)
+
+          console.log('组装后的下载连接：')
+          console.log( myUrl.localUrl + this.props.queryNamespace.downloadLink)
+
+          window.open( myUrl.localUrl + this.props.queryNamespace.downloadLink)
+
+       
         }
       })
   }

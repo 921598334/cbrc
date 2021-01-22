@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { loginRequest } from '../services/loginService'
-
+import {myUrl} from '../services/ip'
 import Cookies from 'js-cookie'
 
 export default {
@@ -30,12 +30,18 @@ export default {
             const orgid = Cookies.get('orgid')
   
             if(orgid.indexOf("10-") == -1){
-              //不是管理员，那判断其访问的是否为管理员也
+              
+              //不是管理机构，设置非管理机构的访问路径
+              myUrl.localUrl = "http://19.120.250.10:8080/"
+              //那判断其访问的是否为admin
               if(pathname.indexOf('admin')!=-1){
                 notification.info({message:"当前用户没有访问管理员界面的权限"})
                 history.push('/user')  
               }
 
+            }else{
+              //是管理机构，设置管理机构的访问路径
+              myUrl.localUrl = "http://10.120.250.10:8080/" 
             }
           }
 
@@ -54,6 +60,11 @@ export default {
 
       console.log("*login开始执行")
       console.log(loginInfo)
+
+
+
+      
+
 
       notification.info({message:'登陆中，请等待.....'})
 

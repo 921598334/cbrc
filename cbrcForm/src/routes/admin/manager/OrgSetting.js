@@ -1,7 +1,7 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-import '../table/tableCSS';
+
 
 import Cookies from 'js-cookie'
 import { connect } from 'dva';

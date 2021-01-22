@@ -140,17 +140,9 @@ class IndexPage extends React.Component {
 
           </Form>
 
-
-
         </Fragment>
 
-
-
-
       </ConfigProvider>
-
-
-
 
     )
   }
